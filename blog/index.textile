@@ -1,0 +1,16 @@
+---
+layout: default
+title: Test Page
+---
+
+h1. Ben Blackburne
+
+{% for post in site.posts %}
+h1. "{{post.title}}":{{post.url}}
+
+{{ post.date | date_to_string }} 
+
+{{post.content}}
+
+{% endfor %}
+
