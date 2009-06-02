@@ -6,19 +6,19 @@
 @font-face {
         font-family: 'Gentium Basic';
         font-style: italic;
-        src: url('/font/GenBasI.TTF');
+        src: url('/font/GenBasI.ttf');
 }
 @font-face {
         font-family: 'Gentium Basic';
         font-style: normal;
         font-weight: bold;
-        src: url('/font/GenBasB.TTF');
+        src: url('/font/GenBasB.ttf');
 }
 @font-face {
         font-family: 'Gentium Basic';
         font-style: italic;
         font-weight: bold;
-        src: url('/font/GenBasBI.TTF');
+        src: url('/font/GenBasBI.ttf');
 }
 @font-face {
         font-family: 'Inconsolata';
