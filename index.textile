@@ -23,10 +23,6 @@ h2. Blog Posts
 {% for post in site.posts %} 
 * {{ post.date | date_to_string }} "{{post.title}}":{{post.url}} {% endfor %}
 
-h2. Presentations
-
-"SSAHA_pileup":ftp://ftp.sanger.ac.uk/pub/zn1/ssaha_pileup/ is a variation detection pipeline. I gave "this presentation":http://www.slideshare.net/bpb/ssahapileup-258998 about it at AGBT2008.
-
 h2. Papers
 
 <div class="papers">
@@ -52,6 +48,10 @@ h2. Papers
 ** Journal of Chemical Physics, 115, 1935-1942 (2001).
 ** <div class="copy">Copyright (2001) American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics.</div>
 </div>
+
+h2. Presentations
+
+"SSAHA_pileup":ftp://ftp.sanger.ac.uk/pub/zn1/ssaha_pileup/ is a variation detection pipeline. I gave "this presentation":http://www.slideshare.net/bpb/ssahapileup-258998 about it at AGBT2008.
 
 h2. Contact
 
