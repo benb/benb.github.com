@@ -1,0 +1,70 @@
+---
+layout: default
+title: Ben Blackburne - logspace.co.uk
+---
+<div id="header">
+logspace.co.uk
+</div>
+
+h2. Ben Blackburne
+
+I currently work at the "Wellcome Trust Sanger Institute":http://www.sanger.ac.uk/. Previously I have worked at the "National Institute for Medical Research":http://www.nimr.mrc.ac.uk/ and I did my PhD at "The University of Nottingham":http://comp.chem.nottingham.ac.uk/.
+
+h2. Current Projects
+
+*Rome* is a probabilitic method to determine structure variations in DNA from new sequencing data.
+
+*"Modiphy":http://github.com/benb/modiphy* is a library in Scala for implementing phylogenetic models.
+
+*"TLF":http://github.com/benb/tlf/* is a Trivial Logging Framework for Scala
+
+h2. Blog Posts
+
+{% for post in site.posts %} 
+* {{ post.date | date_to_string }} "{{post.title}}":{{post.url}} {% endfor %}
+
+h2. Presentations
+
+"SSAHA_pileup":ftp://ftp.sanger.ac.uk/pub/zn1/ssaha_pileup/ is a variation detection pipeline. I gave "this presentation":http://www.slideshare.net/bpb/ssahapileup-258998 about it at AGBT2008.
+
+h2. Papers
+
+<div class="papers">
+* "Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:papers/flu2008.pdf
+** Blackburne, B. P., Hay A. H. & Goldstein, R. A.
+** _PLoS Pathogens_ 4(5): e1000058
+* "Assessing the Accuracy of Ancestral Protein Reconstruction Methods":http://dx.doi.org/10.1371/journal.pcbi.0020069 !/icons/pdf.png!:papers/anc-rec-acc.pdf
+** Williams, P. D., Pollock, D. D., Blackburne, B. P. & Goldstein, R. A.
+** _PLoS Computational Biology_ 2 (6): e69.
+* "Population Dynamics Simulations of Functional Model Proteins":http://dx.doi.org/10.1063/1.2056545 !/icons/pdf.png!:papers/FMP-Population-Dynamics.pdf
+** Blackburne, B.P. & Hirst, J.D.
+** _Journal of Chemical Physics_ 123, 154907 (2005).
+** <div class="copy">Copyright (2005) American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics.</div>
+* "Three Dimensional Functional Model Proteins: Structure, Function and Evolution":http://dx.doi.org/10.1063/1.1590310 !/icons/pdf.png!:/papers/3D-Functional-Model-Proteins.pdf 
+** Blackburne, B.P. & Hirst, J.D.
+** _Journal of Chemical Physics_ 119, 6 3453-3460 (2003).
+** <div class="copy">Copyright (2003) American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics.</div>
+* "Multimeme Algorithms for Protein Structure Prediction":http://www.springerlink.com/content/1valvewbl7ycy0bm/?p=927a9c48a5ab42b1b23b90c842a7ec89&pi=5 !/icons/pdf.png!:papers/ppsn2002.pdf
+** Krasnogor, N., Blackburne, B.P., Hirst, J.D., and Burke, E.K.,
+** _Proceedings of Parallel Problem Solving From Nature_, 2002, Lecture Notes in Computer Science. 
+* "Evolution of Functional Model Proteins":http://dx.doi.org/10.1063/1.1383051 !/icons/pdf.png!:/papers/Evolution-of-Functional-Model-Proteins.pdf 
+** Blackburne, B.P. & Hirst, J.D.
+** Journal of Chemical Physics, 115, 1935-1942 (2001).
+** <div class="copy">Copyright (2001) American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics.</div>
+</div>
+
+h2. Contact
+
+* Twitter: "bpb":http://twitter.com/bpb 
+* Jabber: &#98;&#98;&#52;&#64;&#115;&#97;&#110;&#103;&#101;&#114;.&#97;&#99;&#46;&#117;&#107;
+* Email: <a href="mailto:b&#98;&#52;&#64;sa&#110;g&#101;&#114;&#46;a&#99;&#46;&#117;k">&#98;&#98;&#52;&#64;&#115;&#97;&#110;&#103;&#101;&#114;.&#97;&#99;&#46;&#117;&#107;</a>
+
+
+h2. Recent Twitterage
+
+<div id="twitter">
+<ul id="twitter_update_list"></ul>
+<a href="http://twitter.com/bpb" id="twitter-link" style="display:block;text-align:right;">You can follow me on Twitter</a>
+</div>
+<script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script>
+<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/bpb.json?callback=twitterCallback2&amp;count=5"></script>
