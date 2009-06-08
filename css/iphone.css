@@ -1,34 +1,11 @@
-@font-face {
-        font-family: 'Gentium Basic';
-        font-style: normal;
-        src: url('/font/GenBasR.ttf');
-}
-@font-face {
-        font-family: 'Gentium Basic';
-        font-style: italic;
-        src: url('/font/GenBasI.ttf');
-}
-@font-face {
-        font-family: 'Gentium Basic';
-        font-style: normal;
-        font-weight: bold;
-        src: url('/font/GenBasB.ttf');
-}
-@font-face {
-        font-family: 'Gentium Basic';
-        font-style: italic;
-        font-weight: bold;
-        src: url('/font/GenBasBI.ttf');
-}
-@font-face {
-        font-family: 'Inconsolata';
-        src: url('/font/Inconsolata.otf');
-}
 body { 
-        font-family:'Gentium Basic',Palatino,"Palatino Linotype","Book Antiqua", "URW Palladio L", georgia,serif;
-        font-size:10pt;
+        font-family:Palatino,"Palatino Linotype","Book Antiqua", "URW Palladio L", georgia,serif;
+        font-size:20pt;
         margin: 0 auto;
         line-height: 1.4em;
+        padding-left:15px;
+        padding-right:10px;
+        max-width:2000px;
 }
 .date{
         font-size:80%;
