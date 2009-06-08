@@ -1,0 +1,56 @@
+body { 
+        font-family:Palatino,"Palatino Linotype","Book Antiqua", "URW Palladio L", georgia,serif;
+        font-size:20pt;
+        margin: 0 auto;
+        line-height: 1.4em;
+        padding-left:15px;
+        padding-right:10px;
+        max-width:2000px;
+}
+.date{
+        font-size:80%;
+        font-style:italic;
+        text-align:right;
+}
+.copy{
+        font-size:60%;
+}
+#header{
+        color: #61374b;
+        font-size:200%;
+        font-weight:bold;
+}
+h1, h2, h3, h4{
+        color: #31674b;
+}
+h2{
+        font-size:17pt;
+        font-weight:bold;
+        padding:1pt;
+        color:
+}
+li {
+        line-height:110%;
+        list-style-type:none;
+}
+A img{
+        border:0;
+        text-decoration:none;
+}
+A link{
+        text-decoration: none;
+        color:#E3FFF2;
+}
+A visited{
+        text-decoration: none;
+        color:#E3F2FF;
+}
+A{
+        text-decoration: none;
+}
+#twitter{
+        font-size:80%;
+}
+pre {
+        font-size:10pt;
+}

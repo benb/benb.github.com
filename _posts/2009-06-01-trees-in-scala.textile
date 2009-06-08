@@ -1,0 +1,72 @@
+---
+layout: post
+title: Parsing phylogenetic trees in Scala
+---
+
+I am currently using "Scala":http://www.scala-lang.org/ for most of my computational biology work. While writing Modiphy (more on that later) I needed to 
+produce code to parse phylogenetic trees in "Newick format":http://en.wikipedia.org/wiki/Newick_format (sometimes called New Hampshire format). Newick format trees look
+like so:
+
+<pre>
+((((A:0.1,B:0.2):0.1,(C:0.1,D:0.4):0.3)):0.1,E:0.5);
+</pre>
+
+Represents the following phylogenetic tree:
+
+!/images/example-tree.png!
+
+How do we parse such a thing? It can be quite complex (for instance, look at the Perl "parsing code in Bio::Phylo":http://cpansearch.perl.org/src/RVOSA/Bio-Phylo-0.17_RC9/lib/Bio/Phylo/Parsers/Newick.pm).
+Scala offers a feature called "Parser Combinators":http://www.codecommit.com/blog/scala/the-magic-behind-parser-combinators (the previous link is to Daniel Spiewak's excellent "Code Commit":http://www.codecommit.com/ blog, which contains many fantastic articles on Scala).
+This is brilliant for parsing trees. Lets start by setting up a simple class hierarchy for the nodes in the tree:
+
+
+<pre class="brush:scala">
+trait Node
+abstract class ANode(children:List[Node],nodeID:Int) extends Node {
+  override def toString={"("+children.mkString(",")+")"}
+}
+class Leaf(name:String,lengthTo:Double,nodeID:Int) extends Node {
+  override def toString=name+":"+lengthTo
+}
+class RootNode(children:List[Node],nodeID:Int) extends ANode (children,nodeID) {
+  override def toString=super.toString+";"
+}
+class INode(children:List[Node],lengthTo:Double,nodeID:Int) extends ANode (children,nodeID){
+  override def toString=super.toString+":"+lengthTo
+}
+</pre>
+
+Here, we have classes <code>INode</code> for internal nodes, <code>RootNode</code> for the root node of the tree, and <code>Leaf</code> for the leaves. The only code here is to implement a sensible <code>toString</code> method which yield a newick formatted tree when toString is called on the root.
+
+Now, we define a utility class that generates these nodes, which allows some flexibility (we can number them with a nodeID, for instance):
+<pre class="brush:scala">
+trait TreeGen {
+    def makeINode(children:List[Node],lengthTo:Double):INode
+    def makeLeaf(name:String,lengthTo:Double):Leaf
+    def makeRoot(children:List[Node]):RootNode
+}
+class TreeGenImpl extends TreeGen{
+  var nodeCount:Int= -1
+  def makeINode(children:List[Node],lengthTo:Double)={nodeCount += 1;new INode(children,lengthTo,nodeCount)}
+  def makeLeaf(name:String,lengthTo:Double)={nodeCount += 1;new Leaf(name,lengthTo,nodeCount)}
+  def makeRoot(children:List[Node])={nodeCount+=1;new RootNode(children,nodeCount)}
+}
+</pre>
+
+Now for the parsing. Firstly, what are we looking for? A leaf node is made up of a name (which we can match with a regex) and a real number. Scala's JavaTokenParsers class provides access to both a <code>regex()</code> method for recognising strings by regex, and <code>floatingPointNumber</code> for the branch length, so we will use that:
+<pre class="brush:scala">
+class TreeParser(treegen:TreeGen) extends JavaTokenParsers{
+</pre>
+We need a regex to recognise the leaf name:
+<pre class="brush:scala">
+def seqName: Parser[String] = regex(new scala.util.matching.Regex("[a-zA-Z0-9_.+-]+"))
+</pre>
+
+Now, a leaf is a seqName, followed by a colon, followed by a floatingPointNumber:
+<pre class="brush:scala">
+  def leaf: Parser[Leaf] = seqName~":"~floatingPointNumber ^^ {case name~":"~length => makeLeaf(name,length.toDouble)}
+</pre>
+
+The <code>^^</code> operator (the "eyebrows operator") transforms the result of the parser into an object (in this case, a <code>Leaf</code>).
+The function after <code>^^</code> is matched 
+
