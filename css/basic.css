@@ -25,7 +25,7 @@ body {
 #header{
         color: #61374b;
         font-size:250%;
-        font-family:'Fontin';
+        font-family:'Fontin','Tahoma','Geneva';
         text-shadow: #ccc 2px 2px 5px;
         float:right;
         width:400px;
@@ -33,8 +33,9 @@ body {
 }
 h1, h2, h3, h4{
         color: #31674b;
-        font-family:'Fontin';
+        font-family:'Fontin','Tahoma','Geneva';
         text-shadow: #ccc 2px 2px 5px;
+        font-weight:500;
 }
 h2{
         font-size:22pt;
