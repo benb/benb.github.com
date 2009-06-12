@@ -2,9 +2,6 @@
 layout: default
 title: Ben Blackburne - logspace.co.uk
 ---
-<div id="header">
-logspace.co.uk
-</div>
 
 h2. Ben Blackburne
 
