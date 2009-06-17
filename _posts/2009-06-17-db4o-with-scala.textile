@@ -9,7 +9,7 @@ with "Scala":http://www.scala-lang.org/, there is a snag.
 
 Db4o allows easy construction of querys by implementing their <code>Predicate</code> interface. Example, from their "tutorial":http://www.db4o.com/about/productinformation/resources/db4o-7.4-tutorial-java.pdf:
 <pre class="brush:java">
-List &lt;Pilot> pilots = db.query(new Predicate &lt;Pilot>() { 
+List <Pilot> pilots = db.query(new Predicate <Pilot>() { 
    public boolean match(Pilot pilot) { 
    return pilot.getPoints() == 100; 
    } 
