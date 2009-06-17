@@ -18,7 +18,7 @@ h2. Current Projects
 h2. Blog Posts
 
 {% for post in site.posts %} 
-*{{ post.date | date_to_string }} "{{post.title}}":{{post.url}} {% endfor %}
+* {{ post.date | date_to_string }} "{{post.title}}":{{post.url}} {% endfor %}
 
 h2. Papers
 
