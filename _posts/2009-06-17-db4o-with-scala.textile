@@ -51,11 +51,10 @@ result = query execute
 listResult result
 </pre>
 
-From a few minutes play, it seems that things work like they should - you can
-use parentheses to surround subqueries and connect with <code>and</code> or
-<code>or</code>.
+From a few minutes play, it seems that things work like they should - you can use parentheses to surround subqueries and connect with <code>and</code> or <code>or</code>.
 
-i.e. 
+For example:
+
 <pre class="brush:scala">
 (query descend "name" constrain "Rubens Barrichello" or (query descend "points" constrain 99 greater)) and (query descend "points" constrain 199 smaller)
 </pre>
