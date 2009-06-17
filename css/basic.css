@@ -31,11 +31,21 @@ body {
         width:400px;
         text-align:right;
 }
+h1 a{
+        color: #31674b;
+}
+h2 a{
+        color: #31674b;
+}
+
 h1, h2, h3, h4{
         color: #31674b;
         font-family:'Fontin','Tahoma','Geneva';
         text-shadow: #ccc 2px 2px 5px;
         font-weight:500;
+}
+h1{
+        text-align:right;
 }
 h2{
         font-size:22pt;
@@ -65,5 +75,18 @@ A{
         font-size:80%;
 }
 pre {
-        font-size:10pt;
+        font-family:"Inconsolata",Consolas,"Bitstream Vera Sans Mono";
+        font-size:11pt;
+}
+.highlight {
+        overflow:auto;
+        margin-left:1em;
+        margin-right:1em;
+}
+.highlight pre{
+        background-color:#E0FFE0;
+        padding-left:1em;
+        padding-right:1em;
+        padding-top:0.5em;
+        padding-bottom:0.5em;
 }

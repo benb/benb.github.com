@@ -8,13 +8,14 @@ store and retieve java objects. This all seems rather nice, but when using db4o
 with "Scala":http://www.scala-lang.org/, there is a snag. 
 
 Db4o allows easy construction of querys by implementing their <code>Predicate</code> interface. Example, from their "tutorial":http://www.db4o.com/about/productinformation/resources/db4o-7.4-tutorial-java.pdf:
-<pre class="brush:java">
+
+{% highlight java %}
 List <Pilot> pilots = db.query(new Predicate <Pilot>() { 
    public boolean match(Pilot pilot) { 
    return pilot.getPoints() == 100; 
    } 
 }); 
-</pre>
+{% endhighlight %}
 
 The idea is that, rather than running every object in the database past the
 filter <code>.getPoints()==100</code>, db4o parses the bytecode and looks for
@@ -22,7 +23,8 @@ objects that match using the database index. However, "this doesn't seem to work
 
 Maybe at some point this will be fixed. But for now, Scala's syntax comes to the rescue. Db4o converts <code>Predicate</code> implementations into something called a SODA query. The code for constructing a SODA query from scratch in Java, looks like:
 
-<pre class="brush:java">
+
+{% highlight java %}
 Query query=db.query(); 
 query.constrain(Pilot.class); 
 Query pointQuery=query.descend("points"); 
@@ -33,13 +35,13 @@ query.descend("name").constrain("Rubens Barrichello")
 
 ObjectSet result=query.execute(); 
 listResult(result); 
-</pre>
+{% endhighlight %}
 
 (Again, this is from the "tutorial":http://www.db4o.com/about/productinformation/resources/db4o-7.4-tutorial-java.pdf).
 
 Pretty ugly, huh? However, a Scala version is not too bad:
 
-<pre class="brush:scala">
+{% highlight scala %}
 val query = db query
 query constrain classOf[Pilot]
 
@@ -49,21 +51,29 @@ query descend "name" constrain "Rubens Barrichello" or
 
 result = query execute
 listResult result
-</pre>
+{% endhighlight %}
 
 From a few minutes play, it seems that things work like they should - you can use parentheses to surround subqueries and connect with <code>and</code> or <code>or</code>.
 
 For example:
 
-<pre class="brush:scala">
-(query descend "name" constrain "Rubens Barrichello" or (query descend "points" constrain 99 greater)) and (query descend "points" constrain 199 smaller)
-</pre>
+{% highlight scala %}
+(
+  (query descend "name" constrain "Rubens Barrichello") or 
+  (query descend "points" constrain 99 greater)
+) and 
+(query descend "points" constrain 199 smaller)
+{% endhighlight %}
 
 Means ("Reubens Barrichello" OR > 99 points ) AND < 199 points, while:
 
-<pre class="brush:scala">
-query descend "name" constrain "Rubens Barrichello" or ((query descend "points" constrain 99 greater) and (query descend "points" constrain 199 smaller))
-</pre>
+{% highlight scala %}
+query descend "name" constrain "Rubens Barrichello" or 
+  (
+    (query descend "points" constrain 99 greater) and 
+    (query descend "points" constrain 199 smaller)
+  )
+{% endhighlight %}
 
 means "Reubens Barrichello" OR (> 99 points  AND < 199 points).
 
