@@ -13,7 +13,7 @@ h2. {{post.title}}
 
 <div class="date">"{{ post.date | date_to_string }}":{{post.url}}</div>
 
-<a href="{{post.url}}#disquss_thread">View Comments</a>
+<a href="{{post.url}}#disqus_thread">View Comments</a>
 
 {% endfor %}
 <script type="text/javascript">
