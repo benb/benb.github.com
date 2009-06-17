@@ -1,0 +1,72 @@
+---
+layout: post
+title: Querying db4o in Scala
+---
+
+"Db4o":http://www.db4o.com/ is a native java/C# database framework. In a db4o database, you can easily
+store and retieve java objects. This all seems rather nice, but when using db4o
+with "Scala":http://www.scala-lang.org/, there is a snag. 
+
+Db4o allows easy construction of querys by implementing their <code>Predicate</code> interface. Example, from their "tutorial":http://www.db4o.com/about/productinformation/resources/db4o-7.4-tutorial-java.pdf:
+<pre class="brush:java">
+List &lt;Pilot> pilots = db.query(new Predicate &lt;Pilot>() { 
+   public boolean match(Pilot pilot) { 
+   return pilot.getPoints() == 100; 
+   } 
+}); 
+</pre>
+
+The idea is that, rather than running every object in the database past the
+filter <code>.getPoints()==100</code>, db4o parses the bytecode and looks for
+objects that match using the database index. However, "this doesn't seem to work for Scala bytecode":http://www.matthewtodd.info/?p=68.
+
+Maybe at some point this will be fixed. But for now, Scala's syntax comes to the rescue. Db4o converts <code>Predicate</code> implementations into something called a SODA query. The code for constructing a SODA query from scratch in Java, looks like:
+
+<pre class="brush:java">
+Query query=db.query(); 
+query.constrain(Pilot.class); 
+Query pointQuery=query.descend("points"); 
+
+query.descend("name").constrain("Rubens Barrichello") 
+    .or(pointQuery.constrain(new Integer(99)).greater() 
+            .and(pointQuery.constrain(new Integer(199)).smaller())); 
+
+ObjectSet result=query.execute(); 
+listResult(result); 
+</pre>
+
+(Again, this is from the "tutorial":http://www.db4o.com/about/productinformation/resources/db4o-7.4-tutorial-java.pdf).
+
+Pretty ugly, huh? However, a Scala version is not too bad:
+
+<pre class="brush:scala">
+val query = db query
+query constrain classOf[Pilot]
+
+query descend "name" constrain "Rubens Barrichello" or
+  (query descend "points" constrain 99 greater) and 
+  (query descend "points" constrain 199 smaller)
+
+result = query execute
+listResult result
+</pre>
+
+From a few minutes play, it seems that things work like they should - you can
+use parentheses to surround subqueries and connect with <code>and</code> or
+<code>or</code>.
+
+i.e. 
+<pre class="brush:scala">
+(query descend "name" constrain "Rubens Barrichello" or (query descend "points" constrain 99 greater)) and (query descend "points" constrain 199 smaller)
+</pre>
+
+Means ("Reubens Barrichello" OR > 99 points ) AND < 199 points, while:
+
+<pre class="brush:scala">
+query descend "name" constrain "Rubens Barrichello" or ((query descend "points" constrain 99 greater) and (query descend "points" constrain 199 smaller))
+</pre>
+
+means "Reubens Barrichello" OR (> 99 points  AND < 199 points).
+
+This actually isn't too bad to work with, after all!
+
