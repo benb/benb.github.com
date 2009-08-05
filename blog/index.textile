@@ -8,8 +8,9 @@ h1. Logspace
 {% for post in site.posts %}
 h2. {{post.title}}
 
-
-{{post.content}}
+<div class="post">
+{{ post.content }}
+</div>
 
 <div class="date">"{{ post.date | date_to_string }}":{{post.url}}</div>
 
