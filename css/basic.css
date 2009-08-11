@@ -16,7 +16,7 @@ body {
 #header{
         color: #61374b;
         font-size:250%;
-        font-family:'Kontrapunkt Light','Tahoma','Geneva';
+        font-family:'Droid Sans Bold','Tahoma','Geneva';
         text-shadow: #ccc 2px 2px 5px;
         float:right;
         width:400px;
@@ -31,7 +31,7 @@ h2 a{
 
 h1, h2, h3, h4{
         color: #31674b;
-        font-family:'Kontrapunkt Light','Tahoma','Geneva';
+        font-family:'Droid Sans Bold','Tahoma','Geneva';
         text-shadow: #ccc 2px 2px 5px;
         font-weight:500;
 }
