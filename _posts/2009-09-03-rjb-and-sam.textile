@@ -27,11 +27,14 @@ file = Rjb::import('java.io.File')
 samfilereader = Rjb::import('net.sf.samtools.SAMFileReader')
 
 #most BAM files I've seen have errors, so let's be lenient:
-Rjb::import('net.sf.samtools.SAMFileReader').setDefaultValidationStringency(Rjb::import('net.sf.samtools.SAMFileReader$ValidationStringency').LENIENT)
-
+samfilereader.setDefaultValidationStringency(
+   Rjb::import('net.sf.samtools.SAMFileReader$ValidationStringency').LENIENT
+)
 
 #Instantiate the java object:
-sam=samfilereader.new_with_sig('Ljava.io.File;Ljava.io.File;',file.new(bam),file.new(bai))
+sam=samfilereader.new_with_sig(
+ 'Ljava.io.File;Ljava.io.File;',file.new(bam),file.new(bai)
+)
 
 #From here on it's plain sailing
 File.open("regions").each_line do |line|
