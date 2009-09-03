@@ -39,9 +39,12 @@ sam=samfilereader.new_with_sig(
 #From here on it's plain sailing
 File.open("regions").each_line do |line|
         l = line.split
+        #we can use ruby ints and strings in java methods:
         overlapping = sam.queryOverlapping(l[0],l[1].to_i,l[2].to_i)
+
         while (overlapping.hasNext)
                 r = overlapping.next
+                #pull out what we need from the SAMRecord object:
                 puts "@"+r.getReadName 
                 puts r.getReadString
                 puts "+" 
