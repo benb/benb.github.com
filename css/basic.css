@@ -1,6 +1,6 @@
 body { 
         font-family:'Junction','Hoefler Text',Palatino,'Palatino Linotype','Book Antiqua', 'URW Palladio L', georgia,'Bitstream Vera Serif',serif;
-        font-size:14pt;
+        font-size:13pt;
         max-width:700px;
         margin: 0 auto;
         line-height: 1.5em;
@@ -16,7 +16,7 @@ body {
 #header{
         color: #61374b;
         font-size:200%;
-        font-family:'Chunk','Tahoma','Geneva';
+        font-family:'Chunk','Tahoma','Geneva',sans-serif;
         #text-shadow: #ccc 2px 2px 5px;
         float:right;
         width:400px;
@@ -34,7 +34,7 @@ h2 a{
 
 h1, h2, h3, h4{
         color: #31674b;
-        font-family:'Chunk','Tahoma','Geneva';
+        font-family:'Chunk','Tahoma','Geneva',sans-serif;
         #text-shadow: #ccc 2px 2px 5px;
         font-weight:500;
 }
@@ -47,7 +47,7 @@ h2{
         color:
 }
 li {
-        line-height: 1.7em;
+        line-height: 1.6em;
         list-style-type:none;
 }
 A img{
@@ -69,7 +69,7 @@ A{
         font-size:80%;
 }
 pre {
-        font-family:"Inconsolata",Consolas,"Bitstream Vera Sans Mono";
+        font-family:"Inconsolata",Consolas,"Bitstream Vera Sans Mono",Mono;
         font-size:11pt;
 }
 .highlight {
