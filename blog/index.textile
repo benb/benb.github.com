@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Test Page
+title: Logspace Blog
 ---
 
 h1. Logspace
