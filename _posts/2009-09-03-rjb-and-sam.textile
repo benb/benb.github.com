@@ -5,7 +5,7 @@ title: Using RJB to manipulate SAM files in Ruby
 
 "SAM":http://samtools.sourceforge.net/ is a new file format for representing genomic sequence alignments. There are apis available for "Java":http://picard.sourceforge.net/, "Perl":http://search.cpan.org/~lds/Bio-SamTools/, and "Python":http://code.google.com/p/pysam/.  But none for Ruby as far as I know, which is a shame when you want to manipulate SAM files in a rakefile. But - there is a little hackette we can pull. First, install "RJB":http://rjb.rubyforge.org/ (the Ruby Java Bridge). Then we can do interesting things with the "Picard Java API":http://picard.sourceforge.net/:
 
-This routine will load a bam file (Binary SAM file), excise the regions listed in file regions (as "chr start end"), and print them out as fastq.
+This routine will load a bam file (i.e. a binary SAM file), excise the sequences overlapping the regions listed in file "regions" (as "chr start end"), and print them out in "fastq format":http://en.wikipedia.org/wiki/FASTQ_format.
 
 {% highlight ruby %}
 require 'rjb'
