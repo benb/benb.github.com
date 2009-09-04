@@ -22,7 +22,7 @@ body {
         width:400px;
         text-align:right;
 }
-#emph{
+.emph{
         font-family:'Chunk','Tahoma','Geneva';
 }
 h1 a{
