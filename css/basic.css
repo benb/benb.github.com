@@ -3,7 +3,7 @@ body {
         font-size:14pt;
         max-width:700px;
         margin: 0 auto;
-        line-height: 1.6em;
+        line-height: 1.5em;
 }
 .date{
         font-size:80%;
@@ -21,6 +21,9 @@ body {
         float:right;
         width:400px;
         text-align:right;
+}
+#emph{
+        font-family:'Chunk','Tahoma','Geneva';
 }
 h1 a{
         color: #31674b;
@@ -44,7 +47,7 @@ h2{
         color:
 }
 li {
-        line-height:110%;
+        line-height: 1.7em;
         list-style-type:none;
 }
 A img{
