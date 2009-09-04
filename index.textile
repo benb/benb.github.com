@@ -26,7 +26,7 @@ h2. Papers
 
 <div class="papers">
 
-* <div class="emph">"Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:papers/flu2008.pdf </div>
+* "Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:papers/flu2008.pdf
 ** Blackburne, B. P., Hay A. H. & Goldstein, R. A.
 ** _PLoS Pathogens_ 4(5): e1000058
 * "Assessing the Accuracy of Ancestral Protein Reconstruction Methods":http://dx.doi.org/10.1371/journal.pcbi.0020069 !/icons/pdf.png!:papers/anc-rec-acc.pdf
