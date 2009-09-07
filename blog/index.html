@@ -7,7 +7,9 @@ title: Logspace Blog
                         <h1>Logspace</h1>
 
                         {% for post in site.posts %}
-                        <h2>{{post.title}}</h2>
+                        <a href="{{post.url}}" class="posttitle">
+                             <h2>{{post.title}}</h2>
+                        </a>
 
                         <div class="post">
                                 {{ post.content }}
