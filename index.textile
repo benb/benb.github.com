@@ -26,6 +26,9 @@ Some recent posts from "my blog":http://www.logspace.co.uk/blog/:
 h2. Papers
 
 <div class="papers">
+* "Mutation spectrum revealed by breakpoint sequencing of human germline CNVs":http://dx.doi.org/10.1038/ng.564
+** Conrad et al.
+** _Nature Genetics_ "doi:10.1038/ng.564":http://dx.doi.org/10.1038/ng.564
 * "Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:papers/flu2008.pdf
 ** Blackburne, B. P., Hay A. H. & Goldstein, R. A.
 ** _PLoS Pathogens_ 4(5): e1000058
