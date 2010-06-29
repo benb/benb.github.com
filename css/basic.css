@@ -4,6 +4,7 @@ body {
         max-width:750px;
         margin: 0 auto;
         line-height: 1.5em;
+        text-rendering: optimizeLegibility;
 }
 .date{
         font-size:80%;
