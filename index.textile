@@ -23,7 +23,7 @@ Some recent posts from "my blog":http://www.logspace.co.uk/blog/:
 {% for post in site.posts %} 
 * {{ post.date | date_to_string }} "{{post.title}}":{{post.url}} {% endfor %}
 
-h2. Papers
+h2(#publications). Papers
 
 <div class="papers">
 * "Phylogenetic substitution models for detecting heterotachy during plastid evolution":http://dx.doi.org/10.1093/molbev/msq215 
