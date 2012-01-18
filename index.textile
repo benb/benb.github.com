@@ -9,12 +9,11 @@ I currently work in the "Faculty of Life Sciences":http://www.ls.manchester.ac.u
 Before this, I worked at the "Wellcome Trust Sanger Institute":http://www.sanger.ac.uk/ and the "National Institute for Medical Research":http://www.nimr.mrc.ac.uk/. I did my PhD at "The University of Nottingham":http://comp.chem.nottingham.ac.uk/.
 
 h2. Current Projects
+*"MetAl":http://kumiho.smith.man.ac.uk/whelan/software/metal/* is a tool in Haskell for measuring the distance between alternative sequence alignments.
 
 *"Modiphy":http://github.com/benb/modiphy* is a library in Scala for implementing phylogenetic models.
 
 *"Phyhs":https://github.com/benb/EvoHaskell/* is a similar (experimental) library in Haskell.
-
-*"TLF":http://github.com/benb/tlf/* is a Trivial Logging Framework for Scala
 
 h2. Blog Posts
 
