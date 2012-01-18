@@ -59,7 +59,7 @@ h2(#publications). Papers
 </div>
 
 h3. Book Chapter
-* Matt Wood and Ben Blackburne. Life in Data: The Story of DNA. In /Beautiful Data/, Toby Segaran and Jeff Hammerbacher (eds.)
+* Matt Wood and Ben Blackburne. *Life in Data: The Story of DNA*. In _Beautiful Data_, Toby Segaran and Jeff Hammerbacher (eds.)
 
 h2. Contact
 
