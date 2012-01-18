@@ -26,6 +26,9 @@ Some recent posts from "my blog":http://www.logspace.co.uk/blog/:
 h2(#publications). Papers
 
 <div class="papers">
+* "Measuring the distance between multiple sequence alignments":http://dx.doi.org/10.1093/bioinformatics/btr701
+** Blackburne, B.P. and Whelan, S.
+** _Bioinformatics_ "doi:10.1093/bioinformatics/btr701":http://dx.doi.org/10.1093/bioinformatics/btr701 
 * "Phylogenetic substitution models for detecting heterotachy during plastid evolution":http://dx.doi.org/10.1093/molbev/msq215 
 ** Whelan, S., Blackburne, B.P. and Spencer, M.
 ** _Molecular Biology and Evolution_ "doi:10.1093/molbev/msq215":http://dx.doi.org/10.1093/molbev/msq215
@@ -56,9 +59,8 @@ h2(#publications). Papers
 
 </div>
 
-h2. Presentations
-
-"SSAHA_pileup":ftp://ftp.sanger.ac.uk/pub/zn1/ssaha_pileup/ is a variation detection pipeline. I gave "this presentation":http://www.slideshare.net/bpb/ssahapileup-258998 about it at AGBT2008.
+h3. Book Chapter
+* Matt Wood and Ben Blackburne. Life in Data: The Story of DNA. In /Beautiful Data/, Toby Segaran and Jeff Hammerbacher (eds.)
 
 h2. Contact
 
