@@ -16,13 +16,6 @@ h2. Current Projects
 
 *"Phyhs":https://github.com/benb/EvoHaskell/* is a similar (experimental) library in Haskell.
 
-h2. Blog Posts
-
-Some recent posts from "my blog":http://www.logspace.co.uk/blog/:
-
-{% for post in site.posts %} 
-* {{ post.date | date_to_string }} "{{post.title}}":{{post.url}} {% endfor %}
-
 h2(#publications). Papers
 
 <div class="papers">
