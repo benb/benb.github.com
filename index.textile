@@ -28,10 +28,10 @@ h2(#publications). Papers
 * "Mutation spectrum revealed by breakpoint sequencing of human germline CNVs":http://dx.doi.org/10.1038/ng.564 !/icons/pdf.png!:http://www.nature.com/ng/journal/vaop/ncurrent/pdf/ng.564.pdf
 ** Conrad et al.
 ** _Nature Genetics_ "doi:10.1038/ng.564":http://dx.doi.org/10.1038/ng.564
-* "Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:papers/flu2008.pdf
+* "Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:http://www.plospathogens.org/article/fetchObjectAttachment.action?uri=info%3Adoi%2F10.1371%2Fjournal.ppat.1000058&representation=PDF
 ** Blackburne, B. P., Hay A. H. & Goldstein, R. A.
 ** _PLoS Pathogens_ 4(5): e1000058
-* "Assessing the Accuracy of Ancestral Protein Reconstruction Methods":http://dx.doi.org/10.1371/journal.pcbi.0020069 !/icons/pdf.png!:papers/anc-rec-acc.pdf
+* "Assessing the Accuracy of Ancestral Protein Reconstruction Methods":http://dx.doi.org/10.1371/journal.pcbi.0020069 !/icons/pdf.png!:http://www.ploscompbiol.org/article/fetchObjectAttachment.action?uri=info%3Adoi%2F10.1371%2Fjournal.pcbi.0020069&representation=PDF
 ** Williams, P. D., Pollock, D. D., Blackburne, B. P. & Goldstein, R. A.
 ** _PLoS Computational Biology_ 2 (6): e69.
 * "Population Dynamics Simulations of Functional Model Proteins":http://dx.doi.org/10.1063/1.2056545 !/icons/pdf.png!:papers/FMP-Population-Dynamics.pdf
