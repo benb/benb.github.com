@@ -19,10 +19,10 @@ h2. Current Projects
 h2(#publications). Papers
 
 <div class="papers">
-* "Measuring the distance between multiple sequence alignments":http://dx.doi.org/10.1093/bioinformatics/btr701
+* "Measuring the distance between multiple sequence alignments":http://dx.doi.org/10.1093/bioinformatics/btr701 !/icons/pdf.png!:http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf
 ** Blackburne, B.P. and Whelan, S.
 ** _Bioinformatics_ "doi:10.1093/bioinformatics/btr701":http://dx.doi.org/10.1093/bioinformatics/btr701 
-* "Phylogenetic substitution models for detecting heterotachy during plastid evolution":http://dx.doi.org/10.1093/molbev/msq215 
+* "Phylogenetic substitution models for detecting heterotachy during plastid evolution":http://dx.doi.org/10.1093/molbev/msq215 !/icons/pdf.png!:http://mbe.oxfordjournals.org/content/28/1/449.full.pdf
 ** Whelan, S., Blackburne, B.P. and Spencer, M.
 ** _Molecular Biology and Evolution_ "doi:10.1093/molbev/msq215":http://dx.doi.org/10.1093/molbev/msq215
 * "Mutation spectrum revealed by breakpoint sequencing of human germline CNVs":http://dx.doi.org/10.1038/ng.564 !/icons/pdf.png!:http://www.nature.com/ng/journal/vaop/ncurrent/pdf/ng.564.pdf
