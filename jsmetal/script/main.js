@@ -9,6 +9,11 @@ var EVO = 3;
 //Global object (container for a few general features and options that should be easily available)
 var G = {};
 
+function example1(){
+        $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example1a.fa", function(data){
+                $("#alignment1").val(data);
+        });
+}
 	
 function process() {
 	START = new Date();
