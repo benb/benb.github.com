@@ -13,6 +13,23 @@ function example1(){
         $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example1a.fa", function(data){
                 $("#alignment1").val(data);
         });
+        $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example1b.fa", function(data){
+                $("#alignment2").val(data);
+        });
+        $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example1.tre", function(data){
+                $("#newick").val(data);
+        });
+}
+function example2(){
+        $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example2a.fa", function(data){
+                $("#alignment1").val(data);
+        });
+        $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example2b.fa", function(data){
+                $("#alignment2").val(data);
+        });
+        $.get(location.protocol + "//" + location.host + "/" + location.pathname.split('/').slice(0,-1).join("/") +  "/examples/example2.tre", function(data){
+                $("#newick").val(data);
+        });
 }
 	
 function process() {
