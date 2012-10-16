@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+	
+	<link rel="stylesheet" type="text/css" id="seqColour" href="./nucleotide.css" > 
+	
+	
+	<title>jsMetal &mdash; alignment distance metrics in JavaScript</title>
+	
+		
+</head>
+<body> 
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+
+	
+	<script type="text/javascript" src="script/main.js"></script>
+	<script type="text/javascript" src="script/distances.js"></script>
+	<script type="text/javascript" src="script/homologySets.js"></script>
+	<script type="text/javascript" src="script/resorting.js"></script>
+	<script type="text/javascript" src="script/sequence.js"></script>
+	<script type="text/javascript" src="script/consistency.js"></script>
+	<script type="text/javascript" src="script/result.js"></script>
+	<script type="text/javascript" src="script/newick_parser.js"></script>
+		
+
+	<div id="header">
+	<span id="title"><span id="progname">jsMetal &mdash;</span>  alignment distance metrics in JavaScript</span>
+	</div>
+	<div id="errorBox" style="padding: 10px; background-color: #FF4444; text-align: center; color: white; display: none;">
+	</div>
+	
+	
+	
+	
+	<div id="controlPanel" style="display:none;">
+		<div id="homologyPanel" style="display:inline; float:left;">
+			<p>Homology type: 
+			<select name="homologyType" id="homologyType" autocomplete="off">
+				<option name="homologyOption" id="ssp" value="0" selected="selected">Symmetrised sum-of-pairs</option>
+				<option name="homologyOption" id="simple" value="1">Simple homology distance</option>
+				<option name="homologyOption" id="pos" value="2">Homology distance with gaps labelled by position</option>
+				<option name="homologyOption" id="evol" disabled="disabled" value="3" />(no Newick tree provided)</option>
+			</select></p>
+		</div>
+		<div id="distanceVisualizationPanel" style="display:none; float:left;">
+			<p>Distance visualization scheme: 
+			<select name="distanceVisualizationType" id="distanceVisualizationType" autocomplete="off">
+				<option name="distanceVisualizationOption" id="noDistance" selected="selected" value="2">Simple colours</option>
+				<option name="distanceVisualizationOption" id="redfade" value="3">255 Shades of Red</option>
+				<option name="distanceVisualizationOption" id="sameOpacity" value="0">Fade distant characters</option>
+				<option name="distanceVisualizationOption" id="diffOpacity" value="1" >Fade close characters</option>
+			</select></p>
+		</div>
+                <div style="display:inline;">
+		<button type="button" name="button" id="showCharDists">Display individual character distances (CSV)</button>
+		<button type="button" name="button" id="showSeqDists">Display sequence distances</button>
+                </div>
+	</div>
+	
+	<div id="input"><h3>Alignment 1</h3>
+	<textarea id="alignment1" class="alnInput" rows="10" cols="120" wrap="off">>1qf9_A
+--MEKSKPNVVFVLGGPGSGKGTQCANIVRDFGWVHLSAGDLLRQEQ-QSGSKDGEMIATMIKNGEIVPSIVTVKLLKNAIDANQGKN---FLVDGFPRNEENNNSWEENM-KDFVDTKFVLFFDCPEEVMTQRLLKRGESSG---------------------------RSDDNIESIKKRFNTFNVQTKLVIDHYNKFDKVKIIPANRD---VNEVYNDVENLFKSMGF------
+>1uky_
+PAFSPDQVSVIFVLGGPGAGKGTQCEKLVKDYSFVHLSAGDLLRAEQGRAGSQYGELIKNCIKEGQIVPQEITLALLRNAISDNVKANKHKFLIDGFPRKMDQAISFER----DIVESKFILFFDCPEDIMLERLLERGKTSG---------------------------RSDDNIESIKKRFNTFKETSMPVIEYFETKSKVVRVRCDRS---VEDVYKDVQDAIRDSL-------
+>1zak_A
+-----ADPLKVMISGAPASGKGTQCELIKTKYQLAHISAGDLLRAEI-AAGSENGKRAKEFMEKGQLVPDEIVVNMVKERLRQPDAQENG-WLLDGYPRSYSQAMALET----LEIRPDTFILLDVPDELLVERVVGRRLDPVTGKIYHLKYSPPE----NEEIASRLTQRFDDTEEKVKLRLETYYQNIESLLSTYENIIVKVQGDATVD-AVFAKIDELLGSILEKKNEMVSST-
+>1zip_
+--------MNLVLMGLPGAGKGTQAEKIVAAYGIPHISTGDMFRAAM-KEGTPLGLQAKQYMDRGDLVPDEVTIGIVRERLSKD-DCQNG-FLLDGFPRTVAQAEALETMLADIGRKLDYVIHIDVRQDVLMERLTGRRICRNCGATYHLIFHPPAKPGVCDKCGGELYQRADDNEATVANRLEVNMKQMKPLVDFYEQKGYLRNINGEQD---MEKVFADIRELLGGLAR------
+>2ak2_
+-----PKGVRAVLLGPPGAGKGTQAPKLAKNFCVCHLATGDMLRAMV-ASGSELGKKLKATMDAGKLVSDEMVLELIEKNLETP-PCKNG-FLLDGFPRTVRQAEMLDDLMEKRKEKLDSVIEFSIPDSLLIRRITGRLIHPQSGRSYHEEFNPPKEPMKDDITGEPLIRRSDDNKKALKIRLEAYHTQTTPLVEYYSKRGIHSAIDASQT----PDV--VFASILAAFSKATS---
+>2ak3_A
+--GASARLLRAAIMGAPGSGKGTVSSRITKHFELKHLSSGDLLRDNM-LRGTEIGVLAKTFIDQGKLIPDDVMTRLVLHELKNL-TQYN--WLLDGFPRTLPQAEALD-----RAYQIDTVINLNVPFEVIKQRLTARWIHPGSGRVYNIEFNPPKTMGIDDLTGEPLVQREDDRPETVVKRLKAYEAQTEPVLEYYRKKGVLETFSGTETNKIWPHVYAFLQTKLPQRSQETSVTP
+>3adk_
+MEEKLKKSKIIFVVGGPGSGKGTQCEKIVQKYGYTHLSTGDLLRAEV-SSGSARGKMLSEIMEKGQLVPLETVLDMLRDAMVAKVDTSKG-FLIDGYPREVKQGEEFER----KIGQPTLLLYVDAGPETMTKRLLKRGETSG---------------------------RVDDNEETIKKRLETYYKATEPVIAFYEKRGIVRKVNAEGS---VDDVFSQVCTHLDTLK-------
+</textarea>
+	<h3>Alignment 2</h3>
+	<textarea id="alignment2"class="alnInput" rows="10" cols="120" wrap="off">>1qf9_A
+--MEKSKPNVVFVLGGPGSGKGTQCANIVRDFGWVHLSAGDLLRQEQ-QSGSKDGEMIATMIKNGEIVPSIVTVKLLKNAIDANQGKN---FLVDGFPRNEENNNSWEENMKDFVDT-KFVLFFDCPEEVMTQRLLKR---------------------------GESSGRSDDNIESIKKRFNTFNVQTKLVIDHYNKFDKVKIIPANRDVNEVYNDVENLFKSMGF----------
+>1uky_
+PAFSPDQVSVIFVLGGPGAGKGTQCEKLVKDYSFVHLSAGDLLRAEQGRAGSQYGELIKNCIKEGQIVPQEITLALLRNAISDNVKANKHKFLIDGFPRKMDQAISFE---RDIVES-KFILFFDCPEDIMLERLLER---------------------------GKTSGRSDDNIESIKKRFNTFKETSMPVIEYFETKSKVVRVRCDRSVEDVYKDVQDAIRDSL-----------
+>1zak_A
+-----ADPLKVMISGAPASGKGTQCELIKTKYQLAHISAGDLLRAEI-AAGSENGKRAKEFMEKGQLVPDEIVVNMVKERLRQPDAQEN-GWLLDGYPRSYSQAMALE---TLEIRP-DTFILLDVPDELLVERVVGRRLDPVTGKIYHLKYSPPE----NEEIASRLTQRFDDTEEKVKLRLETYYQNIESLLSTYE--NIIVKVQGDATVDAVFAKIDELLGSILEKKNEMVSST-
+>1zip_
+--------MNLVLMGLPGAGKGTQAEKIVAAYGIPHISTGDMFRAAM-KEGTPLGLQAKQYMDRGDLVPDEVTIGIVRERLSKDDCQN--GFLLDGFPRTVAQAEALETMLADIGRKLDYVIHIDVRQDVLMERLTGRRICRNCGATYHLIFHPPAKPGVCDKCGGELYQRADDNEATVANRLEVNMKQMKPLVDFYEQKGYLRNINGEQDMEKVFADIRELLGGLAR----------
+>2ak2_
+-----PKGVRAVLLGPPGAGKGTQAPKLAKNFCVCHLATGDMLRAMV-ASGSELGKKLKATMDAGKLVSDEMVLELIEKNLETPPCKN--GFLLDGFPRTVRQAEMLDDLMEKRKEKLDSVIEFSIPDSLLIRRITGRLIHPQSGRSYHEEFNPPKEPMKDDITGEPLIRRSDDNKKALKIRLEAYHTQTTPLVEYYSKRGIHSAIDASQTPDVVFASILAAFSKATS----------
+>2ak3_A
+--GASARLLRAAIMGAPGSGKGTVSSRITKHFELKHLSSGDLLRDNM-LRGTEIGVLAKTFIDQGKLIPDDVMTRLVLHELKNLTQYN---WLLDGFPRTLPQAEALD-----RAYQIDTVINLNVPFEVIKQRLTARWIHPGSGRVYNIEFNPPKTMGIDDLTGEPLVQREDDRPETVVKRLKAYEAQTEPVLEYYRKKGVLETFSGTET-NKIWPHVYAFLQTKLPQRSQETSVTP
+>3adk_
+MEEKLKKSKIIFVVGGPGSGKGTQCEKIVQKYGYTHLSTGDLLRAEV-SSGSARGKMLSEIMEKGQLVPLETVLDMLRDAMVAKVDTSK-GFLIDGYPREVKQGEEFE---RKIGQP-TLLLYVDAGPETMTKRLLKR---------------------------GETSGRVDDNEETIKKRLETYYKATEPVIAFYEKRGIVRKVNAEGSVDDVFSQVCTHLDTLK-----------
+</textarea>
+	<h3>Newick tree (optional, for calculating tree-based distances)</h3>
+	<textarea id="newick" class="alnInput" rows="2" cols="120" style="white-space:nowrap; font-type:monospace;" wrap="off">((2ak3_A:0.80700307223201050988,2ak2_:0.66285876318918990346):0.20999091317432069803,(1zak_A:0.56157078195097354101,((1qf9_A:0.45773858054651844762,1uky_:0.38480866610120595395):0.56156580092556740436,3adk_:0.29550299312771138860):0.67178681537274875790):0.20905034539519878889,1zip_:0.60881961728723443805):0.0;
+</textarea>
+	
+	<input type="button" id="submit" name="button" Value="Run" onClick="process()" />
+	<label id="visbox"><input type="checkbox" name="button" value="true" id="visualize" checked="true" autocomplete="off"/>Generate sequence alignment visualization</label>
+	
+	</div>
+	
+	<div id="instructions">
+	<h3>Instructions</h3>
+	<p>To compare two different alignments of the same set of sequences please paste both alignments in <a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA format</a> into the corresponding input boxes.  Sequence identifiers must be consistent between alignments and ideally short to make visualization more convenient.</p>
+	<p>By default, this tool will calculate the distance between alignments using three distance metrics: <em>symmetrized sum-of-pairs</em>, <em>simple homology distance</em> and <em>homology distance with position-labelled gaps</em>. To also calculate <em>homology distance with tree-labelled gaps</em>, provide a <a href="http://en.wikipedia.org/wiki/Newick_format">Newick tree</a> containing all sequences in the alignments. 
+	<p>Running this tool on large alignments may cause the browser to become unresponsive for a few seconds while calculations are performed and the visualization is being generated. If this is an issue and visualization of results is not required, please uncheck the <em>Generate sequence alignment visualization</em> option.</p>
+	<p>The distance metrics calculated by this tool are described in <cite> Blackburne, B.P. and Whelan, S. Measuring the distance between multiple sequence alignments <em>Bioinformatics</em>, (2012) <strong>28</strong>(4): 495-502 (<a href="http://dx.doi.org/10.1093/bioinformatics/btr701">doi:10.1093/bioinformatics/btr701</a>)</cite>.</p>
+	</div>
+	
+	
+	
+	
+	
+</body>
+
+</html>
