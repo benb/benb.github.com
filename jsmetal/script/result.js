@@ -3,27 +3,15 @@
 //Returns a <div/> for each homology type, containing the sequences where each non-gap character
 //belongs to a CSS class specifying its distance value between 0 and 255.
 
-function colouredSequenceMaker(charDist,alignment,alignmentID){
+function sequenceMaker(alignment,alignmentID){
 	
-	var $sequenceDiv = [];
-	for(var homType = 0; homType<charDist.length;homType++){
 		
-		$sequenceDiv[homType] = $("<div/>").attr("id",alignmentID+"_seqs").addClass("seqs");;
-		
-		var $colouredSeqDivs = [];
-		//character distances converted to a value between 0 and 255, for use in CSS styling
-		var eightBitDistances = [];
-		for(var i=0;i<G.sequenceNumber;i++){
-			eightBitDistances[i]=[];		
-				for(var k=0;k<charDist[homType][i].length;k++){
-					eightBitDistances[i][k] = Math.round(255*charDist[homType][i][k]);
-				}
-		}
+		$sequenceDiv = $("<div/>").attr("id",alignmentID+"_seqs").addClass("seqs");
 		
 		//array of jquery <div/>s for each sequence
 		for(var i=0;i<G.sequenceNumber;i++){
 	
-			$colouredSeqDivs[i] = $("<div/>").addClass("seq_"+i);
+			$colouredSeqDivs = $("<div/>").addClass("seq_"+i);
 					
 			//index for non-gap characters
 			var k=0;
@@ -34,21 +22,89 @@ function colouredSequenceMaker(charDist,alignment,alignmentID){
 							
 				//only non-gap characters have an identity
 				if (alignment[i].content[j] != "-") {
-					$character.attr("id",alignmentID+"_"+i+"_"+k).addClass("dist"+eightBitDistances[i][k]);
-					$character.attr("title",Math.round(charDist[homType][i][k]*1000000)/1000000);
+					$character.attr("id",alignmentID+"_"+i+"_"+k);
 					k++;
 				}
-						
-				$colouredSeqDivs[i].append($character);
+				$colouredSeqDivs.append($character);
 			}
 		
-			$sequenceDiv[homType].append($colouredSeqDivs[i]);
+			$sequenceDiv.append($colouredSeqDivs);
+		}
+	
+		
+
+	return $sequenceDiv;
+}
+
+function colouredCSSMaker(charDist,alignment,alignmentID){
+	
+	var $sequenceDiv = [];
+	for(var homType = 0; homType<charDist.length;homType++){
+		
+		$sequenceDiv[homType] = [];
+		
+		var $colourF = [];
+		//character distances converted to a value between 0 and 255, for use in CSS styling
+		var eightBitDistances = [];
+		for(var i=0;i<G.sequenceNumber;i++){
+			eightBitDistances[i]=[];		
+                        for(var k=0;k<charDist[homType][i].length;k++){
+                                eightBitDistances[i][k] = Math.round(255*charDist[homType][i][k]);
+                        }
+		}
+		
+		//array of jquery <div/>s for each sequence
+		for(var i=0;i<G.sequenceNumber;i++){
+	
+			$colourF[i] = [];
+					
+			//index for non-gap characters
+			var k=0;
+			
+			for(var j = 0;j<alignment[i].content.length;j++){
+                                        if (alignment[i].content[j] != "-"){
+                                                $character = [ eightBitDistances[i][k], Math.round(charDist[homType][i][k]*1000000)/1000000];
+                                                k++;
+                                        }else {
+                                                $character=null;
+                                        }
+				$colourF[i].push($character);
+			}
+		
+			$sequenceDiv[homType].push($colourF[i]);
 		}
 	
 		
 	}
 
 	return $sequenceDiv;
+}
+function applyCSS(alignment,cssData){
+        var i=0; 
+        _.each($(alignment).children("div"),function(x){
+                var j=0;
+                _.each($(x).contents(".clickable"),function(y){
+                        if (cssData[i][j]){
+                                var target = $(y);
+                                //remove old dist classes
+                                _.chain(target.attr("class").split(' ')).filter(function(x){return (x.substring(0,4)=="dist")}).each(function(x){ target.removeClass(x)});
+                                target.addClass("dist"+cssData[i][j][0]);
+                                target.attr("title",cssData[i][j][1]);
+                        }
+                        j++;
+                });
+                i++;
+        });
+        return alignment;
+}
+
+function colouredSequenceMaker(charDist,alignment,alignmentID){
+	
+        var aln = sequenceMaker(alignment,alignmentID);
+        var colourFs = colouredCSSMaker(charDist,alignment,alignmentID);
+        //var colourFs = [1,2,3,4]; 
+        return [aln,colourFs];
+
 }
 
 
@@ -64,8 +120,13 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 	
 	for(i=0;i< G.sequenceNumber;i++){
 		//populate name
-		$alnA_NamesDiv.append("<div>"+alnA[i].name+"</div>");
-		$alnB_NamesDiv.append("<div>"+alnB[i].name+"</div>");
+                if (i%2==0){
+                        $alnA_NamesDiv.append("<div class='name0'>"+alnA[i].name+"</div>");
+                        $alnB_NamesDiv.append("<div class='name0'>"+alnB[i].name+"</div>");
+                }else {
+                        $alnA_NamesDiv.append("<div class='name1'>"+alnA[i].name+"</div>");
+                        $alnB_NamesDiv.append("<div class='name1'>"+alnB[i].name+"</div>");
+                }
 	}
 	
 	$alnA_NamesDiv.append($("<div>&nbsp;</div>").css("height", scrollbarWidth()));
@@ -74,8 +135,13 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 	//scrollGroup <div/>s serve to allow syncronized vertical scrolling
 	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnASequences).attr("id","alnA_scroll");
 	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBSequences).attr("id","alnB_scroll");
+        var $between=$("<span />").attr("id","alnA_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right");
+        $between = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($between);
+
+        var $end=$("<span />").attr("id","alnB_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right");
+        $end = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($end);
 	
-	$visualiserDiv.append($alnA_scrollGroup,$alnB_scrollGroup);
+	$visualiserDiv.append($alnA_scrollGroup,$between,$alnB_scrollGroup,$end);
 	
 	return $visualiserDiv;
 	
@@ -109,21 +175,24 @@ function makeOutput(distances,homType,alnA){
 function makeOutput(distances,homType,alnA){
 	var $outputTable1=$("<table/>").attr("id","output");
 	var $outputTable2=$("<table/>").attr("id","output");
+
+	var roundedAlnDistance=Math.round((distances.alignment[homType]*1000000))/1000000;
 	
 	if(G.visualize){
-		var $charDistTR=$("<tr/>");
-		var $charDistText=$("<td />").append("Distance for focused character");
-		var $charDistValue=$("<td />").attr("id","charDist").css("font-weight","bold");
-		$charDistTR.append($charDistText);
-		$charDistTR.append($charDistValue);
-		
+                var $charDistTR=$("<tr />");
+		$charDistTR.append($("<td />").append("Alignment distance:"));
+                $charDistTR.append($("<td />").attr("id","alnDist").text(roundedAlnDistance));
+
+		$charDistTR.append($("<td />").append("Distance for focused character:"));
+                $charDistTR.append($("<td />").attr("id","charDist").css("font-weight","bold"));
+
 		$outputTable1.append($charDistTR);
 	}
 	
-	var $alnDistTR=$("<tr/>");;
-	var $alnDistText=$("<td/>").append("Alignment distance");
-	var roundedAlnDistance=Math.round((distances.alignment[homType]*1000000))/1000000;
-	var $alnDistValue=$("<td/>").attr("id","alnDist").text(roundedAlnDistance);
+	var $alnDistTR=$("<tr/>");
+
+        var $alnDistValue=$("<td />").attr("id","alnDist").text(roundedAlnDistance);
+        var $alnDistText=$("<td />").append("Alignment distance");
 	$alnDistTR.append($alnDistText);
 	$alnDistTR.append($alnDistValue);
 
@@ -168,6 +237,55 @@ function makeRawCharDist(distances,homType,alnA){
 		$charDist.push(charDistString);
 	}
 	return $charDist;
+}
+function makeRawColumnDist(distances,homType,alnA){
+        var $colDist=[];
+        for (var i=0; i < alnA[0].content.length; i++){
+                $colDist[i]=0.0;
+        }
+        for (var j=0; j < alnA.length; j++){
+                var id=0;
+                var seq=alnA[j].content
+                for (var i=0; i < seq.length; i++){
+                        if (seq[i]!="-"){
+                                $colDist[i]+=distances.character[homType][j][id]/alnA.length;
+                                id++;
+                        }
+                }
+        }
+
+        
+        return $colDist;
+}
+function makeVisualColumnDist(distance,homType,alnA,alnAView,target,width){
+        var colDist = makeRawColumnDist(distance,homType,alnA);
+        applyColumnDist(colDist,alnAView,target,width);
+}
+function applyColumnDist(colDist,alnAView,target,width,clickReceiver){
+        var left = alnAView.scrollLeft();
+        var totalWidth = alnAView[0].scrollWidth;
+        var visibleWidth = alnAView.width();
+        totalChars = colDist.length + padChars*2;
+        var fractionStart = Math.floor(((left/totalWidth)*totalChars));
+        fractionStart=fractionStart-padChars;
+        if (fractionStart<0){fractionStart=0};
+        var fractionEnd = Math.floor(((left+visibleWidth)/totalWidth * totalChars));
+        fractionEnd=fractionEnd-padChars;
+        if (fractionEnd>colDist){fractionEnd=colDist};
+        var map=[];
+        for (var i=0; i < fractionStart; i++){
+                map.push("blue");
+        }
+        for (var i=fractionStart; i<fractionEnd; i++){
+                map.push("red");
+        }
+        for (var i=fractionEnd; i<colDist.length; i++){
+                map.push("blue");
+        }
+        target.css("width",width+"px");
+        barWidth=(width / colDist.length) - 2;
+        //console.log(barWidth);
+        target.sparkline(colDist,{type:'bar',height:"30px",chartRangeMax:1.0,barWidth:barWidth,barSpacing:2,colorMap:map});
 }
 
 

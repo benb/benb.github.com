@@ -73,20 +73,20 @@ function parser(alignmentString,alnName) {
 // in a sequence is indexed as "1" if the first character is a gap it's indexed as "0".
 // Labelling format is "iXindex", where i is the sequence number and X is the character or gap.
 
-function labeller(alignment,tree,doEvo){	
+function labeller(alignment,tree,doEvo,seqNum){	
 	var index;
 	var nextLabel;
 	var gapsHere=[];
-	for(var i =0; i<G.sequenceNumber;i++){
+	for(var i =0; i<seqNum;i++){
 		alignment[i].labeledContent=[];
 	}
 	
 	if(doEvo){
-		evoLabeller(alignment,tree);
+		evoLabeller(alignment,tree,seqNum);
 	
 	}
 	
-	for(var i =0; i<G.sequenceNumber;i++){
+	for(var i =0; i<seqNum;i++){
 		alignment[i].labeledContent[SSP] = [];
 		alignment[i].labeledContent[SIM] = [];
 		alignment[i].labeledContent[POS] = [];
@@ -133,18 +133,20 @@ function labeller(alignment,tree,doEvo){
 	}
 	//return gapsHere;
 }
-function nameLookup(alignment){
+function nameLookup(alignment,seqNum){
 	names=new Object();
-	for(var i =0;i<G.sequenceNumber;i++){
+	for(var i =0;i<seqNum;i++){
 		names[alignment[i].name]=i;
 		
 	}
 	return names;
 }
 
-function evoLabeller(alignment,tree){
+function evoLabeller(alignment,tree,seqNum){
+
+        var names = nameLookup(alignment,seqNum);
 	
-	for(var i=0;i<G.sequenceNumber;i++){
+	for(var i=0;i<seqNum;i++){
 	
 		alignment[i].labeledContent[EVO]=[];
 
@@ -153,7 +155,7 @@ function evoLabeller(alignment,tree){
 	for(var j=0;j<alignment[0].content.length;j++){
 		gapMemory = [];
 		
-		for(var i=0;i<G.sequenceNumber;i++){
+		for(var i=0;i<seqNum;i++){
 			
 			if(alignment[i].content[j] == "-"){
 				gapMemory.push(alignment[i].name);
@@ -168,7 +170,7 @@ function evoLabeller(alignment,tree){
 			splits=tree.splitsFor(gapMemory);
 			for(var k=0;k<gapMemory.length;k++){
 				
-				alignment[G.names[gapMemory[k]]].labeledContent[EVO][j]=splits[gapMemory[k]].toString();
+				alignment[names[gapMemory[k]]].labeledContent[EVO][j]=splits[gapMemory[k]].toString();
 			}
 					
 		}

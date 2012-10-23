@@ -9,7 +9,7 @@
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center,dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%;	font: inherit; vertical-align: baseline; } article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {	display: block;} body { line-height: 1; } ol, ul { list-style: none; } blockquote, q { quotes: none; } blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; } table { border-collapse: collapse; border-spacing: 0; } 
 
 /** Base Body Styles **/
-body{ background:#ddd; color:#000; font:14px Arial, Helvetica, "Trebuchet MS", sans-serif;}
+body{ background:#ddd; color:#000; font-family: 'Vollkorn', serif; }
 
 h1,h2,h3,h4,h5,h6{ font-weight:bold; }
 h1{ font-size:30px;}
@@ -37,30 +37,33 @@ a:hover { color: #036; }
  */
 
 #visualiser{
-	white-space:nowrap;width:100%;margin-right:5px;margin-left:5px;height:auto;overflow:hidden;font-size:12px;
-	background-color: white;
+	white-space:nowrap;margin-right:1%;margin-left:1%;height:auto;overflow:hidden;font-size:12px;
+	background-color: transparent;
 	border-style:dotted;
 	border-width:2px;
 	border-color:black;
+        width:98%;
 }
 
 #chardists{
 	white-space:nowrap;width:auto;margin:0px;height:auto;overflow:scroll;font-size:12px;
 	background-color: white;
-	font-family:monospace;
+	font-family:'Inconsolata', 'Consolas', monospace;
 	border-style:dotted;
 	border-width:2px;
 	border-color:black;
 }
 
 #header{
-	padding:10px;
+	padding:20px;
+        padding-bottom:2px;
+        padding-top:4px;
 	font-size:20px;
-	font-weight:bold;
+        font-family: 'Cabin', sans-serif;
+        font-weight: bold;
 	height: 2 em;
 	line-height:2em;
-	background-color: gold;
-	border-style:ridge;
+	background-color: rgb(214,171,92);
 	border-width:5px;
 }
 #progname{
@@ -71,7 +74,7 @@ a:hover { color: #036; }
 textarea.alnInput{	
 	overflow:scroll; 
 	white-space:nowrap; 
-	font-family:monospace;
+	font-family:'Inconsolata', 'Consolas', monospace;
 	width:99%;
 	resize: none; 
 }
@@ -115,7 +118,7 @@ padding:0.25em;
 }
 
 div.names{
-	font-family: monospace;
+	font-family: 'Inconsolata', 'Consolas', monospace;
 	overflow: hidden;
 	width:10em;
 	height:20em;
@@ -123,6 +126,7 @@ div.names{
 
 	text-overflow: ellipsis;
 	float:left;
+        background:white;
 	/*float:left;margin-left:2px; padding-left:.5em; border-right:1px solid gray; width:170px;overflow:hidden;line-height:120%;font-family:monospace; */
 	
 }
@@ -132,17 +136,43 @@ div.seqs{
 	/*overflow-y:auto; */
 	height:20em;
 	white-space:nowrap; 
-	font-family:monospace; 
+	font-family: 'Inconsolata', 'Consolas', monospace; 
 	/*padding-top:10px;*/
 	width:auto;
+        background:white;
 	/*white-space:nowrap;width:auto;margin:0px;overflow:auto;white-space:nowrap;width:auto;margin:0px;height:auto;overflow:auto;line-height:120%;font-family:monospace; */
 
 	
 }
-div.seqs span{padding-left: 10px; padding-right:10px;}
+div.seqs span{
+        padding-left: 10px; padding-right:10px;
+}
 span.centralChar{border-left:5px solid black; border-right:5px solid black;padding-left: 5px !important; padding-right:5px !important;}
 .padding {padding-left: 10px; padding-right:10px;}
 
 span.clickable {cursor: pointer;}
 
 span.clickable:hover{background-color:rgba(0,0,0,1) !important; color:white;opacity:1.0}
+.ui-dialog-titlebar-close {
+        visibility: hidden;
+}
+#dialog{
+        text-align:center;
+}
+#dspinner{
+        padding-left:50%;
+        padding-top:3em;
+}
+
+#alnA_scroll{
+}
+#homologyPanel{
+        margin-left:1em;
+        margin-right:1em;
+        margin-top:0.5em;
+        margin-bottom:0.5em;
+}
+
+.name1{
+        background-color:#EEE;
+}

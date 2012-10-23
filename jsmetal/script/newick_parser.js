@@ -9,11 +9,22 @@ Node.prototype.isLeaf=function(){
         return ((typeof this.children) === 'undefined' || this.children.length==0);
 }
 Node.prototype.descendents=function(){
-        if (this.isLeaf()){
-                return [this.name];
-        }else {
-                return this.children.map(function(x){return x.descendents()}).reduce(function(x,y,a,b){return x.concat(y)})
+        try{
+                var stack;
+                stack = nodeList(this);
+                var desc=[];
+                for (i=0; i < stack.length; i++){
+                        if (stack[i].isLeaf()){
+                                desc.push(stack[i].name);
+                        }
+                }
+                return desc;
+        }catch (e){
+                throw("WTF!");
         }
+
+        //    var desc= _.filter(stack,function(x){return x.isLeaf()});
+        //        return _.map(desc,function(x){return x.name});
 }
 Node.prototype.splitsFor=function(gap_leaves){
         if (this.isRoot()){
@@ -28,46 +39,77 @@ Node.prototype.splitsFor=function(gap_leaves){
 //to a node that represents the split where the 1<->0 transition responsible for
 //the leaf node state, iff the leaf node is in the 0 state.
 function splitsForRoot(root,gap_leaves){
-        var ans=splitsFor(root,gap_leaves);
+        var ans=splitsForX(root,gap_leaves);
         return _.reduce(ans,function(h,kv){h[kv[0]]=kv[1]; return h;},new Object()) 
 }
 //returns an array of format [[leaf_name,node],[leaf_name,node]..]
 //where leaf_name is one of the names specified in gap_leaves
 //and node is the ancestral location of the 1<->0 transition that 
 //left this node in state 0 inferred by Dollo parsimony.
-function splitsFor(node,gap_leaves){
-        if (node.isRoot()){
-                var allgappedchildren = _.filter(node.children,function(x){return _.isEmpty(_.difference(x.descendents(),gap_leaves))});
-                if (allgappedchildren.length==2){
-                        //handle special case of root
-                        alldesc = _.chain(allgappedchildren).map(function(x){return x.descendents()}).flatten(true).value();
-                        left = _.chain(allgappedchildren).map(function(x){return x.descendents()}).flatten(true).map(function(x){return [x,alldesc]}).value();
-                        remaining = _.difference(node.children,allgappedchildren)[0];
-                        return left.concat(splitsFor(remaining,gap_leaves));
-                }
 
-        }
-        var desc=node.descendents();
-        if (node.isLeaf()){
-                if (_.include(gap_leaves,desc[0])){
-                        return [[desc[0],desc]];
-                }else {
-                        return [];
-                }
-        }else {
-                if (_.isEmpty(_.difference(desc,gap_leaves))){
-                        //all my descendents are gaps
-                        return _.map(desc,function(x){return [x,desc]});
-                }else {
-                        //I have non-gap descendents, so go down the tree
-                        return _.chain(node.children).map(function(x){return splitsFor(x,gap_leaves)}).flatten(true).value();
-                }
-        }
 
+function splitsForX(root,gap_leaves){
+        var goodNodes = new Object();
+        var gapL = new Object();
+        var descNames = new Object();
+        var stack = nodeList(root).reverse();
+        _.each(stack,function(x){
+                var a;
+                        a = x.descendents();
+                try{
+                        descNames[x.id]=a;
+                }catch(e){
+                        throw(a);
+                }
+        });
+        _.each(gap_leaves,function(x){
+                gapL[x]=1;
+        });
+
+        for (var i=0; i < stack.length; i++){ 
+                var node = stack[i];
+                if (!node.children || node.children.length==0){
+                        if (gapL[node.name]==1){
+                                goodNodes[node.id]=1;
+                        }
+                }else {
+                        var good=true;
+                        
+                        _.each(node.children,function(x){
+                                if (!goodNodes[x.id]){
+                                        good=false;
+                                }
+                        });
+                        if (good){
+                                _.each(node.children,function(x){
+                                        delete goodNodes[x.id];
+                                });
+                                goodNodes[node.id]=1;
+                        }
+
+                }
+        }
+        var ans = [];
+        var finNodes = _.filter(stack,function(x){
+                return goodNodes[x.id];
+        });
+
+        _.each(finNodes,function(x){
+                //special handling for root
+                var desc = descNames[x.id];
+                if (x.parent.id==root.id){
+                        firstLevel =  _.chain(goodNodes).keys.filter(function(y){return (y.parent==root && x!=y)}).value();
+                        while (firstLevel.length>0){
+                                desc=desc.concat(descNames[firstLevel.pop().id]);
+                        }
+                }
+                //make the list
+                _.each(desc,function(x){
+                        ans.push([x,desc]);
+                });
+        });
+        return ans;
 }
-
-
-
 
 
 
@@ -118,23 +160,23 @@ function parseNewickString(newick_string){
 	temp.parents = new Array();	//a FILO stack to remeber the parent nodes
 	
 	//calling the function that decides what to do for each character.
-	var nodesArray = recursiveParse(null,newick_string);
+	var nodesArray = basicParse(newick_string);
 	delete temp;
 	return nodesArray;
 }
 		
-// recursiveParse
-// The true parser. It's called recursively and takes the array of nodes (except the first time it's called) and the string to parse.
+// The true parser. Takes the string to parse.
 
-function recursiveParse(nodes,newick_string){
+function basicParse(newick_string){
 	//check if this is the first call, if so declare 'nodes'
 	if(nodes == null) {
 		var nodes = new Array();	
 	}
 	
 	//look at the current character, decide what to do
+        while(newick_string[temp.cursor]!=";"){
 	switch(newick_string[temp.cursor])
-	{
+	   {
 		
 		case "(":
 			temp.cursor++;
@@ -142,13 +184,10 @@ function recursiveParse(nodes,newick_string){
 			break;		
 		case ",":
 			temp.cursor++; 
-			recursiveParse(nodes,newick_string); //recursion	
 			break;		
 		case ")":
 			temp.parents.pop(); //forget latest parent
-			
 			temp.cursor++;
-			recursiveParse(nodes,newick_string); //recursion	
 			break;
 		case ";":
 			//we're done here
@@ -156,14 +195,15 @@ function recursiveParse(nodes,newick_string){
 		
 		default:
 			//get the name.
-			var name = newick_string.substring(temp.cursor).match("^[0-9A-Za-z_|]+");
+			var name = newick_string.substring(temp.cursor).match("^[0-9A-Za-z_|/-]+");
 			// some browsers return an array of 1 string instead of a string; this line fixes it.
 			name = name instanceof Array ? name[0] : name;
 			
 			temp.cursor += name.length; 
 			newNode(name,nodes,newick_string); //create a new leaf node
 			break;
-	}
+           }
+        }
 	return nodes;
 }
 
@@ -185,7 +225,6 @@ function newNode(name,nodes,newick_string){
 	}
 
 	temp.index++;
-	recursiveParse(nodes,newick_string); //recursion
 	
 }
 
@@ -222,11 +261,29 @@ function getRoot(nodes){
         }
 }
 
+function nodeList(node){
+        var stack=[];
+        stack.push(node);
+        var pos=0;
+        while (pos < stack.length){
+                if (stack[pos].children){
+                        var children = stack[pos].children;
+                        for (var i=0; i < children.length; i++){
+                                stack.push(children[i]);
+                        }
+                }
+                pos=pos+1;
+        }
+        return stack;
+}
 //enforce a bifurcating tree
 function enforceBi(node){
-        if (node.children){
-                node.children.map(enforceBi);
+        stack=nodeList(node)[0];
+        for (var i=stack.length-1; i >= 0; i--){
+                doEnforceBi(stack[i]);
         }
+}
+function doEnforceBi(node){
         if (node.children){
                 if (node.children.length==2){
                         return;
@@ -280,6 +337,17 @@ function unroot(root){
 function makeTree(nodes){
         var n = getRoot(nodes.map(function(x){return fixNode(nodes,x)}));
         enforceBi(n);
-        return unroot(n);
+        n=unroot(n);
+        return numberNodes(n);
+}
+
+function numberNodes(n){
+        stack = nodeList(n);
+        var id=0;
+        _.each(stack,function(x){
+                x.id=id;
+                id++;
+        });
+        return n;
 }
 

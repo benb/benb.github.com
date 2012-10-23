@@ -7,9 +7,19 @@
 // function getUnion(setA, setB)
 // function tempListMaker(setA,setB)
 
+var SSP = 0;
+var SIM = 1;
+var POS = 2;
+var EVO = 3;
 
 // GETCHARACTERDISTANCE
-function getDistances(homSetsA, homSetsB, doEvo, gapsHere){
+onmessage = function(e){
+        var dat = JSON.parse(e.data);
+        var g = dat.G
+        dist = getDistances(dat.A,dat.B,g.doEvo,dat.gapsHere,g);
+        postMessage(JSON.stringify({"type":"success","distances":dist}));
+}
+function getDistances(homSetsA, homSetsB, doEvo, gapsHere,G){
 	
 	var setSize= G.sequenceNumber - 1;
 	
@@ -66,12 +76,16 @@ function getDistances(homSetsA, homSetsB, doEvo, gapsHere){
 			
 	
 					seqDist[hom][i]+=charDist[hom][i][j];
+
 			}
 			
 			
 			seqDist[hom][i]/= G.origLengths[i];
 			alnDist[hom]+=seqDist[hom][i]*G.origLengths[i];
 			
+                               var message = " metric " + (POS+doEvo-hom+1) + " / " + (POS+doEvo+1)
+                               var message = message  + " :: sequence " + (i+1) + " / " + G.sequenceNumber 
+                               postMessage(JSON.stringify({"type":"intermediate","msg":message}));
 		}
 		
 		alnDist[hom]/=allChars;
@@ -113,7 +127,11 @@ function getDistances(homSetsA, homSetsB, doEvo, gapsHere){
 		
 		seqDist[SSP][i]=1-(seqIntersection/seqUnion);
 		
+                var message = " metric " + (POS+doEvo+1) + " / " + (POS+doEvo+1)
+                var message = message  + " :: sequence " + (i+1) + " / " + G.sequenceNumber 
+                postMessage(JSON.stringify({"type":"intermediate","msg":message}));
 	}
+        postMessage(JSON.stringify({"type":"intermediate","msg":"Finishing distances"}));
 	alnDist[SSP] = 1-(alnIntersection/alnUnion);
 
 		
