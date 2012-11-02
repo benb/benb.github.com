@@ -23,6 +23,18 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js"></script>
 
 
+	<script type="text/javascript" src="webmetal.js"></script>
+
+<!--
+        <script type="text/javascript" src="script/main.js"></script>                                                                                    
+        <script type="text/javascript" src="script/distances.js"></script>                                                                               
+        <script type="text/javascript" src="script/sequence.js"></script>                                                                                
+        <script type="text/javascript" src="script/consistency.js"></script>                                                                             
+        <script type="text/javascript" src="script/result.js"></script>                                                                                  
+        <script type="text/javascript" src="script/homologySets.js"></script>                                                                            
+        <script type="text/javascript" src="script/newick_parser.js"></script>                                                                           
+                                                                    
+-->
         <script>
                 $(document).ready(function() {
 
@@ -49,11 +61,20 @@
 //
 
                         _.each(["#newickFile","#alignment1File","#alignment2File"],function(b){
+                                var target=$(b.replace("File",""));
                                 $(b).kendoUpload({
                                         remove: function(e){
                                                 $(b.replace(/File$/,"")).val("");
                                                 console.log("OK");
-                                        }
+                                        },
+                                        select: function(e){
+                                                console.log("HANDLING FILE");                                                                                                            
+                                                e = e.originalEvent || e;                                                                                                                
+                                                var file = e.files[0].rawFile;                                                                                                            
+                                                console.log(e);                                                                                                                          
+                                                getFile(file,target);                                                                                                                    
+                                        },
+                                        multiple: false
                                 });
 
                         });
@@ -87,9 +108,7 @@
                 });
 
                    </script>
-	
-	<script type="text/javascript" src="webmetal.js"></script>
-
+	       
 
 	<div id="header">
                 <span id="title"><span id="progname"> webMetAl </span> </span>

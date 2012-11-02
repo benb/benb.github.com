@@ -51,9 +51,6 @@ $(function(){
         draganddrop("#alignment2");
         draganddrop("#newick");
         //$("#alignment1File").bind('change',[],["#alignment1"],handleFileSelect); //.addEventListener('change', handleFileSelect, false);
-        $("#alignment2File").bind('change',getHandleFileSelect($("#alignment2"))); 
-        $("#alignment1File").bind('change',getHandleFileSelect($("#alignment1"))); 
-        $("#newickFile").bind('change',getHandleFileSelect($("#newick"))); 
 });
 
 function getHandleFileSelect(target){
@@ -61,7 +58,7 @@ function getHandleFileSelect(target){
                 handleFileSelect(target,e);
         }
         function handleFileSelect(target,e){
-                //console.log("HANDLING FILE");
+                console.log("HANDLING FILE");
                 e = e.originalEvent || e;
                 var file = e.target.files[0];
                 console.log(e);
