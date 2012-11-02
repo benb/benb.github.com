@@ -4,6 +4,9 @@ try{
 }
 //methods on Nodes
 function Node(){
+        if (!(this instanceof Node)){
+                return new Node();
+        }
 }
 
 Node.prototype.isRoot=function(){
@@ -141,12 +144,6 @@ Node.prototype.rootedCopy=function(){
 
 
 var c =0;
-var throwit= function(gap_leaves,ans){
-    //    if (gap_leaves.length==2){
-        if(false){
-                throw(gap_leaves.join(":") + " \n " + ans.join(" - "));
-        }
-}
 
 //Dollo parsimony
 //returns an object that maps from a leaf node name
@@ -154,7 +151,6 @@ var throwit= function(gap_leaves,ans){
 //the leaf node state, iff the leaf node is in the 0 state.
 function splitsForRoot(root,gap_leaves){
         var ans=splitsForX(root,gap_leaves);
-        throwit(gap_leaves,ans);
         return _.reduce(ans,function(h,kv){h[kv[0]]=kv[1]; return h;},new Object()) 
 }
 //returns an array of format [[leaf_name,node],[leaf_name,node]..]

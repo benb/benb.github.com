@@ -8,7 +8,13 @@
 // SEQUENCE
 //Constructor for sequence objects.
 
-function sequence(name,content){
+/**
+ * @constructor
+ */
+function Sequence(name,content){
+        if (!(this instanceof Sequence)){
+                return new Sequence(name,content);
+        }
 	this.name=name;
 	this.content=content;
 }
@@ -59,7 +65,7 @@ function parser(alignmentString,alnName) {
 			G.sequenceType="amino acid";
 		}
 		
-		parsedSequences[i] = new sequence(name,content);
+		parsedSequences[i] = new Sequence(name,content);
 		
 		if(sequenceLength && sequenceLength != parsedSequences[i].content.length){
 			throw "Sequences of differing lengths in "+alnName;
