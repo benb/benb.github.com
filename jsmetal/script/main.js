@@ -19,6 +19,8 @@ var colDistB;
 var sparkLineClickA;
 var sparkLineClickB;
 var homType=2;
+var sparklineDistanceType=true;
+
 
 //Global object (container for a few general features and options that should be easily available)
 var G = {};
@@ -59,7 +61,7 @@ function getHandleFileSelect(target){
                 handleFileSelect(target,e);
         }
         function handleFileSelect(target,e){
-                console.log("HANDLING FILE");
+                //console.log("HANDLING FILE");
                 e = e.originalEvent || e;
                 var file = e.target.files[0];
                 console.log(e);
@@ -141,7 +143,10 @@ function process() {
 	$("#errorBox").css("display","none");
 	
         $("#dialogtext").html("Calculation of homology sets");
-        $("#dialog").dialog("open");
+        dialogBox.center();
+        dialogBox.open();
+      //  $("#dialog").dialog("open");
+        
         dateStamp("end process()")
         _.defer(process1);
 
@@ -166,7 +171,10 @@ function process1(){
                         $("#distanceVisualizationType").html($("#nuc-distanceVisualizationType").html());
                 }
                 $("#nuc-distanceVisualizationType").remove();
-	        $("#distanceVisualizationType").kendoDropDownList();	
+	        $("#distanceVisualizationType").kendoDropDownList({autoBind:true});	
+                //hack:
+                $("#distanceVisualizationType").data("kendoDropDownList").toggle();
+                $("#distanceVisualizationType").data("kendoDropDownList").toggle();
 		alnA.sort(nameSorter);
 		alnB.sort(nameSorter);
 		
@@ -194,7 +202,8 @@ function process1(){
 	{
 		$("#errorBox").html("<b>ERROR: "+e+"</b>");
 		$("#errorBox").fadeIn();
-                $("#dialog").dialog("close");
+                //$("#dialog").dialog("close");
+                dialogBox.close();
 		return;
 	}
 	
@@ -299,7 +308,10 @@ function vis(){
                 }else {
                         $("#evol").remove();
                 }
-                $("#homologyType").kendoDropDownList();
+                $("#homologyType").kendoDropDownList({autoBind:true});
+
+                $("#homologyType").data("kendoDropDownList").toggle();
+                $("#homologyType").data("kendoDropDownList").toggle();
 		$("#distanceVisualizationPanel").css("display","inline");
 		cssCache=[[],[],[],[]];
 		
@@ -320,7 +332,22 @@ function vis(){
 		var $visualiser = makeVisualiser($alnASeqDiv,$alnBSeqDiv,alnA,alnB);
 		
 		$("body").append($visualiser);
-		
+
+                $("#distanceToggle").click(function(){
+                        console.log("CLICK");
+                        sparklineDistanceType=!sparklineDistanceType;
+                        if (sparklineDistanceType){
+                                $(this).html("similarity");
+                        }else{
+                                $(this).html("distance");
+                        }
+                        doRedisplaySparklines();
+                });
+                if (sparklineDistanceType){
+                        $("#distanceToggle").html("similarity");
+                }else {
+                        $("#distanceToggle").html("distance");
+                }
                 applyCSS(alnAF[0],alnAF[1][homType]());
                 applyCSS(alnBF[0],alnBF[1][homType]());
 
@@ -415,7 +442,7 @@ function vis(){
                 var throttleSpeed=200;
 	
                 scrollA=_.debounce(function(ev){
-                        console.log("SCROLL A");
+                    //    console.log("SCROLL A");
                                 var range = visibleRange($("#alnA_seqs"),alnA[0].content.length);
 
                                 central=alnACharacterAt[focusSeq][Math.round($("#alnA_seqs").scrollLeft()/charWidth)];
@@ -432,7 +459,7 @@ function vis(){
                 },throttleSpeed);
 		
                 scrollB=_.debounce(function(ev) { 
-                        console.log("SCROLL B");
+                     //   console.log("SCROLL B");
 			
                                 central=alnBCharacterAt[focusSeq][Math.round($("#alnB_seqs").scrollLeft()/charWidth)];
                                 clickChar();
@@ -452,7 +479,7 @@ function vis(){
                 var distVisHandler = function () {
 			$("#distanceVisualizationType option:selected").each(function () {
 				var visType=$(this).val();
-                                console.log(visType);
+                                //console.log(visType);
                                 $("#seqColour").attr('href','css/'+visType+'.css');
 				
 				});
@@ -461,7 +488,7 @@ function vis(){
 		$("#distanceVisualizationType").change(distVisHandler);
 
 	}
-        _.defer(function(){$("#dialog").dialog("close");});
+        _.defer(function(){dialogBox.close(); });
         _.defer(bindings);
         dateStamp("end vis()")
        	
@@ -471,7 +498,7 @@ function bindings(){
 	$("#homologyType").change(function () {
 			
 			homType=parseInt($(this).val());
-                        console.log("homType " + homType);
+                        //console.log("homType " + homType);
                         updateCurrentHomType();
 			
                         /*
@@ -588,8 +615,9 @@ function recalculateSparklines(){
                 redisplaySparklines = _.throttle(doRedisplaySparklines,1000);
 }
 function doRedisplaySparklines(){
-                applyColumnDist(colDistA,alnADensity,$("#alnA_seqs"),$("#alnA_sparkline"),$("#alnA_seqs").width(),sparkLineClickA);
-                applyColumnDist(colDistB,alnBDensity,$("#alnB_seqs"),$("#alnB_sparkline"),$("#alnB_seqs").width(),sparkLineClickB);
+        console.log("distance " + sparklineDistanceType);
+                applyColumnDist(colDistA,alnADensity,$("#alnA_seqs"),$("#alnA_sparkline"),$("#alnA_seqs").width(),sparklineDistanceType);
+                applyColumnDist(colDistB,alnBDensity,$("#alnB_seqs"),$("#alnB_sparkline"),$("#alnB_seqs").width(),sparklineDistanceType);
 }
 
 

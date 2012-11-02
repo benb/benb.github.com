@@ -130,10 +130,14 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 	//scrollGroup <div/>s serve to allow syncronized vertical scrolling
 	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnASequences).attr("id","alnA_scroll").addClass("scrollbox");
 	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBSequences).attr("id","alnB_scroll").addClass("scrollbox");
-        var $between=$("<span />").attr("id","alnA_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right");
-        $between = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($between);
+        var $between1=$("<button class='k-button' id='distanceToggle' />");
+        $between1.css("height","30px").css("font-size","14px").css("margin-top","7px");
+        var $between2=$("<span />").attr("id","alnA_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right").css("padding-top","5px");
+        var $between = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($between1).append($between2);
 
-        var $end=$("<span />").attr("id","alnB_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right");
+        $between1.html("distance");
+
+        var $end=$("<span />").attr("id","alnB_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right").css("padding-top","5px");
         $end = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($end);
 	
 	$visualiserDiv.append($alnA_scrollGroup,$between,$alnB_scrollGroup,$end);
@@ -268,37 +272,58 @@ function visibleRange(alnAView,columns){
         var fractionEnd = Math.floor(((left+visibleWidth)/totalWidth * totalChars));
         fractionEnd=fractionEnd-padChars;
         if (fractionEnd>columns){fractionEnd=columns};
+        if (fractionStart<0){fractionStart=0};
         return [fractionStart,Math.floor((fractionStart+fractionEnd)/2),fractionEnd];
 }
-function applyColumnDist(colDist,density,alnAView,target,width,clickReceiver){
+function applyColumnDist(colDist,density,alnAView,target,width,invert){
         var range = visibleRange(alnAView,colDist.length)
         var fractionStart=range[0];
         var fractionEnd=range[2];
         var normal=[];
         var highlight=[];
-        for (var i=0; i < fractionStart-1; i++){
+
+        var normalD=[];
+        var highD=[];
+        for (var i=0; i < fractionStart; i++){
                 normal.push(colDist[i]);
                 highlight.push(null);
+                normalD.push(density[i]);
+                highD.push(null);
         }
-                normal.push(colDist[fractionStart-1]);
-                highlight.push(colDist[fractionStart-1]);
-        for (var i=fractionStart; i<fractionEnd-1; i++){
+                normal.push(colDist[fractionStart]);
+                highlight.push(colDist[fractionStart]);
+                normalD.push(density[fractionStart]);
+                highD.push(density[fractionStart]);
+        for (var i=fractionStart+1; i<fractionEnd-1; i++){
                 highlight.push(colDist[i]);
                 normal.push(null);
+                highD.push(density[i]);
+                normalD.push(null);
         }
                 normal.push(colDist[fractionEnd-1]);
                 highlight.push(colDist[fractionEnd-1]);
+                highD.push(density[fractionEnd-1]);
+                normalD.push(density[fractionEnd-1]);
 
         for (var i=fractionEnd; i<colDist.length; i++){
                 normal.push(colDist[i]);
                 highlight.push(null);
+                normalD.push(density[i]);
+                highD.push(null);
         }
         target.css("width",width+"px");
         barWidth=Math.max((width / colDist.length),1);
-        console.log(width + " " + colDist.length + " " + barWidth);
-        target.sparkline(normal,{height:"30px",chartRangeMax:1.0,width:width,fillColor:'blue',lineColor:false,disableTooltips:true,disableHighlight:true});
-        target.sparkline(highlight,{chartRangeMax:1.0,composite:true,lineColor: 'red', fillColor:'red',disableTooltips:true,disableHighlight:true});
-        target.sparkline(density,{composite:true,lineColor: 'black',fillColor:false,disableTooltips:true,disableHighlight:true});
+        console.log("INVERT? " + invert);
+        if (invert){
+                for (var i=0; i < colDist.length; i++){
+                        if (normal[i]!=null){normal[i]=density[i]-normal[i];}
+                        if (highlight[i]!=null){highlight[i]=density[i]-highlight[i];}
+                }
+        }
+        target.sparkline(normalD,{width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",lineColor: '#444444',fillColor:'#444444',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        target.sparkline(highD,{composite:true,width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",lineColor: 'black',fillColor:'black',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        target.sparkline(normal,{composite:true,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",chartRangeMax:1.0,width:width,fillColor:'#6c8be9',lineColor:false,disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        target.sparkline(highlight,{width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",composite:true,lineColor: false, fillColor:'blue',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
 }
 
 

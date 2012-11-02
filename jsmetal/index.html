@@ -16,7 +16,6 @@
         <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 
-                <link rel="stylesheet" type="text/css" href="http://cdn.wijmo.com/themes/aristo/jquery-wijmo.css"/>
 
 
 
@@ -32,21 +31,32 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
 
 
         <script>
                 $(document).ready(function() {
-                    $("#dialog").dialog({
-                        autoOpen: false,
-                        show: "fade",
-                        hide: "fade",
-                        modal: true,
-                        draggable: false,
-                        closeOnEscape: false,
-                        resizable: false
-                     });
 
+                        $("#dialog").kendoWindow({                                                                                                                              
+                                actions:[],                                                                                                                                     
+                                draggable:false,                                                                                                                                
+                                height:"150px",                                                                                                                                 
+                                modal: true,                                                                                                                                    
+                                resizable: false,                                                                                                                               
+                                title: "Please wait...",                                                                                                                        
+                                width: "300px",                                                                                                                                 
+                                visible: false                                                                                                                                  
+                        });                                                                                                                                                     
+                        dialogBox=$("#dialog").data("kendoWindow");   
+                        //                    $("#dialog").dialog({
+//                        autoOpen: false,
+//                        show: "fade",
+//                        hide: "fade",
+//                        modal: true,
+//                        draggable: false,
+//                        closeOnEscape: false,
+//                        resizable: false
+//                     });
+//
 
                         _.each(["#newickFile","#alignment1File","#alignment2File"],function(b){
                                 $(b).kendoUpload({
@@ -145,7 +155,7 @@
 
 
                         <div style="display:inline;">
-                                <button type="button" class="k-button" name="button" id="showCharDists">Distances per character (as CSV)</button>
+                                <button type="button" class="k-button" name="button" id="showCharDists">Distances per character</button>
                                 <button type="button" class="k-button" name="button" id="showSeqDists">Distances per sequence</button>
                                 <button type="button" class="k-button" name="button" id="consensus">Strict consensus alignment</button>
                         </div>
