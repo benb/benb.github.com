@@ -2,14 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+        <link rel="stylesheet" href="http://cdn.kendostatic.com/2012.2.710/styles/kendo.common.min.css">
+        <link rel="stylesheet" href="http://cdn.kendostatic.com/2012.2.710/styles/kendo.default.min.css">
+
+	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 	
-	<link rel="stylesheet" type="text/css" id="seqColour" href="./nucleotide.css" /> 
-        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css"/>
+	<link rel="stylesheet" type="text/css" id="seqColour" href="" /> 
+        <!--     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css"/> -->
+        
         <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,400' rel='stylesheet' type='text/css'>
 
         <link href='http://fonts.googleapis.com/css?family=Cabin:400,600,400italic,600italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+                <link rel="stylesheet" type="text/css" href="http://cdn.wijmo.com/themes/aristo/jquery-wijmo.css"/>
 
 
 
@@ -21,26 +28,40 @@
 </head>
 <body> 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+        <script src="http://cdn.kendostatic.com/2012.2.710/js/kendo.all.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+
 
         <script>
-                $(function() {
-                        $( "#dialog" ).dialog({
-                                autoOpen: false,
-                                show: "fade",
-                                hide: "fade",
-                                modal: true,
-                                draggable: false,
-                                closeOnEscape: false,
-                                resizable: false
+                $(document).ready(function() {
+                    $("#dialog").dialog({
+                        autoOpen: false,
+                        show: "fade",
+                        hide: "fade",
+                        modal: true,
+                        draggable: false,
+                        closeOnEscape: false,
+                        resizable: false
+                     });
+
+
+                        _.each(["#newickFile","#alignment1File","#alignment2File"],function(b){
+                                $(b).kendoUpload({
+                                        remove: function(e){
+                                                $(b.replace(/File$/,"")).val("");
+                                                console.log("OK");
+                                        }
+                                });
+
                         });
                 });
         </script>
         <script>
-                                $(function() {
+
+                $(function() {
 
                 var opts = {
                         lines: 13, // The number of lines to draw
@@ -61,25 +82,28 @@
                         visability: true
                 };
                 var spinner = new Spinner(opts).spin();
-                console.log(spinner);
+                //console.log(spinner);
                 $("#dspinner").html(spinner.el);
                 });
-        </script>
+
+                   </script>
 	
 	<script type="text/javascript" src="script/main.js"></script>
 	<script type="text/javascript" src="script/distances.js"></script>
 	<script type="text/javascript" src="script/sequence.js"></script>
 	<script type="text/javascript" src="script/consistency.js"></script>
 	<script type="text/javascript" src="script/result.js"></script>
+	<script type="text/javascript" src="script/homologySets.js"></script>
 	<script type="text/javascript" src="script/newick_parser.js"></script>
+	<script type="text/javascript" src="script/msgpack.js"></script>
 
         <script type="text/javascript" src="https://raw.github.com/eriwen/javascript-stacktrace/master/stacktrace.js"></script>
 		
 
 	<div id="header">
                 <span id="title"><span id="progname"> webMetAl &mdash;</span> MetAl alignment distance metrics in pure JavaScript </span>
-                <span style="float:right;"><button onClick="if(confirm('Really reset?')){window.location.reload(false);}">Reset</button></span>
-                <span style="float:right;"><button onClick="window.open('faq.html','faq','status=1');">Help</button></span>
+                <span style="float:right;"><button class="k-button" onClick="if(confirm('Really reset?')){window.location.reload(false);}" id="reset"><span class="k-icon k-i-refresh"></span>Reset</button></span>
+                <span style="float:right;"><button class="k-button" onClick="window.open('faq.html','faq','status=1');" id="help">Help</button></span>
 
 	</div>
 	<div id="errorBox" style="padding: 10px; background-color: #FF4444; text-align: center; color: white; display: none;">
@@ -96,25 +120,34 @@
 	
 	<div id="controlPanel" style="display:none;">
 		<div id="homologyPanel" style="display:inline; float:left;">
-			<p style="display:inline;">Distance: 
-			<select name="homologyType" id="homologyType" autocomplete="off">
-				<option name="homologyOption" id="ssp" value="0">SSP</option>
-				<option name="homologyOption" id="simple" value="1">seq</option>
-				<option name="homologyOption" id="pos" value="2" selected="selected">pos (recommended)</option>
+			<p style="float:left;">Distance: 
+			<select name="homologyType" id="homologyType" style="width:150px">
+				<option name="homologyOption" id="ssp" value="0" disabled>SSP</option>
+				<option name="homologyOption" id="simple" value="1" disabled>seq</option>
+				<option name="homologyOption" id="pos" disabled="disabled" value="2" selected="selected">pos (recommended)</option>
 				<option name="homologyOption" id="evol" disabled="disabled" value="3" />(no Newick tree provided)</option>
 			</select></p>
-                        <div id="distanceVisualizationPanel" style="display:none; float:left;">
-                                <p>Colour scheme: 
-                                <select name="distanceVisualizationType" id="distanceVisualizationType" autocomplete="off">
-                                        <option name="distanceVisualizationOption" id="diffOpacity" selected="selected" value="1" >Taylor (Fade close)</option>
-                                        <option name="distanceVisualizationOption" id="sameOpacity" value="0">Taylor (Fade distant)</option>
-                                        <option name="distanceVisualizationOption" id="noDistance" value="2">Taylor colours (distances not shown)</option>
-                                        <option name="distanceVisualizationOption" id="redfade" value="3" >White &rarr;  Red</option>
+                                <p style="float:left;">Colour scheme: 
+                                <select name="distanceVisualizationType" id="distanceVisualizationType" autocomplete="off" style="width:200px">
+                                        <option name="distanceVisualizationOption" value="taylor-fade-close" selected="selected"  >Taylor (Fade close)</option>
+                                        <option name="distanceVisualizationOption" value="taylor-fade-distant" >Taylor (Fade distant)</option>
+                                        <option name="distanceVisualizationOption" value="taylor" >Taylor</option>
+                                        <option name="distanceVisualizationOption" value="redfade"  >White &rarr; Red</option>
+                                        <option name="distanceVisualizationOption" value="hydrophobicity-fade-close"  >Hydrophobicity (Fade close)</option>
+                                        <option name="distanceVisualizationOption" value="hydrophobicity-fade-distant" >Hydrophobicity (Fade distant)</option>
+                                </select>
+                                <select name="nuc-distanceVisualizationType" id="nuc-distanceVisualizationType" autocomplete="off" style="width:200px;display:none;">
+                                        <option name="distanceVisualizationOption" value="redfade"  >White &rarr; Red</option>
+                                        <option name="distanceVisualizationOption" value="nucleotide-fade-close" >Nucleotide (Fade close)</option>
+                                        <option name="distanceVisualizationOption" value="nucleotide-fade-distant" >Nucleotide (Fade distant)</option>
+                                        <option name="distanceVisualizationOption" value="nucleotide" >Nucleotide</option>
                                 </select></p>
-                        </div>
+
+
                         <div style="display:inline;">
-                                <button type="button" name="button" id="showCharDists">Distances per character (as CSV)</button>
-                                <button type="button" name="button" id="showSeqDists">Distances per sequence</button>
+                                <button type="button" class="k-button" name="button" id="showCharDists">Distances per character (as CSV)</button>
+                                <button type="button" class="k-button" name="button" id="showSeqDists">Distances per sequence</button>
+                                <button type="button" class="k-button" name="button" id="consensus">Strict consensus alignment</button>
                         </div>
 
 		</div>
@@ -122,31 +155,39 @@
 	
         <div id="input">
                 
-        <button id="example1" onClick="example1()">load small example</button>
-        <button id="example1" onClick="example2()">load larger example</button>
+        <div style="margin-bottom:0.5em;">
+        <button class="k-button" id="example1" onClick="example(1)">load small example</button>
+        <button class="k-button" id="example2" onClick="example(2)">load larger example</button>
+        <button class="k-button" id="example3" onClick="example(3)">load huge RNA example</button>
+        </div>
+        
                 <h3>Alignment 1</h3>
-                <input type="file" id="alignment1File" name="file" />
+                <form>
+                <input type="file" id="alignment1File" name="file"/>
+        </form>
                 <textarea id="alignment1" class="alnInput" rows="10" cols="120" wrap="off">
                 </textarea>
 	<h3>Alignment 2</h3>
-        <input type="file" id="alignment2File" name="file" />
+        <input type="file" id="alignment2File" name="file"/>
 	<textarea id="alignment2"class="alnInput" rows="10" cols="120" wrap="off">
         </textarea>
 	<h3>Newick tree (optional, for calculating tree-based distances)</h3>
-        <input type="file" id="newickFile" name="file" />
+        <input type="file" id="newickFile" name="file"/>
 	<textarea id="newick" class="alnInput" rows="2" cols="120" style="white-space:nowrap; font-type:monospace;" wrap="off">
 </textarea>
 	
-	<input type="button" id="submit" name="button" Value="Run" onClick="process()" />
-	<label id="visbox"><input type="checkbox" name="button" value="true" id="visualize" checked="true" autocomplete="off"/>Generate sequence alignment visualisation</label>
+<button class="k-button" id="submit" onClick="process()">
+        <span class="k-icon k-i-arrow-e"></span>
+        Run</button>
 	
+<input name="doviz" id="doviz" type="checkbox" checked="yes">Visualise</input>
 	</div>
 	
 	<div id="instructions">
 	<h3>Instructions</h3>
 	<p>To compare two different alignments of the same set of sequences please paste both alignments in <a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA format</a> into the corresponding input boxes.  Sequence identifiers must be consistent between alignments and ideally short to make visualization more convenient.</p>
 	<p>By default, this tool will calculate the distance between alignments using three distance metrics: <em>symmetrized sum-of-pairs</em>, <em>simple homology distance</em> and <em>homology distance with position-labelled gaps</em>. To also calculate <em>homology distance with tree-labelled gaps</em>, provide a <a href="http://en.wikipedia.org/wiki/Newick_format">Newick tree</a> containing all sequences in the alignments. 
-	<p>Running this tool on large alignments may cause the browser to become unresponsive for a few seconds while calculations are performed and the visualization is being generated. If this is an issue and visualization of results is not required, please uncheck the <em>Generate sequence alignment visualization</em> option.</p>
+	<p>Running this tool on large alignments may cause the browser to become unresponsive for a few seconds while calculations are performed and the visualization is being generated. If this is an issue and visualization of results is not required, please uncheck the <em>visualise</em> option.</p>
 	<p>The distance metrics calculated by this tool are described in <cite> Blackburne, B.P. and Whelan, S. Measuring the distance between multiple sequence alignments <em>Bioinformatics</em>, (2012) <strong>28</strong>(4): 495-502 (<a href="http://dx.doi.org/10.1093/bioinformatics/btr701">doi:10.1093/bioinformatics/btr701</a>)</cite>.</p>
 	</div>
 	

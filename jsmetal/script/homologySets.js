@@ -3,40 +3,33 @@ var SSP = 0;
 var SIM = 1;
 var POS = 2;
 var EVO = 3;
-importScripts('newick_parser.js','sequence.js');
-importScripts('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
+try{
+        importScripts('newick_parser.js','sequence.js','msgpack.js');
+        importScripts('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
+}catch(e){
+        //don't care
+}
+
+
+//var pack = function(x){return msgpack.pack(x,true);}
+//var unpack = function(x){return msgpack.unpack(x);}
+
+var pack = function(x){return JSON.stringify(x);}
+var unpack = function(x){return JSON.parse(x);}
 
 onmessage = function(e){
-        var o = JSON.parse(e.data);
+        var o = unpack(e.data);
         var newick_string = o.tree;
 
         var tree;
         var doEvo=0;
         var alnA = o.aln;
-
+        
         try{
-                if(newick_string){
-                        root=parseNewickString(newick_string);
-                        //check if names match those of the sequences
-                        treeNames = [];
-                        for(var i=0;i<root.length;i++){
-                                treeNames.push(root[i].name);
-                        }
-
-                        treeNames.sort();
-                        for(var i=0;i<alnA.length;i++){
-                                if(treeNames[i] != alnA[i].name) {
-                                        throw "Names differ in Newick tree and alignments";
-                                }
-                        }
-                        if(treeNames[alnA.length] != undefined){
-                                throw "There are more sequences in the Newick tree than in the alignments";
-                        }
-
+                alnA=performHomologyWork(newick_string,alnA,o.seqNum);
+                if (alnA[0].labeledContent[EVO]){
                         doEvo=1;
-                        tree=makeTree(root);
                 }
-                getHomologySets(alnA,tree,doEvo,o.seqNum);
         }catch(e){
                 if (e.message){
 
@@ -45,56 +38,50 @@ onmessage = function(e){
                                 .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
                                 .split('\n');
 
-                        postMessage(JSON.stringify({'type':'error','msg':e + '\n' + stack}));
+                        postMessage(pack({'type':'error','msg':e + '\n' + stack}));
                 }else {
-                        postMessage(JSON.stringify({'type':'error','msg':e}));
+                        postMessage(pack({'type':'error','msg':e}));
                 }
                 return;
         }
 
+        postMessage(pack({'type':'success','ans':alnA,'doEvo':doEvo}));
+        
 }
 
-function getHomologySets(aln,tree,doEvo,seqNum){	
-	
-	var aln=resortNonOverlapping(aln,seqNum);
-	labeller(aln,tree,doEvo,seqNum);
-	var gapsHere=[];
-	var homologySets = [];
-		
-	for(var hom=0;hom<=POS+doEvo;hom++){
-		
-		homologySets[hom]=[];
-		for (var i=0;i<aln.length;i++){
-			homologySets[hom][i]=[];
-			jNoGap=0;
-			
-			for ( var j=0;j<aln[i].content.length;j++){
-				
-				if(aln[i].content[j]  != "-"){
-					
-					homologySets[hom][i][jNoGap]=[];
-					for(var k=0;k<aln.length;k++){
-						if(aln[k].content[j]  == "-"){
-							gapsHere[jNoGap]=true;
-						}
-						
-						if(k!=i && aln[k].content[j]){
-							
-							homologySets[hom][i][jNoGap].push(aln[k].labeledContent[hom][j]);
-							
-						}
-					
-					
-					}
-					jNoGap++;
-				}
-					
-					
-			}
-		}
-	}
-		
-	postMessage(JSON.stringify({'type':'success','ans':[homologySets,gapsHere],'doEvo':doEvo}));
+function performHomologyWork(newick_string,alnA,seqNum){
+        if(newick_string){
+                root=parseNewickString(newick_string);
+                //check if names match those of the sequences
+                treeNames = [];
+                for(var i=0;i<root.length;i++){
+                        treeNames.push(root[i].name);
+                }
+
+                treeNames.sort();
+                for(var i=0;i<alnA.length;i++){
+                        if(treeNames[i] != alnA[i].name) {
+                                throw "Names differ in Newick tree and alignments";
+                        }
+                }
+                if(treeNames[alnA.length] != undefined){
+                        throw "There are more sequences in the Newick tree than in the alignments";
+                }
+
+                doEvo=1;
+                tree=makeTree(root);
+        }else {
+                tree=null;
+                doEvo=0;
+        }
+        try{
+        postMessage(pack({type:'status','msg':'1'}));
+        }catch(e){}
+	labeller(alnA,tree,doEvo,seqNum);
+        try{
+        postMessage(pack({type:'status','msg':'2'}));
+        }catch(e){}
+        return alnA;
 }
 
 

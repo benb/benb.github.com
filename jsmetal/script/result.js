@@ -18,7 +18,7 @@ function sequenceMaker(alignment,alignmentID){
 			
 			for(var j = 0;j<alignment[i].content.length;j++){
 				
-				var $character = $("<span/>").text(alignment[i].content[j]).addClass(alignment[i].content[j]).addClass("clickable");
+				var $character = $("<span/>").text(alignment[i].content[j]).addClass(alignment[i].content[j].toUpperCase()).addClass("clickable");
 							
 				//only non-gap characters have an identity
 				if (alignment[i].content[j] != "-") {
@@ -36,23 +36,17 @@ function sequenceMaker(alignment,alignmentID){
 	return $sequenceDiv;
 }
 
-function colouredCSSMaker(charDist,alignment,alignmentID){
+function colouredCSSMaker(charDistF,alignment,alignmentID){
 	
 	var $sequenceDiv = [];
-	for(var homType = 0; homType<charDist.length;homType++){
+	for(var homType = 0; homType<charDistF.length;homType++){
+                var tmp=function(hT){
+                var charDist = charDistF[hT]().character;
 		
-		$sequenceDiv[homType] = [];
+		var $sDiv = [];
 		
 		var $colourF = [];
 		//character distances converted to a value between 0 and 255, for use in CSS styling
-		var eightBitDistances = [];
-		for(var i=0;i<G.sequenceNumber;i++){
-			eightBitDistances[i]=[];		
-                        for(var k=0;k<charDist[homType][i].length;k++){
-                                eightBitDistances[i][k] = Math.round(255*charDist[homType][i][k]);
-                        }
-		}
-		
 		//array of jquery <div/>s for each sequence
 		for(var i=0;i<G.sequenceNumber;i++){
 	
@@ -63,7 +57,7 @@ function colouredCSSMaker(charDist,alignment,alignmentID){
 			
 			for(var j = 0;j<alignment[i].content.length;j++){
                                         if (alignment[i].content[j] != "-"){
-                                                $character = [ eightBitDistances[i][k], Math.round(charDist[homType][i][k]*1000000)/1000000];
+                                                $character = [ Math.round(255*charDist[i][k]), Math.round(charDist[i][k]*1000000)/1000000];
                                                 k++;
                                         }else {
                                                 $character=null;
@@ -71,12 +65,13 @@ function colouredCSSMaker(charDist,alignment,alignmentID){
 				$colourF[i].push($character);
 			}
 		
-			$sequenceDiv[homType].push($colourF[i]);
+			$sDiv.push($colourF[i]);
 		}
+                return $sDiv;
+                }
 	
-		
+		$sequenceDiv[homType] = _.memoize(_.bind(tmp,{},homType));
 	}
-
 	return $sequenceDiv;
 }
 function applyCSS(alignment,cssData){
@@ -98,10 +93,9 @@ function applyCSS(alignment,cssData){
         return alignment;
 }
 
-function colouredSequenceMaker(charDist,alignment,alignmentID){
-	
+function colouredSequenceMaker(distanceFs,alignment,alignmentID){ 
         var aln = sequenceMaker(alignment,alignmentID);
-        var colourFs = colouredCSSMaker(charDist,alignment,alignmentID);
+        var colourFs = colouredCSSMaker(distanceFs,alignment,alignmentID);
         //var colourFs = [1,2,3,4]; 
         return [aln,colourFs];
 
@@ -121,20 +115,21 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 	for(i=0;i< G.sequenceNumber;i++){
 		//populate name
                 if (i%2==0){
-                        $alnA_NamesDiv.append("<div class='name0'>"+alnA[i].name+"</div>");
-                        $alnB_NamesDiv.append("<div class='name0'>"+alnB[i].name+"</div>");
+                        $alnA_NamesDiv.append("<div class='row0'><div class='name' title='"+alnA[i].name+"'>"+alnA[i].name+ "</div><div class='miniline_"+i+ "'></div></div>");
+                        $alnB_NamesDiv.append("<div class='row0'><div class='name' title='"+alnB[i].name+"'>"+alnB[i].name+ "</div><div class='miniline_"+i+ "'></div></div>");
                 }else {
-                        $alnA_NamesDiv.append("<div class='name1'>"+alnA[i].name+"</div>");
-                        $alnB_NamesDiv.append("<div class='name1'>"+alnB[i].name+"</div>");
+                        $alnA_NamesDiv.append("<div class='row1'><div class='name' title='"+alnA[i].name+"'>"+alnA[i].name+ "</div><div class='miniline_"+i+ "'></div></div>");
+                        $alnB_NamesDiv.append("<div class='row1'><div class='name' title='"+alnB[i].name+"'>"+alnB[i].name+ "</div><div class='miniline_"+i+ "'></div></div>");
                 }
 	}
+
 	
 	$alnA_NamesDiv.append($("<div>&nbsp;</div>").css("height", scrollbarWidth()));
 	$alnB_NamesDiv.append($("<div>&nbsp;</div>").css("height", scrollbarWidth()));
 	
 	//scrollGroup <div/>s serve to allow syncronized vertical scrolling
-	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnASequences).attr("id","alnA_scroll");
-	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBSequences).attr("id","alnB_scroll");
+	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnASequences).attr("id","alnA_scroll").addClass("scrollbox");
+	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBSequences).attr("id","alnB_scroll").addClass("scrollbox");
         var $between=$("<span />").attr("id","alnA_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right");
         $between = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($between);
 
@@ -173,20 +168,22 @@ function makeOutput(distances,homType,alnA){
 }*/
 ////////////////////////////////////
 function makeOutput(distances,homType,alnA){
-	var $outputTable1=$("<table/>").attr("id","output");
+	var $outputTable1=$("<div/>").attr("id","output");
 	var $outputTable2=$("<table/>").attr("id","output");
 
 	var roundedAlnDistance=Math.round((distances.alignment[homType]*1000000))/1000000;
 	
 	if(G.visualize){
-                var $charDistTR=$("<tr />");
-		$charDistTR.append($("<td />").append("Alignment distance:"));
-                $charDistTR.append($("<td />").attr("id","alnDist").text(roundedAlnDistance));
-
-		$charDistTR.append($("<td />").append("Distance for focused character:"));
-                $charDistTR.append($("<td />").attr("id","charDist").css("font-weight","bold"));
-
+                var $charDistTR=$("<table/>").css("display","inline").css("float","left").append($("<tr />"));
+		$charDistTR.append($("<td />").append("Total alignment distance:"));
+                $charDistTR.append($("<td />").attr("id","alnDist").css("width","8em").css("font-weight","bold").text(roundedAlnDistance));
 		$outputTable1.append($charDistTR);
+
+                var $charDistTR=$("<table/>").css("display","inline").css("float","right").append($("<tr />"));
+		$charDistTR.append($("<td />").append("Focused character distance:"));
+                $charDistTR.append($("<td />").attr("id","charDist").css("font-weight","bold").css("width","5em"));
+		$outputTable1.append($charDistTR);
+
 	}
 	
 	var $alnDistTR=$("<tr/>");
@@ -261,31 +258,47 @@ function makeVisualColumnDist(distance,homType,alnA,alnAView,target,width){
         var colDist = makeRawColumnDist(distance,homType,alnA);
         applyColumnDist(colDist,alnAView,target,width);
 }
-function applyColumnDist(colDist,alnAView,target,width,clickReceiver){
+function visibleRange(alnAView,columns){
         var left = alnAView.scrollLeft();
         var totalWidth = alnAView[0].scrollWidth;
         var visibleWidth = alnAView.width();
-        totalChars = colDist.length + padChars*2;
+        var totalChars = columns + padChars *2;
         var fractionStart = Math.floor(((left/totalWidth)*totalChars));
         fractionStart=fractionStart-padChars;
-        if (fractionStart<0){fractionStart=0};
         var fractionEnd = Math.floor(((left+visibleWidth)/totalWidth * totalChars));
         fractionEnd=fractionEnd-padChars;
-        if (fractionEnd>colDist){fractionEnd=colDist};
-        var map=[];
-        for (var i=0; i < fractionStart; i++){
-                map.push("blue");
+        if (fractionEnd>columns){fractionEnd=columns};
+        return [fractionStart,Math.floor((fractionStart+fractionEnd)/2),fractionEnd];
+}
+function applyColumnDist(colDist,density,alnAView,target,width,clickReceiver){
+        var range = visibleRange(alnAView,colDist.length)
+        var fractionStart=range[0];
+        var fractionEnd=range[2];
+        var normal=[];
+        var highlight=[];
+        for (var i=0; i < fractionStart-1; i++){
+                normal.push(colDist[i]);
+                highlight.push(null);
         }
-        for (var i=fractionStart; i<fractionEnd; i++){
-                map.push("red");
+                normal.push(colDist[fractionStart-1]);
+                highlight.push(colDist[fractionStart-1]);
+        for (var i=fractionStart; i<fractionEnd-1; i++){
+                highlight.push(colDist[i]);
+                normal.push(null);
         }
+                normal.push(colDist[fractionEnd-1]);
+                highlight.push(colDist[fractionEnd-1]);
+
         for (var i=fractionEnd; i<colDist.length; i++){
-                map.push("blue");
+                normal.push(colDist[i]);
+                highlight.push(null);
         }
         target.css("width",width+"px");
-        barWidth=(width / colDist.length) - 2;
-        //console.log(barWidth);
-        target.sparkline(colDist,{type:'bar',height:"30px",chartRangeMax:1.0,barWidth:barWidth,barSpacing:2,colorMap:map});
+        barWidth=Math.max((width / colDist.length),1);
+        console.log(width + " " + colDist.length + " " + barWidth);
+        target.sparkline(normal,{height:"30px",chartRangeMax:1.0,width:width,fillColor:'blue',lineColor:false,disableTooltips:true,disableHighlight:true});
+        target.sparkline(highlight,{chartRangeMax:1.0,composite:true,lineColor: 'red', fillColor:'red',disableTooltips:true,disableHighlight:true});
+        target.sparkline(density,{composite:true,lineColor: 'black',fillColor:false,disableTooltips:true,disableHighlight:true});
 }
 
 
@@ -354,10 +367,10 @@ function charPadding(num) {
 }
 
 function transparentAminoCSS(charDist,type){
-	$(".clickable").css("background-color","");
 	var transparentCSS=[];
 	for(var i=0;i<G.sequenceNumber;i++){
 		transparentCSS[i]=[];
+                console.log("transparentAminoCSS " + type);
 		for(var k=0;k<G.origLengths[i];k++){
 			if(type==1){
 				opacity=charDist[i][k];				
@@ -366,7 +379,9 @@ function transparentAminoCSS(charDist,type){
 			}else{
 				opacity=1-charDist[i][k];
 			}
+                        console.log($("#alnA_"+i+"_"+k).css("background-color"));
 			transparentCSS[i].push($("#alnA_"+i+"_"+k).css("background-color").replace("rgb","rgba").replace(")",", "+opacity+")"));
+                        console.log(transparentCSS[i][k])
 			}
 		}
 	
@@ -377,7 +392,11 @@ function transparentAminoCSS(charDist,type){
 
 function 	changeDistanceVisualization(newCSS){
 	if(!newCSS){
-		$(".clickable").css("background-color","");		
+                for(var i=0;i<G.sequenceNumber;i++){
+                        for(var k=0;k<G.origLengths[i];k++){
+                                $("#alnA_"+i+"_"+k).css("background-color","");
+                        }
+                }
 	}else{
 			for(var i=0;i<G.sequenceNumber;i++){
 				for(var k=0;k<G.origLengths[i];k++){
