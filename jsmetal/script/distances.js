@@ -100,7 +100,11 @@ function quickDistNew(alnA,alnB,hom){
                         }
                         seqDists[i]+=dist;
                         alnDist+=dist;
-                        dist/=c;
+                        if (c==0){
+                                dist=0;//dSSP can produce empty homology sets - call this distance 0 by convention
+                        }else {
+                                dist/=c;
+                        }
                         dists[i].push(dist);
                         alnLen+=c;
                         p1++;
