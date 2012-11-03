@@ -19,21 +19,27 @@ h2. Current Projects
 h2(#publications). Papers
 
 <div class="papers">
+* Class of multiple sequence alignment algorithm affects genomic analysis
+** Blackburne, B.P. and Whelan, S.
+** _Molecular Biology and Evolution_ (in press).
+* "An integrated map of genetic variation from 1,092 human genomes":http://dx.doi.org/10.1038/nature11632 !/icons/pdf.png!:http://www.nature.com/nature/journal/v491/n7422/pdf/nature11632.pdf
+** The 1000 Genomes Project Consortium
+** _Nature_ "doi:10.1038/nature11632":http://dx.doi.org/10.1038/nature11632 (2012).
 * "Measuring the distance between multiple sequence alignments":http://dx.doi.org/10.1093/bioinformatics/btr701 !/icons/pdf.png!:http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf
 ** Blackburne, B.P. and Whelan, S.
-** _Bioinformatics_ "doi:10.1093/bioinformatics/btr701":http://dx.doi.org/10.1093/bioinformatics/btr701 
+** _Bioinformatics_ "doi:10.1093/bioinformatics/btr701":http://dx.doi.org/10.1093/bioinformatics/btr701 (2012).
 * "Phylogenetic substitution models for detecting heterotachy during plastid evolution":http://dx.doi.org/10.1093/molbev/msq215 !/icons/pdf.png!:http://mbe.oxfordjournals.org/content/28/1/449.full.pdf
 ** Whelan, S., Blackburne, B.P. and Spencer, M.
-** _Molecular Biology and Evolution_ "doi:10.1093/molbev/msq215":http://dx.doi.org/10.1093/molbev/msq215
+** _Molecular Biology and Evolution_ "doi:10.1093/molbev/msq215":http://dx.doi.org/10.1093/molbev/msq215 (2011).
 * "Mutation spectrum revealed by breakpoint sequencing of human germline CNVs":http://dx.doi.org/10.1038/ng.564 !/icons/pdf.png!:http://www.nature.com/ng/journal/vaop/ncurrent/pdf/ng.564.pdf
 ** Conrad et al.
-** _Nature Genetics_ "doi:10.1038/ng.564":http://dx.doi.org/10.1038/ng.564
+** _Nature Genetics_ "doi:10.1038/ng.564":http://dx.doi.org/10.1038/ng.564 (2010).
 * "Changing Selective Pressure during Antigenic Changes in Human Influenza H3":http://dx.doi.org/doi:10.1371/journal.ppat.1000058 !/icons/pdf.png!:http://dx.plos.org/10.1371/journal.ppat.1000058.pdf
 ** Blackburne, B. P., Hay A. H. & Goldstein, R. A.
-** _PLoS Pathogens_ 4(5): e1000058
+** _PLoS Pathogens_ 4(5): e1000058 (2008).
 * "Assessing the Accuracy of Ancestral Protein Reconstruction Methods":http://dx.doi.org/10.1371/journal.pcbi.0020069 !/icons/pdf.png!:http://dx.plos.org/10.1371/journal.pcbi.0020069.pdf
 ** Williams, P. D., Pollock, D. D., Blackburne, B. P. & Goldstein, R. A.
-** _PLoS Computational Biology_ 2 (6): e69.
+** _PLoS Computational Biology_ 2 (6): e69. (2006).
 * "Population Dynamics Simulations of Functional Model Proteins":http://dx.doi.org/10.1063/1.2056545 !/icons/pdf.png!:papers/FMP-Population-Dynamics.pdf
 ** Blackburne, B.P. & Hirst, J.D.
 ** _Journal of Chemical Physics_ 123, 154907 (2005).
@@ -44,7 +50,7 @@ h2(#publications). Papers
 ** <div class="copy">Copyright (2003) American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics.</div>
 * "Multimeme Algorithms for Protein Structure Prediction":http://www.springerlink.com/content/1valvewbl7ycy0bm/?p=927a9c48a5ab42b1b23b90c842a7ec89&pi=5 !/icons/pdf.png!:papers/ppsn2002.pdf
 ** Krasnogor, N., Blackburne, B.P., Hirst, J.D., and Burke, E.K.,
-** _Proceedings of Parallel Problem Solving From Nature_, 2002, Lecture Notes in Computer Science. 
+** _Proceedings of Parallel Problem Solving From Nature_, Lecture Notes in Computer Science (2002).
 * "Evolution of Functional Model Proteins":http://dx.doi.org/10.1063/1.1383051 !/icons/pdf.png!:/papers/Evolution-of-Functional-Model-Proteins.pdf 
 ** Blackburne, B.P. & Hirst, J.D.
 ** Journal of Chemical Physics, 115, 1935-1942 (2001).
