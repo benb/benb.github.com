@@ -36,12 +36,8 @@ function sequenceMaker(alignment,alignmentID){
 	return $sequenceDiv;
 }
 
-function colouredCSSMaker(charDistF,alignment,alignmentID){
-	
+function colouredCSSMaker(charDist,alignment,alignmentID){
 	var $sequenceDiv = [];
-	for(var homType = 0; homType<charDistF.length;homType++){
-                var tmp=function(hT){
-                var charDist = charDistF[hT]().character;
 		
 		var $sDiv = [];
 		
@@ -68,11 +64,6 @@ function colouredCSSMaker(charDistF,alignment,alignmentID){
 			$sDiv.push($colourF[i]);
 		}
                 return $sDiv;
-                }
-	
-		$sequenceDiv[homType] = _.memoize(_.bind(tmp,{},homType));
-	}
-	return $sequenceDiv;
 }
 function applyCSS(alignment,cssData){
         var i=0; 
@@ -93,9 +84,9 @@ function applyCSS(alignment,cssData){
         return alignment;
 }
 
-function colouredSequenceMaker(distanceFs,alignment,alignmentID){ 
+function colouredSequenceMaker(distances,alignment,alignmentID,numHom){ 
         var aln = sequenceMaker(alignment,alignmentID);
-        var colourFs = colouredCSSMaker(distanceFs,alignment,alignmentID);
+        var colourFs = colouredCSSMaker(distances,alignment,alignmentID,numHom);
         //var colourFs = [1,2,3,4]; 
         return [aln,colourFs];
 
@@ -131,7 +122,7 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnASequences).attr("id","alnA_scroll").addClass("scrollbox");
 	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBSequences).attr("id","alnB_scroll").addClass("scrollbox");
         var $between1=$("<button class='k-button' id='distanceToggle' />");
-        $between1.css("height","30px").css("font-size","14px").css("margin-top","7px");
+        $between1.css("height","30px").css("font-size","14px").css("margin-top","7px").css("float","left");
         var $between2=$("<span />").attr("id","alnA_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right").css("padding-top","5px");
         var $between = $("<div />").css("width","100%").css("overflow","hidden").css("display","block").append($between1).append($between2);
 

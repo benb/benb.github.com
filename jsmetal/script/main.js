@@ -9,8 +9,9 @@ var EVO = 3;
 var alnBresults=[];
 var alnAresults=[];
 
-var alnAF;
-var alnBF;//functions for rewriting the CSS on the alignments
+var homTypes=[0,1,2];
+var alnAF=[];
+var alnBF=[];//functions for rewriting the CSS on the alignments
 
 var padChars = 20;
 var charWidth;
@@ -20,6 +21,9 @@ var sparkLineClickA;
 var sparkLineClickB;
 var homType=2;
 var sparklineDistanceType=true;
+var distances={};
+var lock=[];
+var def=[];
 
 
 //Global object (container for a few general features and options that should be easily available)
@@ -144,7 +148,7 @@ function process() {
         dialogBox.open();
       //  $("#dialog").dialog("open");
         
-        dateStamp("end process()")
+        //dateStamp("end process()")
         _.defer(process1);
 
 }
@@ -192,7 +196,7 @@ function process1(){
 		
 		//if there's anything left, it had better be newick tree or we will be very upset.
 	
-                dateStamp("");
+                //dateStamp("");
 			}
 
 	catch(e)
@@ -216,7 +220,7 @@ function process1(){
                 _.defer(function(){doHomology(newick_string,alnA,G.sequenceNumber,end)}); 
                 _.defer(function(){doHomology(newick_string,alnB,G.sequenceNumber,end)}); 
 
-                dateStamp("end process1()")
+                //dateStamp("end process1()")
 }
 
 function doHomology(newick_string,aln,seqNum,end){
@@ -224,6 +228,9 @@ function doHomology(newick_string,aln,seqNum,end){
                 if (alnA===aln){
                         alnA=ans.ans;
                         G.doEvo=ans.doEvo;
+                        if (G.doEvo){
+                                homTypes.push(3);
+                        }
                         console.log("doEvo? " + ans.doEvo);
                         homType=2+G.doEvo;
                 }else if (alnB===aln){
@@ -238,14 +245,14 @@ function doHomology(newick_string,aln,seqNum,end){
                         if (ans.type=='error'){
                                 throw ("ERROR: " + ans.msg);
                         }else if (ans.type=='status'){
-                                dateStamp(ans.msg);
+                                //dateStamp(ans.msg);
                         }else if (ans.type=='success') {
-                                dateStamp("Got MSG");
+                                //dateStamp("Got MSG");
                                 gotAns(ans);
                         }
                 }
                 worker.postMessage(pack({tree:newick_string,aln:aln,seqNum:seqNum,set:3}));
-                dateStamp("Sent MSG");
+                //dateStamp("Sent MSG");
         } else {
                 performHomologyWork(newick_string,aln,seqNum,3);
                 if (aln[0].labeledContent[EVO]){
@@ -254,29 +261,53 @@ function doHomology(newick_string,aln,seqNum,end){
                 }
                 end();
         }
-        
 }
 function process2(){
         _.defer(function(){$("#dialogtext").html("Calculation of distances")});
         console.log("PROCESS 2");
+
+        distances.character=Array(3+G.doEvo);
+        distances.alignment=Array(3+G.doEvo);
+        distances.sequence=Array(3+G.doEvo);
+        if (useWorkers){
+                var distSet=[2,1,0];
+                if (G.doEvo){distSet.unshift(3)}
+                lock=_.map(distSet,function(x){return true;});
+                def=_.map(distSet,function(x){return $.Deferred()});
+                var postF=function(myDist){
+                        if (myDist<0){return;}
+                        var worker = new Worker("script/distances.js");
+                        var deferred=def[myDist];
+                        worker.onmessage= function (e) { 
+                                        var raw = unpack(e.data).distances;
+                                        distances.character[myDist]=raw.character;
+                                        distances.alignment[myDist]=raw.alignment;
+                                        distances.sequence[myDist]=raw.sequence;
+                                        deferred.resolve();
+                                }
+                        worker.postMessage(pack({A:alnA,B:alnB,dist:myDist}));
+                        console.log("Sent one!");
+                }
+                postF(3);
+                _.each(distSet,function(x){
+                        def[x].done(function(){lock[x]=false;postF(x-1)});
+                       });
+                def[homType].done(process3);
+        }else{
                 distanceFs=calcDistances(alnA,alnB);
-                console.log(distanceFs.length);
-                distances={};
-                distances.character=[];
-                distances.alignment=[];
-                distances.sequence=[];
+                _.each([0,1,2,3],function(i){
+                        var raw = distanceFs[i]();
+                        distances.character[i]=raw.character;
+                        distances.alignment[i]=raw.alignment;
+                        distances.sequence[i]=raw.sequence;
+
+                });
                 _.defer(process3);
-		//distances=getDistances(homSetsA,homSetsB,G.doEvo,gapsHere);
-                dateStamp("end process2()")
+        }
+        //distances=getDistances(homSetsA,homSetsB,G.doEvo,gapsHere);
 }
 function updateCurrentHomType(){
-        console.log(distanceFs);
-        console.log(distanceFs.length);
         console.log("UPDATE HOM");
-        var raw=distanceFs[homType]();
-        distances.character[homType]=raw.character;
-        distances.alignment[homType]=raw.alignment;
-        distances.sequence[homType]=raw.sequence;
 }
 function process3(){
 		
@@ -292,7 +323,7 @@ function process3(){
         _.defer(updateCurrentHomType);
         _.defer(vis);
         
-        dateStamp("end process3()")
+        //dateStamp("end process3()")
 }
 function vis(){
         console.log("VIS");
@@ -313,10 +344,10 @@ function vis(){
 		cssCache=[[],[],[],[]];
 		
 		//create coloured sequences for all homology types
-		var $alnASeqDivX = colouredSequenceMaker(distanceFs,alnA,"alnA");
-		var $alnBSeqDivX = colouredSequenceMaker(distanceFs,alnB,"alnB");
-                alnAF = $alnASeqDivX;
-                alnBF = $alnBSeqDivX;
+                alnAF[0] = sequenceMaker(alnA,"alnA");                                                                                                  
+                alnBF[0] = sequenceMaker(alnB,"alnB");                                                                                                  
+                alnAF[1] = _.map(homTypes,function(x){return _.memoize(function(){return colouredCSSMaker(distances.character[x],alnA,"alnA")});});                                                                         
+                alnBF[1] = _.map(homTypes,function(x){return _.memoize(function(){return colouredCSSMaker(distances.character[x],alnB,"alnB")});});                                                                         
                 var $alnASeqDiv = alnAF[0];
                 var $alnBSeqDiv = alnBF[0];
 
@@ -425,7 +456,7 @@ function vis(){
                         $("#alnA"+"_"+focusSeq+"_"+central).addClass("centralChar");
                         $("#alnB"+"_"+focusSeq+"_"+central).addClass("centralChar");
                 }
-	$("#alnA_seqs").bind('click', function(event) {
+                $("#alnA_seqs").bind('click', function(event) {
 			focusSeq = $(event.target).closest("div").index();
 			central = alnACharacterAt[focusSeq][$(event.target).closest("span").index() - padChars];
                         clickChar();
@@ -488,41 +519,42 @@ function vis(){
         _.defer(function(){dialogBox.close(); });
         _.defer(bindings);
         dateStamp("end vis()")
-       	
 }
 function bindings(){
 
 	$("#homologyType").change(function () {
 			
 			homType=parseInt($(this).val());
-                        //console.log("homType " + homType);
-                        updateCurrentHomType();
+                        var deferred=function(){
+                                var roundedAlnDistance=Math.round((distances.alignment[homType]*1000000))/1000000;
+                                $("#alnDist").text(roundedAlnDistance);
+
+                                var visType=parseInt($('#distanceVisualizationType option:selected').val());
+                                if(G.visualize){
+                                        applyCSS(alnAF[0],alnAF[1][homType]());
+                                        applyCSS(alnBF[0],alnBF[1][homType]());
+                                        recalculateSparklines();
+                                        redisplaySparklines();
+                                        recalculateMinilines();
+                                }
+
+                                if(G.charDists){
+                                        var newCharDists=makeCharDist(distances,homType,alnA);
+                                        $("#chardists").replaceWith(newCharDists);
+                                }
+                        }
 			
-                        /*
-			for(var i=0;i<G.sequenceNumber;i++){
-				var roundedSeqDistance=Math.round((distances.sequence[homType][i]*1000000))/1000000;
-				
-				$("#"+alnA[i].name+"_dist").text(roundedSeqDistance);
-				
-			}*/
-			var roundedAlnDistance=Math.round((distances.alignment[homType]*1000000))/1000000;
-			$("#alnDist").text(roundedAlnDistance);
-			
-                        var visType=parseInt($('#distanceVisualizationType option:selected').val());
-			if(G.visualize){
-                                applyCSS(alnAF[0],alnAF[1][homType]());
-                                applyCSS(alnBF[0],alnBF[1][homType]());
-                                recalculateSparklines();
-                                redisplaySparklines();
-                                recalculateMinilines();
-			}
-			
-			if(G.charDists){
-				var newCharDists=makeCharDist(distances,homType,alnA);
-				$("#chardists").replaceWith(newCharDists);
-			}
-			
-			
+                        if (useWorkers && (def[homType].state()!="resolved")){
+                                $("#dialogtext").html("Calculating distances...");
+                                dialogBox.open();
+                                def[homType].done(function(){
+                                        console.log(distances.character);
+                                        dialogBox.close();
+                                        deferred();
+                                });
+                        }else {
+                                deferred();
+                        }
 		});
 	
 	var $output = makeOutput(distances,homType,alnA);

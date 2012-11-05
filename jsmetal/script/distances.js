@@ -4,12 +4,16 @@ var POS = 2;
 var EVO = 3;
 
 
+try{
+        importScripts('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
+}catch(e){
+}
 // GETCHARACTERDISTANCE
 onmessage = function(e){
         var dat = JSON.parse(e.data);
         var g = dat.G
-        dist = getDistances(dat.A,dat.B,g.doEvo,dat.gapsHere,g);
-        postMessage(JSON.stringify({"type":"success","distances":dist}));
+        dist = calcDistances(dat.A,dat.B);
+        postMessage(JSON.stringify({"type":"success","distances":dist[dat.dist]()}));
 }
 
 function dssp(dist,c,l,r){
@@ -41,7 +45,6 @@ var dpos=dgen;
 var devol=dgen;
 
 function quickDistNew(alnA,alnB,hom){
-        console.log("quickDistNew " + hom);
         var dists=[];
         var seqDists=[];
         var totalLen=0;
@@ -112,14 +115,8 @@ function quickDistNew(alnA,alnB,hom){
 }
 
 function calcDistances(alnA,alnB){
-        console.log("calcDistances");
         var fn=[];
-        console.log("HUH");
-        console.log(alnA);
-        console.log(alnA[0].labeledContent);
-        console.log(alnA[0].labeledContent.length);
         var len = alnA[0].labeledContent.length;
-        console.log(len);
         fn.push(_.memoize(
                         function() { return quickDistNew(alnA,alnB,0); }
                         )
