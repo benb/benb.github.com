@@ -195,3 +195,21 @@ span.clickable:hover{background-color:rgba(0,0,0,1) !important; color:white;opac
         width:100%
         float:none;
 }
+
+.aln_y{
+        width:30px;
+        height:0;
+        float:right;
+}
+
+.tiny{
+        margin:0;
+        padding:0;
+        overflow:hidden;
+}
+.bar{
+        background:#6c8be9;
+}
+.bar-selected{
+        background:blue;
+}
