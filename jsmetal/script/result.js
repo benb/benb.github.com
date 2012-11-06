@@ -108,12 +108,16 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 	
 	$alnA_NamesDiv.append($("<div>&nbsp;</div>").css("height", scrollbarWidth()));
 	$alnB_NamesDiv.append($("<div>&nbsp;</div>").css("height", scrollbarWidth()));
-        $alnADistPlot=$("<div class='aln_y'/>").attr("id","alnA_Y");
-        $alnBDistPlot=$("<div class='aln_y'/>").attr("id","alnB_Y");
+     //   $alnADistPlot=$("<div class='aln_y'/>").attr("id","alnA_Y");
+     //   $alnBDistPlot=$("<div class='aln_y'/>").attr("id","alnB_Y");
 	
 	//scrollGroup <div/>s serve to allow syncronized vertical scrolling
+        /*
 	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnADistPlot,$alnASequences).attr("id","alnA_scroll").addClass("scrollbox");
 	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBDistPlot,$alnBSequences).attr("id","alnB_scroll").addClass("scrollbox");
+        */
+	var $alnA_scrollGroup=$("<div/>").append($alnA_NamesDiv,$alnASequences).attr("id","alnA_scroll").addClass("scrollbox");
+	var $alnB_scrollGroup=$("<div/>").append($alnB_NamesDiv,$alnBSequences).attr("id","alnB_scroll").addClass("scrollbox");
         var $between1=$("<button class='k-button' id='distanceToggle' />");
         $between1.css("height","30px").css("font-size","14px").css("margin-top","7px").css("float","left");
         var $between2=$("<span />").attr("id","alnA_sparkline").css("height","40px").css("width",$alnASequences.width()).css("float","right").css("padding-top","5px");

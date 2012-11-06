@@ -1,3 +1,11 @@
+//WARN IE USERS
+function warn(){
+        if (navigator.userAgent.indexOf('MSIE') != -1){
+                $("#errorBox").html("<b>WARNING: webMetAl is known to perform poorly in Internet Explorer.</b>");
+                $("#errorBox").fadeIn();
+        }
+}
+
 //CONSTANTS - to use arrays instead of objects
 
 var SSP = 0;
@@ -26,6 +34,7 @@ var def=[];
 
 //Global object (container for a few general features and options that should be easily available)
 var G = {};
+G.ignoreNamesFlag=false;
 
 //var pack = function(x){return msgpack.pack(x,true)};
 //var unpack = function(x){return msgpack.unpack(x)};
@@ -134,6 +143,13 @@ function dateStamp(string){
         console.log((t-START) + " : " + string);
         START=t;
 }
+function errorBox(e){
+        $("#errorBox").html("<b>ERROR: "+e+"</b>");
+        $("#errorBox").fadeIn();
+        //$("#dialog").dialog("close");
+        dialogBox.close();
+}
+
 function process() {
 
         
@@ -166,6 +182,15 @@ function process1(){
 		//parse and check syntax of alignments
 		alnA = parser( $("#alignment1").val(),"alignment 1" );
 		alnB = parser( $("#alignment2").val(),"alignment 2" );
+		alnA.sort(nameSorter);
+		alnB.sort(nameSorter);
+		newick_string=$("#newick").val().replace(/\s/g, "");
+                var seqDetails;
+                if (newick_string!=""){
+                        seqDetails = checkConsistency(alnA,alnB,newick_string);
+                }else {
+                        seqDetails = checkConsistency(alnA,alnB);
+                }
                 if (G.sequenceType=='nucleotide'){
                         $("#distanceVisualizationType").html($("#nuc-distanceVisualizationType").html());
                 }
@@ -174,14 +199,12 @@ function process1(){
                 //hack:
                 $("#distanceVisualizationType").data("kendoDropDownList").toggle();
                 $("#distanceVisualizationType").data("kendoDropDownList").toggle();
-		alnA.sort(nameSorter);
-		alnB.sort(nameSorter);
+
 		
                 alnADensity=calcDensity(alnA);
                 alnBDensity=calcDensity(alnB);
 
 		//Check the mutual consistency of both alignments and gather a few global characteristics
-		var seqDetails = checkConsistency(alnA,alnB);
 		
 		G.sequenceNumber = seqDetails[0];
 		G.origLengths = seqDetails[1];
@@ -190,7 +213,6 @@ function process1(){
 		
 		
 		//remove whitespace from newick string input
-		newick_string=$("#newick").val().replace(/\s/g, "");
 		
 		//if there's anything left, it had better be newick tree or we will be very upset.
 	
@@ -199,10 +221,7 @@ function process1(){
 
 	catch(e)
 	{
-		$("#errorBox").html("<b>ERROR: "+e+"</b>");
-		$("#errorBox").fadeIn();
-                //$("#dialog").dialog("close");
-                dialogBox.close();
+                errorBox(e);
 		return;
 	}
 	
@@ -222,42 +241,49 @@ function process1(){
 }
 
 function doHomology(newick_string,aln,seqNum,end){
-        var gotAns=function(ans){
-                if (alnA===aln){
-                        alnA=ans.ans;
-                        G.doEvo=ans.doEvo;
-                        if (G.doEvo){
+        try{
+                var gotAns=function(ans){
+                        if (alnA===aln){
+                                alnA=ans.ans;
+                                G.doEvo=ans.doEvo;
+                                if (G.doEvo){
+                                        homTypes.push(3);
+                                }
+                                console.log("doEvo? " + ans.doEvo);
+                                homType=2+G.doEvo;
+                        }else if (alnB===aln){
+                                alnB=ans.ans;
+                        }
+                        end();
+                }
+                if (useWorkers){
+                        var worker = new Worker('script/homologySets.js');
+                        worker.onmessage = function(event){
+                                var ans = unpack(event.data);
+                                if (ans.type=='error'){
+                                        errorBox(ans.msg);
+                                }else if (ans.type=='status'){
+                                        //dateStamp(ans.msg);
+                                }else if (ans.type=='success') {
+                                        //dateStamp("Got MSG");
+                                        gotAns(ans);
+                                }
+                        }
+                        worker.postMessage(pack({tree:newick_string,aln:aln,seqNum:seqNum}));
+                        //dateStamp("Sent MSG");
+                } else {
+                        performHomologyWork(newick_string,aln,seqNum);
+                        if (aln[0].labeledContent[EVO]){
+                                G.doEvo=1;
+                                homType=3;
                                 homTypes.push(3);
                         }
-                        console.log("doEvo? " + ans.doEvo);
-                        homType=2+G.doEvo;
-                }else if (alnB===aln){
-                        alnB=ans.ans;
+                        end();
                 }
-                end();
         }
-        if (useWorkers){
-                var worker = new Worker('script/homologySets.js');
-                worker.onmessage = function(event){
-                        var ans = unpack(event.data);
-                        if (ans.type=='error'){
-                                throw ("ERROR: " + ans.msg);
-                        }else if (ans.type=='status'){
-                                //dateStamp(ans.msg);
-                        }else if (ans.type=='success') {
-                                //dateStamp("Got MSG");
-                                gotAns(ans);
-                        }
-                }
-                worker.postMessage(pack({tree:newick_string,aln:aln,seqNum:seqNum,set:3}));
-                //dateStamp("Sent MSG");
-        } else {
-                performHomologyWork(newick_string,aln,seqNum,3);
-                if (aln[0].labeledContent[EVO]){
-                        G.doEvo=1;
-                        homType=3;
-                }
-                end();
+        catch(e){
+                console.log(e);
+                errorBox(e);
         }
 }
 function process2(){
@@ -287,24 +313,25 @@ function process2(){
                         worker.postMessage(pack({A:alnA,B:alnB,dist:myDist}));
                         console.log("Sent one!");
                 }
-                postF(3);
+                postF(homType);
                 _.each(distSet,function(x){
                         def[x].done(function(){lock[x]=false;postF(x-1)});
                        });
-                alnAF[0] = sequenceMaker(alnA,"alnA",padChars);                                                                                                  
-                alnBF[0] = sequenceMaker(alnB,"alnB",padChars);                                                                                                  
+                _.defer(function(){alnAF[0] = sequenceMaker(alnA,"alnA",padChars)});                                                                                                  
+                _.defer(function(){alnBF[0] = sequenceMaker(alnB,"alnB",padChars)});                                                                                                  
                 def[homType].done(function(){_.defer(process3)});
         }else{
                 distanceFs=calcDistances(alnA,alnB);
-                _.each([0,1,2,3],function(i){
+                _.each(homTypes,function(i){
                         var raw = distanceFs[i]();
                         distances.character[i]=raw.character;
                         distances.alignment[i]=raw.alignment;
                         distances.sequence[i]=raw.sequence;
 
                 });
-                alnAF[0] = sequenceMaker(alnA,"alnA",padChars);                                                                                                  
-                alnBF[0] = sequenceMaker(alnB,"alnB",padChars);                                                                                                  
+                _.defer(function(){alnAF[0] = sequenceMaker(alnA,"alnA",padChars)});                                                                                                  
+                _.defer(function(){alnBF[0] = sequenceMaker(alnB,"alnB",padChars)});                                                                                                  
+                _.defer(function(){ console.log(alnAF[0])});
                 _.defer(process3);
         }
         //distances=getDistances(homSetsA,homSetsB,G.doEvo,gapsHere);
@@ -483,14 +510,14 @@ function bindings(){
                         focusCentral();
                 }
                 verticalClick=function(event){
-                        var posY = $(this).position().top;
+                        var posY = $(this).offset().top;
                         var posY=event.pageY-posY;
                         console.log("GOT CLICK " + posY);
-                        var height = $(this).height();
+                        var height = $("#alnA_seqs").height();
                         var fullheight = $("#alnA_seqs")[0].scrollHeight;
                         var sTop = Math.max(0,posY/height-(height/fullheight/2))*fullheight;
                         
-                        console.log("scrollTop " + posY + " " + fullheight + " " + height + " " + (height / 2) + " " + sTop);
+                        console.log("scrollTop " + $(this).offset().top + " " + event.pageY + " " + posY + " " + fullheight + " " + height + " " + (height / 2) + " " + sTop);
                         $("#alnA_seqs").scrollTop(sTop);
                 }
                 $("#alnA_Y").on("click",verticalClick);
@@ -640,8 +667,17 @@ function bindings(){
                 alnA_names.css("height",targetHeight);
                 alnB_seqs.css("height",targetHeight);
                 alnB_names.css("height",targetHeight);
-                $("#alnA_Y").css("height",targetHeight);
-                $("#alnB_Y").css("height",targetHeight);
+                /*
+                var height=$("#alnA_Y").height();
+                var scale=targetHeight/height;
+                var transform="scale(1,"+scale+")";
+                $("#alnA_Y").css("margin-top",((targetHeight-height)/2)+"px");
+                $("#alnA_Y").css("-webkit-transform-style","flat");
+                $("#alnA_Y").css("transform",transform);
+                $("#alnB_Y").css("margin-top",((targetHeight-height)/2)+"px");
+                $("#alnB_Y").css("-webkit-transform",transform);
+                $("#alnB_Y").css("transform",transform);
+                */
                 redisplaySparklines();
         };
 
@@ -698,6 +734,7 @@ function doRedisplaySparklines(){
         console.log("foo");
         applyColumnDist(colDistB,alnBDensity,$("#alnB_seqs"),$("#alnB_sparkline"),$("#alnB_seqs").width(),sparklineDistanceType);
         console.log("foo");
+        /*
 
         var range = visibleRange($("#alnA_seqs"),alnA[0].content.length,alnA.length);                                                              
         console.log(range);
@@ -705,8 +742,10 @@ function doRedisplaySparklines(){
         var alnBY=$("#alnB_Y");
         alnAY.empty();
         alnBY.empty();
+        alnAY.css("height",distances.sequence[homType].length+"px");
+        alnBY.css("height",distances.sequence[homType].length+"px");
         for (var i=0; i < distances.sequence[homType].length; i++){
-                var h = 100/distances.sequence[homType].length + "%";
+                var h = "1px";//100/distances.sequence[homType].length + "%";
                 if (i>=range[3] && i<=range[5]){
                         alnAY.append($("<div class='bar-selected'/>").css("width",distances.sequence[homType][i]*100+"%").css("height",h));
                         alnBY.append($("<div class='bar-selected'/>").css("width",distances.sequence[homType][i]*100+"%").css("height",h));
@@ -714,8 +753,8 @@ function doRedisplaySparklines(){
                         alnAY.append($("<div class='bar'/>").css("width",distances.sequence[homType][i]*100+"%").css("height",h));
                         alnBY.append($("<div class='bar'/>").css("width",distances.sequence[homType][i]*100+"%").css("height",h));
                 }
-
         }
+        */
 }
 
 

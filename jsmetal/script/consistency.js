@@ -2,7 +2,7 @@
 // Checks the consistency of the two alignments provided and, if everything's fine, returns an array containing the
 // number of sequences, the length of each original sequence (minus the gaps) and the original sequences themselves.
 
-function checkConsistency(alignmentA,alignmentB){
+function checkConsistency(alignmentA,alignmentB,newick){
 	
 	var sequenceNumber;
 	
@@ -17,9 +17,10 @@ function checkConsistency(alignmentA,alignmentB){
 	
 	//Unless names are to be ignored, 
 	if( !G.ignoreNamesFlag ){
-			for(var i =0; i<sequenceNumber;i++){
+			for(var i =0; i<alignmentA.length;i++){
+                                console.log(alignmentA[i].name + " " + alignmentB[i].name);
 				if(alignmentA[i].name != alignmentB[i].name){
-					throw "Sequence identifiers are not consistent between alignments. Fix this issue or use \"Ignore Names\" if you are certain the sequences are in the same order in both alignments";
+					throw "Sequence identifiers are not consistent between alignments";//. Fix this issue or use \"Ignore Names\" if you are certain the sequences are in the same order in both alignments";
 			}
 		}
 	}
@@ -71,6 +72,38 @@ function checkConsistency(alignmentA,alignmentB){
 		origSeqs[i] = origSeqA[i];
 		//}
 	}
+
+        if (newick){
+                var tree = makeTree(parseNewickString(newick));
+                var leaves = tree.descendents().sort();
+                console.log(leaves);
+                var inconsistent_with=function(aln,id){
+                        alnNames=_.map(alignmentA,function(x){return x.name});
+                        var alnUniq = _.difference(alnNames,leaves);
+                        if (alnUniq.length==1){
+                                throw "Tree is missing a node for " + alnUniq[0] + ".";
+                        }
+                        else if (alnUniq.length < 3 && alnUniq.length>0){
+                                throw "Tree is missing nodes for " + alnUniq.join(" ") + ".";
+                        }else if (alnUniq.length>0){
+                                throw "Tree is missing nodes for " + _.take(alnUniq,3).join(" ") + " (and others)."
+                        }
+                        var treeUniq = _.difference(leaves,alnNames);
+                        if (alnUniq.length==1){
+                                throw "Tree contains node " + alnUniq[0] + " that is not present in " + id + " alignment.";
+                        }
+                        else if (alnUniq.length < 3 && alnUniq.length>0){
+                                throw "Tree contains nodes " + alnUniq.join(" ") + " that are not present in " + id + " alignment.";
+                        }else if (alnUniq.length>0){
+                                throw "Tree contains nodes " + _.take(alnUniq,3).join(" ") + " (and others) that are not present in " + id + " alignment.";
+                        }
+                };
+                if (leaves.length!=sequenceNumber){
+                        throw "Tree has " + leaves.length + " leaf nodes, but alignments have " + sequenceNumber + " sequences."
+                }
+                inconsistent_with(alignmentA,"top");
+                inconsistent_with(alignmentB,"bottom");
+        }
 	
 	return [sequenceNumber,origLengths,origSeqs];
 }

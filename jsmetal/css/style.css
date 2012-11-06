@@ -78,6 +78,7 @@ textarea.alnInput{
 	white-space:nowrap; 
 	font-family:'Inconsolata', 'Consolas', monospace;
 	width:99%;
+        white-space: pre;
 	resize: none; 
 }
 #input{
@@ -212,4 +213,15 @@ span.clickable:hover{background-color:rgba(0,0,0,1) !important; color:white;opac
 }
 .bar-selected{
         background:blue;
+}
+.seqs::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 11px;
+        height: 11px;
+}
+
+.seqs::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        border: 2px solid white; /* should match background, can't be transparent */
+        background-color: rgba(0, 0, 0, .5);
 }

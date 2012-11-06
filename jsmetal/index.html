@@ -23,9 +23,10 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js"></script>
 
 
+<!--
 	<script type="text/javascript" src="webmetal.js"></script>
 
-<!--
+-->
         <script type="text/javascript" src="script/main.js"></script>                                                                                    
         <script type="text/javascript" src="script/distances.js"></script>                                                                               
         <script type="text/javascript" src="script/sequence.js"></script>                                                                                
@@ -33,9 +34,9 @@
         <script type="text/javascript" src="script/result.js"></script>                                                                                  
         <script type="text/javascript" src="script/homologySets.js"></script>                                                                            
         <script type="text/javascript" src="script/newick_parser.js"></script>                                                                           
--->
                                                                     
         <script>
+                $(document).ready(warn);
                 $(document).ready(function() {
 
                         $("#dialog").kendoWindow({                                                                                                                              
@@ -172,15 +173,10 @@
         </div>
         
                 <h3>Alignment 1</h3>
-                <form>
-                <input type="file" id="alignment1File" name="file"/>
-        </form>
-                <textarea id="alignment1" class="alnInput" rows="10" cols="120" wrap="off">
-                </textarea>
+                <form><input type="file" id="alignment1File" name="file"/></form>
+                <textarea id="alignment1" class="alnInput" rows="10" cols="120" wrap="off"></textarea>
 	<h3>Alignment 2</h3>
-        <input type="file" id="alignment2File" name="file"/>
-	<textarea id="alignment2"class="alnInput" rows="10" cols="120" wrap="off">
-        </textarea>
+        <input type="file" id="alignment2File" name="file"/><textarea id="alignment2"class="alnInput" rows="10" cols="120" wrap="off"></textarea>
 	<h3>Newick tree (optional, for calculating tree-based distances)</h3>
         <input type="file" id="newickFile" name="file"/>
 	<textarea id="newick" class="alnInput" rows="2" cols="120" style="white-space:nowrap; font-type:monospace;" wrap="off">
