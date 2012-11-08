@@ -78,6 +78,7 @@ textarea.alnInput{
 	white-space:nowrap; 
 	font-family:'Inconsolata', 'Consolas', monospace;
 	width:99%;
+        white-space: pre;
 	resize: none; 
 }
 #input{
@@ -178,6 +179,10 @@ span.clickable:hover{background-color:rgba(0,0,0,1) !important; color:white;opac
         width:70%;
         overflow:hidden;
         text-overflow:ellipsis;
+        display:inline;
+}
+.miniline{
+        display:inline;
 }
 .scrollbox{
         border:2px solid black;
@@ -194,4 +199,33 @@ span.clickable:hover{background-color:rgba(0,0,0,1) !important; color:white;opac
         display:block;
         width:100%
         float:none;
+}
+
+.aln_y{
+        width:30px;
+        height:0;
+        float:right;
+}
+
+.tiny{
+        margin:0;
+        padding:0;
+        overflow:hidden;
+}
+.bar{
+        background:#6c8be9;
+}
+.bar-selected{
+        background:blue;
+}
+.seqs::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 11px;
+        height: 11px;
+}
+
+.seqs::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        border: 2px solid white; /* should match background, can't be transparent */
+        background-color: rgba(0, 0, 0, .5);
 }

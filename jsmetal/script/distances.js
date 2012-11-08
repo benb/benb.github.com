@@ -5,7 +5,7 @@ var EVO = 3;
 
 
 try{
-        importScripts('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
+        importScripts('underscore-min.js');
 }catch(e){
 }
 // GETCHARACTERDISTANCE

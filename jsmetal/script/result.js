@@ -135,7 +135,7 @@ function makeVisualiser($alnASequences,$alnBSequences,alnA,alnB){
 }
 function makeOutput(distances,homType,alnA){
 	var $outputTable1=$("<div/>").attr("id","output");
-	var $outputTable2=$("<table/>").attr("id","output");
+	var $outputTable2=$("<pre/>").attr("id","output");
 
 	var roundedAlnDistance=Math.round((distances.alignment[homType]*1000000))/1000000;
 	
@@ -152,23 +152,16 @@ function makeOutput(distances,homType,alnA){
 
 	}
 	
-	var $alnDistTR=$("<tr/>");
-
-        var $alnDistValue=$("<td />").attr("id","alnDist").text(roundedAlnDistance);
-        var $alnDistText=$("<td />").append("Alignment distance");
-	$alnDistTR.append($alnDistText);
-	$alnDistTR.append($alnDistValue);
-
 	for(var i=0;i<G.sequenceNumber;i++){
 		var roundedSeqDistance=Math.round((distances.sequence[homType][i]*1000000))/1000000;
-		var $seqDistTR=$("<tr/>");
-		var $seqDistText = $("<td/>").append("Distance for sequence "+alnA[i].name);
-		var $seqDistValue=$("<td/>").attr("id",alnA[i].name+"_dist").text(roundedSeqDistance);
-		$seqDistTR.append($seqDistText);
-		$seqDistTR.append($seqDistValue);
-		$outputTable2.append($seqDistTR);
+//		var $seqDistTR=$("<tr/>");
+//		var $seqDistText = $("<td/>").append(alnA[i].name);
+               
+//		var $seqDistValue=$("<td/>").attr("id",alnA[i].name+"_dist").text(roundedSeqDistance);
+		$outputTable2.append(alnA[i].name + "," + roundedSeqDistance + "\n");//$seqDistText);
+//		$seqDistTR.append($seqDistValue);
 	}
-	$outputTable2.append($alnDistTR);
+	$outputTable2.append("Total_Alignment_Distance,"+roundedAlnDistance+"\n");
 	return [$outputTable1,$outputTable2];
 }
 ////////////////////////////////////
@@ -292,10 +285,15 @@ function applyColumnDist(colDist,density,alnAView,target,width,invert){
                         if (highlight[i]!=null){highlight[i]=density[i]-highlight[i];}
                 }
         }
+        console.log(1);
         target.sparkline(normalD,{width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",lineColor: '#444444',fillColor:'#444444',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        console.log(2);
         target.sparkline(highD,{composite:true,width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",lineColor: 'black',fillColor:'black',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
-        target.sparkline(normal,{composite:true,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",chartRangeMax:1.0,width:width,fillColor:'#6c8be9',lineColor:false,disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
-        target.sparkline(highlight,{width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",composite:true,lineColor: false, fillColor:'blue',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        console.log(3);
+        target.sparkline(normal,{composite:true,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",chartRangeMax:1.0,width:width,fillColor:'#6c8be9',lineColor:'#6c8be9',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        console.log(4);
+        target.sparkline(highlight,{width:width,chartRangeMax:1.0,chartRangeMin:0.0,height:"30px",composite:true,lineColor: 'blue', fillColor:'blue',disableTooltips:true,disableHighlight:true,spotColor:false,minSpotColor:false,maxSpotColor:false});
+        console.log(5);
 }
 
 

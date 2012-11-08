@@ -179,6 +179,11 @@ span.clickable:hover{background-color:rgba(0,0,0,1) !important; color:white;opac
         width:70%;
         overflow:hidden;
         text-overflow:ellipsis;
+        display:inline;
+}
+.miniline{
+        display:inline;
+        float:right;
 }
 .scrollbox{
         border:2px solid black;

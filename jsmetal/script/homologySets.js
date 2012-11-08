@@ -4,10 +4,11 @@ var SIM = 1;
 var POS = 2;
 var EVO = 3;
 try{
-        importScripts('newick_parser.js','sequence.js');
-        importScripts('http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js');
-}catch(e){
-        //don't care
+        importScripts('sequence.js');
+        importScripts('newick_parser.js');
+        importScripts('underscore-min.js');
+}
+catch(e){
 }
 
 
@@ -77,7 +78,9 @@ function performHomologyWork(newick_string,alnA,seqNum){
         try{
         postMessage(pack({type:'status','msg':'1'}));
         }catch(e){}
+
 	labeller(alnA,tree,doEvo,seqNum);
+
         try{
         postMessage(pack({type:'status','msg':'2'}));
         }catch(e){}
