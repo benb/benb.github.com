@@ -12,9 +12,9 @@ h2. Current Projects
 
 *"MetAl":http://kumiho.smith.man.ac.uk/whelan/software/metal/* is a tool in Haskell for measuring the distance between alternative sequence alignments.
 
-*"Modiphy":http://github.com/benb/modiphy* is a library in Scala for implementing phylogenetic models.
+*"webMetAl":http://webmetal.org/* is a new tool for visualising the MetAl metrics in your browser. It is written entirely in JavaScript and the calculations take place in your browser.
 
-*"Phyhs":https://github.com/benb/EvoHaskell/* is a similar (experimental) library in Haskell.
+*"Phyhs":https://github.com/benb/EvoHaskell/* is a library in Haskell for implementing phylogenetic models.
 
 h2(#publications). Papers
 
