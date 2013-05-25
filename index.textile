@@ -5,9 +5,13 @@ title: Ben Blackburne - logspace.co.uk
 
 h2. Ben Blackburne
 
-I have worked at the "the University of Manchester":http://www.manchester.ac.uk/ in the group of "Simon Whelan":http://kumiho.smith.man.ac.uk/blog/whelanlab/, the "Wellcome Trust Sanger Institute":http://www.sanger.ac.uk/ and the "National Institute for Medical Research":http://www.nimr.mrc.ac.uk/. I did my PhD at "The University of Nottingham":http://comp.chem.nottingham.ac.uk/.
+I am the founder of "Abstrac,":http://www.abstrac.net/ where I develop software for scientists. I have worked at the "the University of Manchester":http://www.manchester.ac.uk/, the "Wellcome Trust Sanger Institute":http://www.sanger.ac.uk/ and the "National Institute for Medical Research":http://www.nimr.mrc.ac.uk/. I did my PhD at "The University of Nottingham":http://comp.chem.nottingham.ac.uk/.
 
 h2. Current Projects
+
+*"Abstrac":http://www.abstrac.net/* is an iPad app that lets scientists track the new papers that are being discussed on Twitter. 
+
+h2. Previous Projects
 
 *"MetAl":http://kumiho.smith.man.ac.uk/whelan/software/metal/* is a tool in Haskell for measuring the distance between alternative sequence alignments.
 
