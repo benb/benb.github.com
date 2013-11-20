@@ -5,13 +5,11 @@ title: Ben Blackburne - logspace.co.uk
 
 h2. Ben Blackburne
 
-I am the founder of "Abstrac,":http://www.abstrac.net/ where I develop software for scientists. I have worked at the "the University of Manchester":http://www.manchester.ac.uk/, the "Wellcome Trust Sanger Institute":http://www.sanger.ac.uk/ and the "National Institute for Medical Research":http://www.nimr.mrc.ac.uk/. I did my PhD at "The University of Nottingham":http://comp.chem.nottingham.ac.uk/.
-
-h2. Current Projects
-
-*"Abstrac":http://www.abstrac.net/* is an iPad app that lets scientists track the new papers that are being discussed on Twitter. 
+I work for "Papers":http://papersapp.com/ doing Cocoa development and data science with a side of node.js. In a previous existence I was a computational biologist.
 
 h2. Previous Projects
+
+*"Abstrac":http://www.abstrac.net/* is an iPad app that lets scientists track the new papers that are being discussed on Twitter. 
 
 *"MetAl":http://kumiho.smith.man.ac.uk/whelan/software/metal/* is a tool in Haskell for measuring the distance between alternative sequence alignments.
 
@@ -33,7 +31,7 @@ h2(#publications). Papers
 ** _Bioinformatics_ "doi:10.1093/bioinformatics/btr701":http://dx.doi.org/10.1093/bioinformatics/btr701 (2012).
 * "Phylogenetic substitution models for detecting heterotachy during plastid evolution":http://dx.doi.org/10.1093/molbev/msq215 !/icons/pdf.png!:http://mbe.oxfordjournals.org/content/28/1/449.full.pdf
 ** Whelan, S., Blackburne, B.P. and Spencer, M.
-** _Molecular Biology and Evolution_ "doi:10.1093/molbev/msq215":http://dx.doi.org/10.1093/molbev/msq215 (2011).
+** _Molecular Biology and Evolution_ "doi:10.1093/molbev/msq215":http://dx.doi.org/10.1093/molbev/nmsq215 (2011).
 * "Mutation spectrum revealed by breakpoint sequencing of human germline CNVs":http://dx.doi.org/10.1038/ng.564 !/icons/pdf.png!:http://www.nature.com/ng/journal/vaop/ncurrent/pdf/ng.564.pdf
 ** Conrad et al.
 ** _Nature Genetics_ "doi:10.1038/ng.564":http://dx.doi.org/10.1038/ng.564 (2010).
