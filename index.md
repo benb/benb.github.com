@@ -3,23 +3,19 @@ layout: default
 title: Ben Blackburne - logspace.co.uk
 ---
 
-h2(#ben-blackburne). Ben Blackburne
+## Ben Blackburne
 
 I work for "Papers":http://papersapp.com/ doing Cocoa development and data science with a side of node.js. In a previous existence I was a computational biologist.
 
-h2(#previous-projects). Previous Projects
+## Previous Projects
 
-&#42;"Abstrac":http://www.abstrac.net/* is an iPad app that lets scientists track the new papers that are being discussed on Twitter.
+* "Abstrac":http://www.abstrac.net/* is an iPad app that lets scientists track the new papers that are being discussed on Twitter.
+* "MetAl":http://kumiho.smith.man.ac.uk/whelan/software/metal/* is a tool in Haskell for measuring the distance between alternative sequence alignments.
+* "webMetAl":http://webmetal.org/* is a new tool for visualising the MetAl metrics on the web. It is written entirely in JavaScript and the calculations take place in your browser.
+* "Phyhs":https://github.com/benb/EvoHaskell/* is a library in Haskell for implementing phylogenetic models.
 
-&#42;"MetAl":http://kumiho.smith.man.ac.uk/whelan/software/metal/* is a tool in Haskell for measuring the distance between alternative sequence alignments.
+## Papers
 
-&#42;"webMetAl":http://webmetal.org/* is a new tool for visualising the MetAl metrics on the web. It is written entirely in JavaScript and the calculations take place in your browser.
-
-&#42;"Phyhs":https://github.com/benb/EvoHaskell/* is a library in Haskell for implementing phylogenetic models.
-
-h2(#publications). Papers
-
-<div class="papers">
 * "ModelOMatic: Fast and Automated Model Selection between RY, Nucleotide, Amino Acid, and Codon Substitution Models":http://dx.doi.org/10.1093/sysbio/syu062 !/icons/pdf.png!:http://sysbio.oxfordjournals.org/content/early/2014/10/07/sysbio.syu062.full.pdf
 ** Whelan, S., Allen, J.E., Blackburne, B.P., and Talavera, D.
 ** _Systematic Biology_ "doi:10.1093/sysbio/syu062":http://dx.doi.org/10.1093/sysbio/syu062
@@ -57,12 +53,11 @@ h2(#publications). Papers
 ** Journal of Chemical Physics, 115, 1935&#45;1942 (2001).
 ** <div class="copy">Copyright (2001) American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics.</div>
 
-</div>
-h3(#book-chapter). Book Chapter
+### Book Chapter
 
 * Matt Wood and Ben Blackburne. *Life in Data: The Story of DNA*. In _Beautiful Data_, Toby Segaran and Jeff Hammerbacher (eds.)
 
-h2(#contact). Contact
+### Contact
 
 Twitter: "bpb":http://twitter.com/bpb
 
