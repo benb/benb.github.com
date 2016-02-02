@@ -21,23 +21,23 @@ Papers
 
 -   [Evidence of Statistical Inconsistency of Phylogenetic Methods in the Presence of Multiple Sequence Alignment Uncertainty](http://dx.doi.org/10.1093/gbe/evv127) [![](/icons/pdf.png)](http://gbe.oxfordjournals.org/content/7/8/2102.full.pdf)
     -   Md Mukarram Hossain, A. S., Blackburne, B.P., Shah, A., and Whelan, S.
-    -   *Genome Biology and Evolution* [doi:10.1093/gbe/evv127.](http://dx.doi.org/10.1093/gbe/evv127)
+    -   *Genome Biology and Evolution* [10.1093/gbe/evv127.](http://dx.doi.org/10.1093/gbe/evv127)
 -   [ModelOMatic: Fast and Automated Model Selection between RY, Nucleotide, Amino Acid, and Codon Substitution Models](http://dx.doi.org/10.1093/sysbio/syu062) [![](/icons/pdf.png)](http://sysbio.oxfordjournals.org/content/early/2014/10/07/sysbio.syu062.full.pdf)
     -   Whelan, S., Allen, J.E., Blackburne, B.P., and Talavera, D.
-    -   *Systematic Biology* [doi:10.1093/sysbio/syu062](http://dx.doi.org/10.1093/sysbio/syu062)
+    -   *Systematic Biology* [10.1093/sysbio/syu062](http://dx.doi.org/10.1093/sysbio/syu062)
 -   [Class of multiple sequence alignment algorithm affects genomic analysis](http://dx.doi.org/10.1093/molbev/mss256) [![](/icons/pdf.png)](http://mbe.oxfordjournals.org/content/early/2012/12/04/molbev.mss256.full.pdf)
     -   Blackburne, B.P. and Whelan, S.
-    -   *Molecular Biology and Evolution* [doi:10.1093/molbev/mss256](http://dx.doi.org/10.1093/molbev/mss256)
+    -   *Molecular Biology and Evolution* [10.1093/molbev/mss256](http://dx.doi.org/10.1093/molbev/mss256)
 -   [Measuring the distance between multiple sequence alignments](http://dx.doi.org/10.1093/bioinformatics/btr701) [![](/icons/pdf.png)](http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf)
     -   Blackburne, B.P. and Whelan, S.
-    -   *Bioinformatics* [doi:10.1093/bioinformatics/btr701](http://dx.doi.org/10.1093/bioinformatics/btr701) (2012).
+    -   *Bioinformatics* [10.1093/bioinformatics/btr701](http://dx.doi.org/10.1093/bioinformatics/btr701) (2012).
 -   [Phylogenetic substitution models for detecting heterotachy during plastid evolution](http://dx.doi.org/10.1093/molbev/msq215) [![](/icons/pdf.png)](http://mbe.oxfordjournals.org/content/28/1/449.full.pdf)
     -   Whelan, S., Blackburne, B.P. and Spencer, M.
-    -   *Molecular Biology and Evolution* [doi:10.1093/molbev/msq215](http://dx.doi.org/10.1093/molbev/nmsq215) (2011).
+    -   *Molecular Biology and Evolution* [10.1093/molbev/msq215](http://dx.doi.org/10.1093/molbev/nmsq215) (2011).
 -   [Mutation spectrum revealed by breakpoint sequencing of human germline CNVs](http://dx.doi.org/10.1038/ng.564) [![](/icons/pdf.png)](http://www.nature.com/ng/journal/vaop/ncurrent/pdf/ng.564.pdf)
     -   Conrad et al.
-    -   *Nature Genetics* [doi:10.1038/ng.564](http://dx.doi.org/10.1038/ng.564) (2010).
--   [Changing Selective Pressure during Antigenic Changes in Human Influenza H3](http://dx.doi.org/doi:10.1371/journal.ppat.1000058) [![](/icons/pdf.png)](http://dx.plos.org/10.1371/journal.ppat.1000058.pdf)
+    -   *Nature Genetics* [10.1038/ng.564](http://dx.doi.org/10.1038/ng.564) (2010).
+-   [Changing Selective Pressure during Antigenic Changes in Human Influenza H3](http://dx.doi.org/10.1371/journal.ppat.1000058) [![](/icons/pdf.png)](http://dx.plos.org/10.1371/journal.ppat.1000058.pdf)
     -   Blackburne, B. P., Hay A. H. & Goldstein, R. A.
     -   *PLoS Pathogens* 4(5): e1000058 (2008).
 -   [Assessing the Accuracy of Ancestral Protein Reconstruction Methods](http://dx.doi.org/10.1371/journal.pcbi.0020069) [![](/icons/pdf.png)](http://dx.plos.org/10.1371/journal.pcbi.0020069.pdf)
