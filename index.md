@@ -1,8 +1,8 @@
-------------------------------------------------------------------------
+---
 
 layout: default\
 title: Ben Blackburne - logspace.co.uk\
-—-
+---
 
 Ben Blackburne
 --------------
