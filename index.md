@@ -17,8 +17,8 @@ I work for "Papers":http://papersapp.com/ doing Cocoa development and data scien
 ## Papers
 
 * ["ModelOMatic: Fast and Automated Model Selection between RY, Nucleotide, Amino Acid, and Codon Substitution Models"](http://dx.doi.org/10.1093/sysbio/syu062) [pdf](http://sysbio.oxfordjournals.org/content/early/2014/10/07/sysbio.syu062.full.pdf)
-** Whelan, S., Allen, J.E., Blackburne, B.P., and Talavera, D.
-** _Systematic Biology_ [doi:10.1093/sysbio/syu062](http://dx.doi.org/10.1093/sysbio/syu062)
+..* Whelan, S., Allen, J.E., Blackburne, B.P., and Talavera, D.
+..* _Systematic Biology_ [doi:10.1093/sysbio/syu062](http://dx.doi.org/10.1093/sysbio/syu062)
 * "Class of multiple sequence alignment algorithm affects genomic analysis":http://dx.doi.org/10.1093/molbev/mss256 !/icons/pdf.png!:http://mbe.oxfordjournals.org/content/early/2012/12/04/molbev.mss256.full.pdf
 ** Blackburne, B.P. and Whelan, S.
 ** _Molecular Biology and Evolution_ "doi:10.1093/molbev/mss256":http://dx.doi.org/10.1093/molbev/mss256
