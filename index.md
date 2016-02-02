@@ -25,7 +25,7 @@ Papers
 -   [Class of multiple sequence alignment algorithm affects genomic analysis](http://dx.doi.org/10.1093/molbev/mss256) [![](/icons/pdf.png)](http://mbe.oxfordjournals.org/content/early/2012/12/04/molbev.mss256.full.pdf)
     -   Blackburne, B.P. and Whelan, S.
     -   *Molecular Biology and Evolution* [doi:10.1093/molbev/mss256](http://dx.doi.org/10.1093/molbev/mss256)
--   [Measuring the distance between multiple sequence alignments](http://dx.doi.org/10.1093/bioinformatics/btr701) [![](/icons/pdf.png)]:(http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf)
+-   [Measuring the distance between multiple sequence alignments](http://dx.doi.org/10.1093/bioinformatics/btr701) [![](/icons/pdf.png)](http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf)
     -   Blackburne, B.P. and Whelan, S.
     -   *Bioinformatics* [doi:10.1093/bioinformatics/btr701](http://dx.doi.org/10.1093/bioinformatics/btr701) (2012).
 -   [Phylogenetic substitution models for detecting heterotachy during plastid evolution](http://dx.doi.org/10.1093/molbev/msq215) [![](/icons/pdf.png)](http://mbe.oxfordjournals.org/content/28/1/449.full.pdf)
