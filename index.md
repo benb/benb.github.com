@@ -6,17 +6,9 @@ title: Ben Blackburne - logspace.co.uk
 Ben Blackburne
 --------------
 
-I work for [Papers](http://papersapp.com/) doing Cocoa development and data science with a side of node.js. In a previous existence I was a computational biologist.
+I work for [Papers](http://papersapp.com/) doing Cocoa development and data science with a side of node.js. In a previous existence I was a bioinformatician.
 
-Previous Projects
------------------
-
-* [Abstrac](http://www.abstrac.net/) is an iPad app that lets scientists track the new papers that are being discussed on Twitter.
-* [MetAl](http://kumiho.smith.man.ac.uk/whelan/software/metal/) is a tool in Haskell for measuring the distance between alternative sequence alignments.
-* [webMetAl](http://webmetal.org/) is a new tool for visualising the MetAl metrics on the web. It is written entirely in JavaScript and the calculations take place in your browser.
-* [Phyhs](https://github.com/benb/EvoHaskell/) is a library in Haskell for implementing phylogenetic models.
-
-Papers
+Publications
 ------
 
 -   [Evidence of Statistical Inconsistency of Phylogenetic Methods in the Presence of Multiple Sequence Alignment Uncertainty](http://dx.doi.org/10.1093/gbe/evv127) [![](/icons/pdf.png)](http://gbe.oxfordjournals.org/content/7/8/2102.full.pdf)
@@ -62,6 +54,13 @@ Papers
 ### Book Chapter
 
 -   Matt Wood and Ben Blackburne. **Life in Data: The Story of DNA**. In *Beautiful Data*, Toby Segaran and Jeff Hammerbacher (eds.)
+
+Previous Projects
+-----------------
+
+* Abstrac was an iPad app to let scientists track the new papers that are being discussed on Twitter.
+* [MetAl](http://kumiho.smith.man.ac.uk/whelan/software/metal/) is a tool in Haskell for measuring the distance between alternative sequence alignments.
+* [webMetAl](https://github.com/benb/jsMetal) is a tool for visualising the MetAl metrics on the web. It is written entirely in JavaScript and the calculations take place in your browser.
 
 Contact
 -------
