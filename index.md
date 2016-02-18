@@ -20,7 +20,7 @@ Publications
 -   [A global reference for human genetic variation](http://dx.doi.org/10.1038/nature15393) [![](/icons/pdf.png)](http://www.nature.com/nature/journal/v526/n7571/pdf/nature15393.pdf)
     -   The 1000 Genomes Project Consortium
     -   *Nature* [10.1038/nature15393](http://dx.doi.org/10.1038/nature15393)
-    -   [Other 1000 Genomes Papers](http://www.ncbi.nlm.nih.gov/pubmed/?term=Blackburne%2C+Ben%5BFull+Investigator+Name%5D+AND+1000+Genomes+Project+Consortium)
+    -   [(Other 1000 Genome Project Papers)](http://www.ncbi.nlm.nih.gov/pubmed/?term=Blackburne%2C+Ben%5BFull+Investigator+Name%5D+AND+1000+Genomes+Project+Consortium)
 -   [Aging as Accelerated Accumulation of Somatic Variants: Whole-Genome Sequencing of Centenarian and Middle-Aged Monozygotic Twin Pairs](http://dx.doi.org/10.1017/thg.2013.73) [![](/icons/pdf.png)](http://journals.cambridge.org/download.php?file=%2FTHG%2FTHG16_06%2FS183242741300073Xa.pdf&code=de031fc8e442abb0954f7b01a59f9543)
     -   Ye et al.
     -   *Twin Research and Human Genetics* [10.1017/thg.2013.73](http://dx.doi.org/10.1017/thg.2013.73)
