@@ -17,6 +17,9 @@ Publications
 -   [ModelOMatic: Fast and Automated Model Selection between RY, Nucleotide, Amino Acid, and Codon Substitution Models](http://dx.doi.org/10.1093/sysbio/syu062) [![](/icons/pdf.png)](http://sysbio.oxfordjournals.org/content/early/2014/10/07/sysbio.syu062.full.pdf)
     -   Whelan, S., Allen, J.E., Blackburne, B.P., and Talavera, D.
     -   *Systematic Biology* [10.1093/sysbio/syu062](http://dx.doi.org/10.1093/sysbio/syu062)
+-   [Aging as Accelerated Accumulation of Somatic Variants: Whole-Genome Sequencing of Centenarian and Middle-Aged Monozygotic Twin Pairs](http://dx.doi.org/10.1017/thg.2013.73) [![](/icons/pdf.png)](http://journals.cambridge.org/download.php?file=%2FTHG%2FTHG16_06%2FS183242741300073Xa.pdf&code=de031fc8e442abb0954f7b01a59f9543)
+    -   Ye et al.
+    -   *Twin Research and Human Genetics* [10.1017/thg.2013.73](http://dx.doi.org/10.1017/thg.2013.73)
 -   [Class of multiple sequence alignment algorithm affects genomic analysis](http://dx.doi.org/10.1093/molbev/mss256) [![](/icons/pdf.png)](http://mbe.oxfordjournals.org/content/early/2012/12/04/molbev.mss256.full.pdf)
     -   Blackburne, B.P. and Whelan, S.
     -   *Molecular Biology and Evolution* [10.1093/molbev/mss256](http://dx.doi.org/10.1093/molbev/mss256)
