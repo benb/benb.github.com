@@ -33,7 +33,7 @@ Publications
 -   [Phylogenetic substitution models for detecting heterotachy during plastid evolution](http://dx.doi.org/10.1093/molbev/msq215) [![](/icons/pdf.png)](http://mbe.oxfordjournals.org/content/28/1/449.full.pdf)
     -   Whelan, S., Blackburne, B.P. and Spencer, M.
     -   *Molecular Biology and Evolution* [10.1093/molbev/msq215](http://dx.doi.org/10.1093/molbev/nmsq215) (2011).
--   [Mutation spectrum revealed by breakpoint sequencing of human germline CNVs](http://dx.doi.org/10.1038/ng.564) [![](/icons/pdf.png)](http://www.nature.com/ng/journal/vaop/ncurrent/pdf/ng.564.pdf)
+-   [Mutation spectrum revealed by breakpoint sequencing of human germline CNVs](http://dx.doi.org/10.1038/ng.564) [![](/icons/pdf.png)](http://rdcu.be/g1Wf)
     -   Conrad et al.
     -   *Nature Genetics* [10.1038/ng.564](http://dx.doi.org/10.1038/ng.564) (2010).
 -   [Changing Selective Pressure during Antigenic Changes in Human Influenza H3](http://dx.doi.org/10.1371/journal.ppat.1000058) [![](/icons/pdf.png)](http://dx.plos.org/10.1371/journal.ppat.1000058.pdf)
