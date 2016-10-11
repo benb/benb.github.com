@@ -1,0 +1,173 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.17" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+  <title>Creating an NPM module in TypeScript &middot; logspace</title>
+  
+
+  
+  <link rel="stylesheet" href="http://logspace.co.uk/css/poole.css">
+  <link rel="stylesheet" href="http://logspace.co.uk/css/syntax.css">
+  <link rel="stylesheet" href="http://logspace.co.uk/css/hyde.css">
+  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Crimson+Text" rel="stylesheet">
+
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://logspace.co.uk/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://logspace.co.uk/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="logspace" />
+</head>
+
+	<body class="theme-base-0f layout-reverse">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://logspace.co.uk/"><h1>logspace</h1></a>
+      <p class="lead">
+       data / code / science by Ben Blackburne 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://logspace.co.uk/">Home</a> </li>
+      
+        <li><a href="http://logspace.co.uk/page/about/"> About </a></li>
+      
+        <li><a href="http://logspace.co.uk/page/publications/"> Publications </a></li>
+      
+    </ul>
+
+    <p> </p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Creating an NPM module in TypeScript</h1>
+			  <span class="post-date">Mon, Oct 10, 2016</span>
+			      
+
+<p>I&rsquo;m a great believer in type systems and we&rsquo;ve recently started to use
+TypeScript. We want to mix TypeScript modules into our existing node.js code.
+However, TypeScript is a rapidly changing ecosystem, which meant I went down
+some blind alleys when trying to figure out how to set up an npm module.
+It turns out, with TypeScript 2.0, it&rsquo;s really simple. Here&rsquo;s one suggestion
+for how to get started. Begin with a directory for your project and</p>
+
+<pre><code>npm init
+</code></pre>
+
+<p>Set your entry point to <code>dist/${projectName}.js</code>. For instance, for a project called safeLeftPad, put this in package.json:</p>
+
+<pre><code>{
+  …
+  &quot;main&quot;: &quot;dist/safeLeftPad.js&quot;,
+  …
+}
+</code></pre>
+
+<p>You&rsquo;re going to need to install TypeScript if you haven&rsquo;t already. Let&rsquo;s
+install it globally, and in the project so random JavaScript hackers can still
+compile our module.</p>
+
+<pre><code>npm install --save-dev typescript
+npm install --global typescript
+</code></pre>
+
+<p>Typescript uses a <code>tsconfig.json</code> file to configure the compiler. Let&rsquo;s autogenerate one:</p>
+
+<pre><code>tsc --init
+</code></pre>
+
+<p>You need to edit it to output to the correct directory (<code>dist</code>) and set the
+source location. You only need to point it at the main entry point file. I also
+turn on <code>noImplicitAny</code> to keep me honest, and target es6 to get the cool
+stuff. My <code>tsconfig.json</code> now looks like this:</p>
+
+<pre><code>{
+    &quot;compilerOptions&quot;: {
+        &quot;module&quot;: &quot;commonjs&quot;,
+        &quot;target&quot;: &quot;es6&quot;,
+        &quot;noImplicitAny&quot;: true,
+        &quot;sourceMap&quot;: false,
+        &quot;outDir&quot;: &quot;dist&quot;
+    }, 
+    &quot;files&quot;: [
+      &quot;src/safeLeftPad.ts&quot;
+    ]
+}
+</code></pre>
+
+<p>Add <code>tsc</code> as a prepublish command to <code>package.json</code> so the TypeScript is compiled when you
+package. My <code>package.json</code> now looks like this:</p>
+
+<pre><code>{
+  &quot;name&quot;: &quot;safe-left-pad&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;dist/safeLeftPad.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;prepublish&quot;: &quot;tsc&quot;,
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;Ben Blackburne&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;typescript&quot;: &quot;^2.0.3&quot;
+  }
+}
+</code></pre>
+
+<p>To compile your TypeScript, simply run <code>tsc</code> and the appropriate <code>.js</code> and
+<code>.d.ts</code> files are created in <code>dist/</code>. You don&rsquo;t need <code>autodts</code>.</p>
+
+<h2 id="a-word-about-typings">A word about typings</h2>
+
+<p>The first thing you are probably going to do is try and use some node modules.
+To do so, you need the appropriate Declaration Files for the module, which
+contain the type definitions. There&rsquo;s a bunch of pre-existing projects for this
+(e.g. <code>typings</code>, DefinitelyTyped). However, it is now all integrated into <code>npm</code>
+and you need (in theory) do nothing more than <code>npm install @types/${moduleName}</code>.
+I&rsquo;ve come across a couple of gotchas though.</p>
+
+<p>Firstly, the type definitions won&rsquo;t necessarily match the module version, and
+<code>npm</code> won&rsquo;t care. For instance:</p>
+
+<pre><code>npm install request-promise @types/request-promise --save
+</code></pre>
+
+<p>At time of writing, this will happily install request-types version 4, and the
+definitions for version 3. In this case, I suggest you manually use the older version of <code>request-promise</code>:</p>
+
+<pre><code>npm install request-promise@3.0.0 @types/request-promise@3.0.0 --save
+</code></pre>
+
+<p>Secondly, it doesn&rsquo;t seem to handle dependencies well. On compiling a project,
+you may find an error about missing dependencies:</p>
+
+<pre><code>node_modules/@types/request-promise/index.d.ts(10,30): error TS2307: Cannot find module 'bluebird'.
+</code></pre>
+
+<p>So you have to manually install the missing definitions:</p>
+
+<pre><code>npm install @types/bluebird --save
+</code></pre>
+
+			</div>
+
+			
+		</div>
+
+  </body>
+</html>

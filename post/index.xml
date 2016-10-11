@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Post-rsses on logspace</title>
+    <link>http://logspace.co.uk/post/index.xml</link>
+    <description>Recent content in Post-rsses on logspace</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright> </copyright>
+    <lastBuildDate>Mon, 10 Oct 2016 20:22:00 +0100</lastBuildDate>
+    <atom:link href="http://logspace.co.uk/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Creating an NPM module in TypeScript</title>
+      <link>http://logspace.co.uk/post/typescript-module/</link>
+      <pubDate>Mon, 10 Oct 2016 20:22:00 +0100</pubDate>
+      
+      <guid>http://logspace.co.uk/post/typescript-module/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;m a great believer in type systems and we&amp;rsquo;ve recently started to use
+TypeScript. We want to mix TypeScript modules into our existing node.js code.
+However, TypeScript is a rapidly changing ecosystem, which meant I went down
+some blind alleys when trying to figure out how to set up an npm module.
+It turns out, with TypeScript 2.0, it&amp;rsquo;s really simple. Here&amp;rsquo;s one suggestion
+for how to get started. Begin with a directory for your project and&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Set your entry point to &lt;code&gt;dist/${projectName}.js&lt;/code&gt;. For instance, for a project called safeLeftPad, put this in package.json:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  …
+  &amp;quot;main&amp;quot;: &amp;quot;dist/safeLeftPad.js&amp;quot;,
+  …
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;rsquo;re going to need to install TypeScript if you haven&amp;rsquo;t already. Let&amp;rsquo;s
+install it globally, and in the project so random JavaScript hackers can still
+compile our module.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install --save-dev typescript
+npm install --global typescript
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Typescript uses a &lt;code&gt;tsconfig.json&lt;/code&gt; file to configure the compiler. Let&amp;rsquo;s autogenerate one:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tsc --init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You need to edit it to output to the correct directory (&lt;code&gt;dist&lt;/code&gt;) and set the
+source location. You only need to point it at the main entry point file. I also
+turn on &lt;code&gt;noImplicitAny&lt;/code&gt; to keep me honest, and target es6 to get the cool
+stuff. My &lt;code&gt;tsconfig.json&lt;/code&gt; now looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;compilerOptions&amp;quot;: {
+        &amp;quot;module&amp;quot;: &amp;quot;commonjs&amp;quot;,
+        &amp;quot;target&amp;quot;: &amp;quot;es6&amp;quot;,
+        &amp;quot;noImplicitAny&amp;quot;: true,
+        &amp;quot;sourceMap&amp;quot;: false,
+        &amp;quot;outDir&amp;quot;: &amp;quot;dist&amp;quot;
+    }, 
+    &amp;quot;files&amp;quot;: [
+      &amp;quot;src/safeLeftPad.ts&amp;quot;
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add &lt;code&gt;tsc&lt;/code&gt; as a prepublish command to &lt;code&gt;package.json&lt;/code&gt; so the TypeScript is compiled when you
+package. My &lt;code&gt;package.json&lt;/code&gt; now looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;safe-left-pad&amp;quot;,
+  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;quot;,
+  &amp;quot;description&amp;quot;: &amp;quot;&amp;quot;,
+  &amp;quot;main&amp;quot;: &amp;quot;dist/safeLeftPad.js&amp;quot;,
+  &amp;quot;scripts&amp;quot;: {
+    &amp;quot;prepublish&amp;quot;: &amp;quot;tsc&amp;quot;,
+    &amp;quot;test&amp;quot;: &amp;quot;echo \&amp;quot;Error: no test specified\&amp;quot; &amp;amp;&amp;amp; exit 1&amp;quot;
+  },
+  &amp;quot;author&amp;quot;: &amp;quot;Ben Blackburne&amp;quot;,
+  &amp;quot;license&amp;quot;: &amp;quot;ISC&amp;quot;,
+  &amp;quot;devDependencies&amp;quot;: {
+    &amp;quot;typescript&amp;quot;: &amp;quot;^2.0.3&amp;quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To compile your TypeScript, simply run &lt;code&gt;tsc&lt;/code&gt; and the appropriate &lt;code&gt;.js&lt;/code&gt; and
+&lt;code&gt;.d.ts&lt;/code&gt; files are created in &lt;code&gt;dist/&lt;/code&gt;. You don&amp;rsquo;t need &lt;code&gt;autodts&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-word-about-typings&#34;&gt;A word about typings&lt;/h2&gt;
+
+&lt;p&gt;The first thing you are probably going to do is try and use some node modules.
+To do so, you need the appropriate Declaration Files for the module, which
+contain the type definitions. There&amp;rsquo;s a bunch of pre-existing projects for this
+(e.g. &lt;code&gt;typings&lt;/code&gt;, DefinitelyTyped). However, it is now all integrated into &lt;code&gt;npm&lt;/code&gt;
+and you need (in theory) do nothing more than &lt;code&gt;npm install @types/${moduleName}&lt;/code&gt;.
+I&amp;rsquo;ve come across a couple of gotchas though.&lt;/p&gt;
+
+&lt;p&gt;Firstly, the type definitions won&amp;rsquo;t necessarily match the module version, and
+&lt;code&gt;npm&lt;/code&gt; won&amp;rsquo;t care. For instance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install request-promise @types/request-promise --save
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;At time of writing, this will happily install request-types version 4, and the
+definitions for version 3. In this case, I suggest you manually use the older version of &lt;code&gt;request-promise&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install request-promise@3.0.0 @types/request-promise@3.0.0 --save
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Secondly, it doesn&amp;rsquo;t seem to handle dependencies well. On compiling a project,
+you may find an error about missing dependencies:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;node_modules/@types/request-promise/index.d.ts(10,30): error TS2307: Cannot find module &#39;bluebird&#39;.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So you have to manually install the missing definitions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install @types/bluebird --save
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

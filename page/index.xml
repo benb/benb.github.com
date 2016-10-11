@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Page-rsses on logspace</title>
+    <link>http://logspace.co.uk/page/index.xml</link>
+    <description>Recent content in Page-rsses on logspace</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright> </copyright>
+    <lastBuildDate>Mon, 10 Oct 2016 20:38:59 +0100</lastBuildDate>
+    <atom:link href="http://logspace.co.uk/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Ben Blackburne</title>
+      <link>http://logspace.co.uk/page/about/</link>
+      <pubDate>Mon, 10 Oct 2016 20:38:59 +0100</pubDate>
+      
+      <guid>http://logspace.co.uk/page/about/</guid>
+      <description>
+
+&lt;p&gt;I work for &lt;del&gt;&lt;a href=&#34;https://papersapp.com/&#34;&gt;Papers&lt;/a&gt;&lt;/del&gt;
+&lt;a href=&#34;https://readcube.com&#34;&gt;ReadCube&lt;/a&gt; doing Cocoa development and data science with
+a side of node.js. In a previous existence I was a bioinformatician.&lt;/p&gt;
+
+&lt;h2 id=&#34;selected-publications&#34;&gt;Selected Publications&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://mbe.oxfordjournals.org/content/early/2012/12/04/molbev.mss256.full.pdf&#34;&gt;Class of multiple sequence alignment algorithm affects genomic analysis&lt;/a&gt;
+&lt;em&gt;Molecular Biology and Evolution&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/molbev/mss256&#34;&gt;http://doi.org/10.1093/molbev/mss256&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf&#34;&gt;Measuring the distance between multiple sequence alignments&lt;/a&gt;
+&lt;em&gt;Bioinformatics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/bioinformatics/btr701&#34;&gt;http://doi.org/10.1093/bioinformatics/btr701&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://rdcu.be/g1Wf&#34;&gt;Mutation spectrum revealed by breakpoint sequencing of human germline CNVs&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Nature Genetics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1038/ng.564&#34;&gt;http://doi.org/10.1038/ng.564&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://journals.plos.org/plospathogens/article/asset?id=10.1371/journal.ppat.1000058.PDF&#34;&gt;Changing Selective Pressure during Antigenic Changes in Human Influenza H3&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;PLoS Pathogens&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1371/journal.ppat.1000058&#34;&gt;http://doi.org/10.1371/journal.ppat.1000058&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://logspace.co.uk/papers/3D-Functional-Model-Proteins.pdf&#34;&gt;Three Dimensional Functional Model Proteins: Structure, Function and Evolution&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Journal of Chemical Physics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1063/1.1590310&#34;&gt;http://doi.org/10.1063/1.1590310&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A &lt;a href=&#34;http://logspace.co.uk/page/publications/&#34;&gt;fuller publication list is available&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;contact&#34;&gt;Contact&lt;/h2&gt;
+
+&lt;p&gt;Twitter: &lt;a href=&#34;http://twitter.com/bpb&#34;&gt;bpb&lt;/a&gt;&lt;br /&gt;
+Email: bpb@&lt;span style=&#34;display:none;&#34;&gt;null&lt;/span&gt;lysozyme.net&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Publications</title>
+      <link>http://logspace.co.uk/page/publications/</link>
+      <pubDate>Mon, 10 Oct 2016 20:38:59 +0100</pubDate>
+      
+      <guid>http://logspace.co.uk/page/publications/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://gbe.oxfordjournals.org/content/7/8/2102.full.pdf&#34;&gt;Evidence of Statistical Inconsistency of Phylogenetic Methods in the Presence of Multiple Sequence Alignment Uncertainty&lt;/a&gt;
+&lt;em&gt;Genome Biology and Evolution&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/gbe/evv127&#34;&gt;http://doi.org/10.1093/gbe/evv127&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://sysbio.oxfordjournals.org/content/early/2014/10/07/sysbio.syu062.full.pdf&#34;&gt;ModelOMatic: Fast and Automated Model Selection between RY, Nucleotide, Amino Acid, and Codon Substitution Models&lt;/a&gt;
+&lt;em&gt;Systematic Biology&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/sysbio/syu062&#34;&gt;http://doi.org/10.1093/sysbio/syu062&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://mbe.oxfordjournals.org/content/early/2012/12/04/molbev.mss256.full.pdf&#34;&gt;Class of multiple sequence alignment algorithm affects genomic analysis&lt;/a&gt;
+&lt;em&gt;Molecular Biology and Evolution&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/molbev/mss256&#34;&gt;http://doi.org/10.1093/molbev/mss256&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://bioinformatics.oxfordjournals.org/content/28/4/495.full.pdf&#34;&gt;Measuring the distance between multiple sequence alignments&lt;/a&gt;
+&lt;em&gt;Bioinformatics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/bioinformatics/btr701&#34;&gt;http://doi.org/10.1093/bioinformatics/btr701&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://mbe.oxfordjournals.org/content/28/1/449.full.pdf&#34;&gt;Phylogenetic substitution models for detecting heterotachy during plastid evolution&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Molecular Biology and Evolution&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1093/molbev/nmsq215&#34;&gt;http://doi.org/10.1093/molbev/msq215&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://rdcu.be/g1Wf&#34;&gt;Mutation spectrum revealed by breakpoint sequencing of human germline CNVs&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Nature Genetics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1038/ng.564&#34;&gt;http://doi.org/10.1038/ng.564&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://journals.plos.org/plospathogens/article/asset?id=10.1371/journal.ppat.1000058.PDF&#34;&gt;Changing Selective Pressure during Antigenic Changes in Human Influenza H3&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;PLoS Pathogens&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1371/journal.ppat.1000058&#34;&gt;http://doi.org/10.1371/journal.ppat.1000058&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://journals.plos.org/ploscompbiol/article/asset?id=10.1371/journal.pcbi.0020069.PDF&#34;&gt;Assessing the Accuracy of Ancestral Protein Reconstruction Methods&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;PLoS Computational Biology&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1371/journal.pcbi.0020069&#34;&gt;http://doi.org/10.1371/journal.pcbi.0020069&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;papers/FMP-Population-Dynamics.pdf&#34;&gt;Population Dynamics Simulations of Functional Model Proteins&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Journal of Chemical Physics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1063/1.2056545&#34;&gt;http://doi.org/10.1063/1.2056545&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://logspace.co.uk/papers/3D-Functional-Model-Proteins.pdf&#34;&gt;Three Dimensional Functional Model Proteins: Structure, Function and Evolution&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Journal of Chemical Physics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1063/1.1590310&#34;&gt;http://doi.org/10.1063/1.1590310&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;papers/ppsn2002.pdf&#34;&gt;Multimeme Algorithms for Protein Structure Prediction&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Lecture Notes in Computer Science&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1007/3-540-45712-7_74&#34;&gt;http://doi.org/10.1007/3-540-45712-7_74&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://logspace.co.uk/papers/Evolution-of-Functional-Model-Proteins.pdf&#34;&gt;Evolution of Functional Model Proteins&lt;/a&gt;&lt;br /&gt;
+&lt;em&gt;Journal of Chemical Physics&lt;/em&gt; &lt;a href=&#34;http://doi.org/10.1063/1.1383051&#34;&gt;http://doi.org/10.1063/1.1383051&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;book-chapter&#34;&gt;Book Chapter&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Matt Wood and Ben Blackburne. &lt;strong&gt;Life in Data: The Story of DNA&lt;/strong&gt;. In &lt;em&gt;Beautiful Data&lt;/em&gt;, Toby Segaran and Jeff Hammerbacher (eds.)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
