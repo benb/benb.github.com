@@ -1,0 +1,82 @@
+==================================================================
+https://keybase.io/bpb
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://logspace.co.uk
+  * I am bpb (https://keybase.io/bpb) on keybase.
+  * I have a public key with fingerprint 27D4 6168 0C0D E6B8 DC5B  C7BC 9D7C C266 4835 54C9
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "client": {
+            "name": "keybase.io node.js client",
+            "version": "0.4.11"
+        },
+        "key": {
+            "fingerprint": "27d461680c0de6b8dc5bc7bc9d7cc266483554c9",
+            "host": "keybase.io",
+            "key_id": "9D7CC266483554C9",
+            "uid": "7dc9c98393516502648c6ee1d190c800",
+            "username": "bpb"
+        },
+        "merkle_root": {
+            "ctime": 1405796825,
+            "hash": "147609d925b0b1825760cded71086667b8ac663a4fb872de3c490b6bbe24e52262b2326147578d0670f8ed90fbc72236d46a57c0a2bd0d3d3837493ce59cf984",
+            "seqno": 29941
+        },
+        "service": {
+            "hostname": "logspace.co.uk",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1405796945,
+    "expire_in": 157680000,
+    "prev": "318fbf7e1897944af9beef3dd70785dc540d44779180d2e01a2ec82fe9375251",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owFVkn1MVWUcxy+gCKEiWuEYFB2IgtH1vJ/z4FQE0USJwBSoNjzPy4HDyz2Xew/o
+nWCrVF4bYCvUjcK3EhEHTNGyXFPUTFquGJbiYM0kMIygIRjOzmH24n/nOb/P8/19
+f9/fUzfPx+bt1Vh6Tn1ZeO2y15UhaNvwzbm0bRTUsYeK20ahAo04DOvLoRQSKo7K
+Jx6ouIld08MdOib2PHf4IyaWKiEut6Y7TIq283aGocpiLd66rWqOHOJyujRLjGIl
+zIuMKNOIxkSEMkYCRBJEAEsIsaLIy5wg8AiYmrm623isLTWjma1h8y9YJSUm/ssn
+WnzxTEHCCCAgc4ATGFGgWZNAIiEMZgCNZJq2QDdxPZoJOqFltZC48gtItkvXZwZG
+hmZVGZ4WJCDKrGCaUdy5Js/wkkgDDFgB0pAxK+YRYYIlhpZFUZSgrCBR5BRehbLE
+YsIhHtBQhJCwPBFYVmQhy7GiKSNIMqZFiVZlggGtmiGwLCea4SiChGiFhZjGHOZk
+TuIBh4gAkApk3nTvJkUOnYpjAeCZMuvoKtEQsWxbgT2aq0DPcTsVROxItxfnm7ec
+Lt3QkV5g1nINwxlnTW14nBa7hcBsU+WoJZMNNQc2F/b/lVpdHk8E8GYiZKtTc5Fs
+zSLMGMxoadrqQ0pMTY6RVahKhJGBBHheUQEkROUwlmhJFsyl8zTmeUkCjExjltCM
+whIksyoBnCSwAvPfnLzpU8kxJd1ajkMxil2EKqv0Dp1l8/K2+c72tt6s7Qn/Bf88
+5HcnF9gqlqvFIcp4gFfympZj9/auLlwtTA1Xd/+6ef2fn16/HNrtzOiMKZs+PIZm
+tcUvbgv74Ddq54le48fULzbaby4Pl8creobfPx9SanuYAhO1kcDA/n170iPy4mPn
+wnS+5vcEr/6sjIfrd8zVymbPPZ/W8VLlL/vK+oM3Jb934KM3Bif7stau2+UXmaCX
+TyRUsxNXvwbnG5boBWdOjS95oW661q/Nfht1LJV2X4vyaYut+fbgjfrU2qCpJZn9
+X3oCmgpD8NhwxcFlS12rtvtEJvkvPN41UpVQhZ6Z//ld3+aG1p+vrnlqIHBPEjf/
+FfWTnLj9SteyWz2hS/WpjXMubNrXfNjedSHVK6nyh+bcqcTW6Puv7r415Nt4Z9nO
+dZO3vzfcntNPtm/eMW+ibbTzIT/2kycmZCClZ7Q9+lJXxfNVfQEtR05nBvbUG80N
+A7bp1OptR49vTVvuczHozOuF1KLevqKV7+RHJa8bcvmv3RCfHDR1yPj4WmaYcOC5
+/TULW6NPpQfJK3Y1bY9K2NoZu5iWE/ZOlvvGw4p2Qwm/23HjOzySkR7xNuxGg8FD
+8KwNjQafXJT0IGUQpZcGiiuaciq5+yuCz93Pqq+fPFL0VlHtg8aqOeXMh5+9ueWP
+pivDz14Kiwho+Suyjos41PtV6jzvzOvDnE/Y2fibF4Ff2InSvJinT86/c+zFpoKV
+bfdq/gY=
+=jfJo
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/bpb
+
+==================================================================
