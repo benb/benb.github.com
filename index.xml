@@ -36,7 +36,7 @@ resolving aliases on the command-line.&lt;/p&gt;
 &lt;p&gt;To create an alias in the shell, you may have used some &lt;a href=&#34;http://stackoverflow.com/questions/7072208/how-do-i-create-a-macintosh-finder-alias-from-the-command-line&#34;&gt;funky-looking
 AppleScript&lt;/a&gt;
 to tell the Finder to do it for you. Now, it&amp;rsquo;s much simpler (assuming you have
-&lt;a href=&#34;http://brew.sh&#34;&gt;Homebrew&lt;/a&gt; or Node.js), as alias-resolver comes with the
+&lt;a href=&#34;http://brew.sh&#34;&gt;Homebrew&lt;/a&gt; or Node.js), as Alias Resolver comes with the
 &lt;code&gt;create-alias&lt;/code&gt; and &lt;code&gt;resolve-alias&lt;/code&gt; commands.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;  $ brew install node
