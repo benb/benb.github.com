@@ -59,6 +59,52 @@
       
   <div class="post">
     <h1 class="post-title">
+      <a href="http://logspace.co.uk/post/alias-resolver/">
+        Dealing with macOS aliases on the command-line
+      </a>
+    </h1>
+
+    <span class="post-date">Thu, Jan 12, 2017</span>
+
+    <p>If you&rsquo;ve been using a Mac for a while, you&rsquo;ve probably come up against
+<a href="https://en.wikipedia.org/wiki/Alias_(Mac_OS)">Aliases</a>. They&rsquo;re similar in
+many ways to the Unix <a href="https://en.wikipedia.org/wiki/Symbolic_link">Symbolic
+Link</a>, but have their own set of
+advantages and disadvantages.  The main advantage is you can move the original
+file to a new location on the same disk, and the alias will still find it. The
+main disadvantage (for me) is that the OS X Unix layer doesn&rsquo;t know what to do
+with them.</p>
+
+<p>We use aliases in <a href="http://papersapp.com">Papers</a> for various reasons, and I
+needed a way to handle them from the node.js world. For that reason, I wrote a
+small module called <a href="https://www.npmjs.com/package/alias-resolver">Alias
+Resolver</a>. I recently updated the
+module to support the creation of aliases (mainly because it is useful for
+testing). As a side-effect of this, the module is now usable for creating and
+resolving aliases on the command-line.</p>
+
+<p>To create an alias in the shell, you may have used some <a href="http://stackoverflow.com/questions/7072208/how-do-i-create-a-macintosh-finder-alias-from-the-command-line">funky-looking
+AppleScript</a>
+to tell the Finder to do it for you. Now, it&rsquo;s much simpler (assuming you have
+<a href="http://brew.sh">Homebrew</a> or Node.js), as alias-resolver comes with the
+<code>create-alias</code> and <code>resolve-alias</code> commands.</p>
+
+<pre><code>  $ brew install node
+  $ npm install -g alias-resolver
+  $ create-alias /bin/ls /tmp/ls-alias
+  $ file /tmp/ls-alias
+  /tmp/ls-alias: MacOS Alias file
+  $ cat /tmp/ls-alias
+  bookmark88&lt;'Atbinv8A    file:///
+                                  Macintosh H(A&amp;$FE16297F-ACA3-31D2-88EF-3B67691353C9/0dnib(Xx@h (      0 4&quot;&lt;%
+  $ resolve-alias /tmp/ls-alias
+  /bin/ls
+</code></pre>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://logspace.co.uk/post/typescript-module/">
         Creating an NPM module in TypeScript
       </a>

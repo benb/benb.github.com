@@ -1,0 +1,100 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.17" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  
+  <title>Dealing with macOS aliases on the command-line &middot; logspace</title>
+  
+
+  
+  <link rel="stylesheet" href="http://logspace.co.uk/css/poole.css">
+  <link rel="stylesheet" href="http://logspace.co.uk/css/syntax.css">
+  <link rel="stylesheet" href="http://logspace.co.uk/css/hyde.css">
+  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Crimson+Text" rel="stylesheet">
+
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://logspace.co.uk/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://logspace.co.uk/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="logspace" />
+</head>
+
+	<body class="theme-base-0f layout-reverse">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://logspace.co.uk/"><h1>logspace</h1></a>
+      <p class="lead">
+       data / code / science by Ben Blackburne 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://logspace.co.uk/">Home</a> </li>
+      
+        <li><a href="http://logspace.co.uk/page/about/"> About </a></li>
+      
+        <li><a href="http://logspace.co.uk/page/publications/"> Publications </a></li>
+      
+    </ul>
+
+    <p> </p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Dealing with macOS aliases on the command-line</h1>
+			  <span class="post-date">Thu, Jan 12, 2017</span>
+			      <p>If you&rsquo;ve been using a Mac for a while, you&rsquo;ve probably come up against
+<a href="https://en.wikipedia.org/wiki/Alias_(Mac_OS)">Aliases</a>. They&rsquo;re similar in
+many ways to the Unix <a href="https://en.wikipedia.org/wiki/Symbolic_link">Symbolic
+Link</a>, but have their own set of
+advantages and disadvantages.  The main advantage is you can move the original
+file to a new location on the same disk, and the alias will still find it. The
+main disadvantage (for me) is that the OS X Unix layer doesn&rsquo;t know what to do
+with them.</p>
+
+<p>We use aliases in <a href="http://papersapp.com">Papers</a> for various reasons, and I
+needed a way to handle them from the node.js world. For that reason, I wrote a
+small module called <a href="https://www.npmjs.com/package/alias-resolver">Alias
+Resolver</a>. I recently updated the
+module to support the creation of aliases (mainly because it is useful for
+testing). As a side-effect of this, the module is now usable for creating and
+resolving aliases on the command-line.</p>
+
+<p>To create an alias in the shell, you may have used some <a href="http://stackoverflow.com/questions/7072208/how-do-i-create-a-macintosh-finder-alias-from-the-command-line">funky-looking
+AppleScript</a>
+to tell the Finder to do it for you. Now, it&rsquo;s much simpler (assuming you have
+<a href="http://brew.sh">Homebrew</a> or Node.js), as alias-resolver comes with the
+<code>create-alias</code> and <code>resolve-alias</code> commands.</p>
+
+<pre><code>  $ brew install node
+  $ npm install -g alias-resolver
+  $ create-alias /bin/ls /tmp/ls-alias
+  $ file /tmp/ls-alias
+  /tmp/ls-alias: MacOS Alias file
+  $ cat /tmp/ls-alias
+  bookmark88&lt;'Atbinv8A    file:///
+                                  Macintosh H(A&amp;$FE16297F-ACA3-31D2-88EF-3B67691353C9/0dnib(Xx@h (      0 4&quot;&lt;%
+  $ resolve-alias /tmp/ls-alias
+  /bin/ls
+</code></pre>
+
+			</div>
+
+			
+		</div>
+
+  </body>
+</html>

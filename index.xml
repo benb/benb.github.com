@@ -7,8 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright> </copyright>
-    <lastBuildDate>Mon, 10 Oct 2016 20:38:59 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2017 09:49:10 +0000</lastBuildDate>
     <atom:link href="http://logspace.co.uk/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dealing with macOS aliases on the command-line</title>
+      <link>http://logspace.co.uk/post/alias-resolver/</link>
+      <pubDate>Thu, 12 Jan 2017 09:49:10 +0000</pubDate>
+      
+      <guid>http://logspace.co.uk/post/alias-resolver/</guid>
+      <description>&lt;p&gt;If you&amp;rsquo;ve been using a Mac for a while, you&amp;rsquo;ve probably come up against
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Alias_(Mac_OS)&#34;&gt;Aliases&lt;/a&gt;. They&amp;rsquo;re similar in
+many ways to the Unix &lt;a href=&#34;https://en.wikipedia.org/wiki/Symbolic_link&#34;&gt;Symbolic
+Link&lt;/a&gt;, but have their own set of
+advantages and disadvantages.  The main advantage is you can move the original
+file to a new location on the same disk, and the alias will still find it. The
+main disadvantage (for me) is that the OS X Unix layer doesn&amp;rsquo;t know what to do
+with them.&lt;/p&gt;
+
+&lt;p&gt;We use aliases in &lt;a href=&#34;http://papersapp.com&#34;&gt;Papers&lt;/a&gt; for various reasons, and I
+needed a way to handle them from the node.js world. For that reason, I wrote a
+small module called &lt;a href=&#34;https://www.npmjs.com/package/alias-resolver&#34;&gt;Alias
+Resolver&lt;/a&gt;. I recently updated the
+module to support the creation of aliases (mainly because it is useful for
+testing). As a side-effect of this, the module is now usable for creating and
+resolving aliases on the command-line.&lt;/p&gt;
+
+&lt;p&gt;To create an alias in the shell, you may have used some &lt;a href=&#34;http://stackoverflow.com/questions/7072208/how-do-i-create-a-macintosh-finder-alias-from-the-command-line&#34;&gt;funky-looking
+AppleScript&lt;/a&gt;
+to tell the Finder to do it for you. Now, it&amp;rsquo;s much simpler (assuming you have
+&lt;a href=&#34;http://brew.sh&#34;&gt;Homebrew&lt;/a&gt; or Node.js), as alias-resolver comes with the
+&lt;code&gt;create-alias&lt;/code&gt; and &lt;code&gt;resolve-alias&lt;/code&gt; commands.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  $ brew install node
+  $ npm install -g alias-resolver
+  $ create-alias /bin/ls /tmp/ls-alias
+  $ file /tmp/ls-alias
+  /tmp/ls-alias: MacOS Alias file
+  $ cat /tmp/ls-alias
+  bookmark88&amp;lt;&#39;Atbinv8A    file:///
+                                  Macintosh H(A&amp;amp;$FE16297F-ACA3-31D2-88EF-3B67691353C9/0dnib(Xx@h (      0 4&amp;quot;&amp;lt;%
+  $ resolve-alias /tmp/ls-alias
+  /bin/ls
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>Ben Blackburne</title>
