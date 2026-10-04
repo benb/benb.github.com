@@ -89,7 +89,7 @@
       <button type="button" class="flashcard" id="flashcard" aria-describedby="studyPrompt">
         <span class="flash-inner">
           <span class="flash-face flash-front"><small>MAP TERM</small><h3 id="termText">Scale</h3><span class="tap">Tap to reveal the meaning →</span></span>
-          <span class="flash-face flash-back"><small>MEANING</small><p id="definitionText">The ratio between a distance on a map and the real distance on the ground.</p><span class="tap">Tap to see the term again</span></span>
+          <span class="flash-face flash-back"><small>MEANING</small><p id="definitionText">The size ratio represented by a map</p><span class="tap">Tap to see the term again</span></span>
         </span>
       </button>
       <div class="study-nav"><div class="card-count" id="cardCount">1 of 11</div><button type="button" class="nav-btn" id="prevCard">← Previous</button><button type="button" class="primary" id="nextCard">Next →</button></div>
@@ -118,17 +118,17 @@
 <script>
 (function(){
   var terms = [
-    {term:'Scale', def:'The ratio between a distance on a map and the real distance on the ground.'},
-    {term:'Direction', def:'The position towards which someone or something moves or faces.'},
-    {term:'Grid reference', def:'A method for specifying an exact position on a map.'},
-    {term:'Relief', def:'The height and shape of the land.'},
-    {term:'Contour lines', def:'Lines on a map that join places at the same height above sea level.'},
-    {term:'Longitude', def:'A measurement of distance east or west of the Prime Meridian.'},
-    {term:'Latitude', def:'A measurement of distance north or south of the Equator.'},
-    {term:'Equator', def:'An imaginary line around the middle of Earth, halfway between the poles.'},
-    {term:'Tropic of Cancer', def:'The line of latitude at 23.5° north of the Equator.'},
-    {term:'Tropic of Capricorn', def:'The line of latitude at 23.5° south of the Equator.'},
-    {term:'Continent', def:'One of the seven large continuous landmasses that make up Earth’s land.'}
+    {term:'Scale', def:'The size ratio represented by a map'},
+    {term:'Direction', def:'The position towards which someone or something moves or faces'},
+    {term:'Grid reference', def:'A method for specifying position on a map'},
+    {term:'Relief', def:'Height and shape of the land'},
+    {term:'Contour lines', def:'A line drawn on a map to join all places at the same height above sea level'},
+    {term:'Longitude', def:'A measurement of the distance east or west of the prime meridian'},
+    {term:'Latitude', def:'A measurement of the distance north or south of the equator'},
+    {term:'Equator', def:'An imaginary line around the middle of a planet (e.g. Earth).'},
+    {term:'Tropic of Cancer', def:'The area from the equator, which circles the Earth, to the invisible line 23° north of the equator.'},
+    {term:'Tropic of Capricorn', def:'The area from the equator, which circles the Earth, to the invisible line 23° south of the equator.'},
+    {term:'Continent', def:'A large continuous landmass, separated from others by water or other geographical features. There are 7 in the world.'}
   ];
   var studyTab=document.getElementById('studyTab'), quizTab=document.getElementById('quizTab');
   var studySection=document.getElementById('studySection'), quizSection=document.getElementById('quizSection');
