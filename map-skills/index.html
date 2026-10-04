@@ -103,7 +103,7 @@
     <div class="panel quiz">
       <div id="quizPlay">
         <div class="quiz-top"><div class="progress" aria-label="Quiz progress"><span id="progressBar"></span></div><div class="score" id="scoreText">0 points</div></div>
-        <p class="question-kicker" id="questionNumber">Question 1 of 10</p>
+        <p class="question-kicker" id="questionNumber">Question 1 of 11</p>
         <h3 class="question" id="questionText"></h3>
         <p class="say-prompt">Say the map term out loud before you reveal it.</p>
         <button type="button" class="primary reveal" id="revealAnswer">Tap to reveal the answer</button>
@@ -111,7 +111,7 @@
         <div class="self-check" id="selfCheck" aria-label="Check your answer"><button type="button" class="check-btn" id="gotIt">I got it</button><button type="button" class="check-btn" id="notYet">Not yet</button></div>
         <div class="feedback"><div class="feedback-text" id="feedback" aria-live="polite"></div><button type="button" class="primary next" id="nextQuestion">Next question →</button></div>
       </div>
-      <div class="results" id="results" aria-live="polite"><div class="result-mark" id="resultScore">0/10</div><h3 id="resultTitle">Mission complete</h3><p id="resultMessage"></p><div class="review-list" id="reviewList"><h4>Terms to learn again</h4><p>Say each term, read its meaning, then try the mission again.</p><div id="reviewItems"></div></div><div class="result-actions"><button type="button" class="primary" id="playAgain">Play again</button><button type="button" class="secondary" id="backToCards">Review the cards</button></div></div>
+      <div class="results" id="results" aria-live="polite"><div class="result-mark" id="resultScore">0/11</div><h3 id="resultTitle">Mission complete</h3><p id="resultMessage"></p><div class="review-list" id="reviewList"><h4>Terms to learn again</h4><p>Say each term, read its meaning, then try the mission again.</p><div id="reviewItems"></div></div><div class="result-actions"><button type="button" class="primary" id="playAgain">Play again</button><button type="button" class="secondary" id="backToCards">Review the cards</button></div></div>
     </div>
   </section>
 </main>
@@ -146,7 +146,7 @@
   var quiz=[], qIndex=0, score=0, answered=false, missedTerms=[];
   var qText=document.getElementById('questionText'), qNum=document.getElementById('questionNumber'), reveal=document.getElementById('revealAnswer'), revealedAnswer=document.getElementById('revealedAnswer'), answerText=document.getElementById('answerText'), selfCheck=document.getElementById('selfCheck'), gotIt=document.getElementById('gotIt'), notYet=document.getElementById('notYet'), feedback=document.getElementById('feedback'), next=document.getElementById('nextQuestion'), progress=document.getElementById('progressBar'), scoreText=document.getElementById('scoreText');
   function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
-  function startQuiz(){quiz=shuffle(terms).slice(0,10);qIndex=0;score=0;answered=false;missedTerms=[];document.getElementById('quizPlay').style.display='block';document.getElementById('results').classList.remove('show');document.getElementById('reviewList').classList.remove('show');document.getElementById('reviewItems').innerHTML='';renderQuestion()}
+  function startQuiz(){quiz=shuffle(terms);qIndex=0;score=0;answered=false;missedTerms=[];document.getElementById('quizPlay').style.display='block';document.getElementById('results').classList.remove('show');document.getElementById('reviewList').classList.remove('show');document.getElementById('reviewItems').innerHTML='';renderQuestion()}
   function renderQuestion(){answered=false;var item=quiz[qIndex];qText.textContent=item.def;qNum.textContent='Question '+(qIndex+1)+' of '+quiz.length;scoreText.textContent=score+' point'+(score===1?'':'s');progress.style.width=(qIndex/quiz.length*100)+'%';feedback.innerHTML='';next.classList.remove('show');reveal.style.display='block';revealedAnswer.classList.remove('show');selfCheck.classList.remove('show');gotIt.classList.remove('selected');notYet.classList.remove('selected');gotIt.disabled=false;notYet.disabled=false;answerText.textContent=item.term}
   on(reveal,'click',function(){reveal.style.display='none';revealedAnswer.classList.add('show');selfCheck.classList.add('show');gotIt.focus()});
   function checkAnswer(gotCorrect){if(answered)return;answered=true;if(gotCorrect){score++;gotIt.classList.add('selected');feedback.innerHTML='<strong>Nice work!</strong> You said the right term.'}else{missedTerms.push(quiz[qIndex]);notYet.classList.add('selected');feedback.innerHTML='<strong>Good check.</strong> Say the answer once more to help it stick. We’ll show it again at the end.'}gotIt.disabled=true;notYet.disabled=true;scoreText.textContent=score+' point'+(score===1?'':'s');next.textContent=qIndex===quiz.length-1?'See my result →':'Next question →';next.classList.add('show')}
@@ -159,7 +159,7 @@
     document.getElementById('resultScore').textContent=score+'/'+quiz.length;
     progress.style.width='100%';
     var title,msg;
-    if(score===10){title='Map master!';msg='Perfect score — every key term is locked in.'}
+    if(score===quiz.length){title='Map master!';msg='Perfect score — every key term is locked in.'}
     else if(score>=8){title='Excellent navigating';msg='You know these really well. Learn the tricky ones below, then have another go.'}
     else if(score>=5){title='Good progress';msg='You have the main ideas. Learn the tricky ones below, then try again.'}
     else{title='A useful first mission';msg='Learn the terms below, then try saying each answer again. You’ll improve fast.'}
