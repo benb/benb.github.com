@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Map Skills Game</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800;900&display=swap');
+    :root {
+      --paper:#f6f7ef; --ink:#132d33; --muted:#4f686c; --panel:#ffffff;
+      --line:#d4ddd7; --green:#087f5b; --green-dark:#075f47; --green-soft:#dff3e8;
+      --yellow:#ffd866; --orange:#ed6a3a; --orange-soft:#fff0e9; --blue:#1d6d9e;
+      --shadow:0 16px 38px rgba(21,55,55,.11); --radius:22px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper:#102225; --ink:#eef8f1; --muted:#b9ccca; --panel:#173237; --line:#315056; --green:#69d5aa; --green-dark:#9ce5c8; --green-soft:#203f38; --yellow:#f3c857; --orange:#ff8b64; --orange-soft:#4a302a; --blue:#79b9e1; --shadow:0 18px 40px rgba(0,0,0,.24); }
+    }
+    *{box-sizing:border-box}
+    html{min-height:100%;background:var(--paper)}
+    body{margin:0;min-height:100%;font-family:"Atkinson Hyperlegible",sans-serif;background:var(--paper);color:var(--ink);line-height:1.45}
+    button{font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+    button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+    .page{width:min(100%,1040px);margin:auto;padding:clamp(20px,4vw,48px) clamp(16px,4vw,40px) 64px;position:relative;overflow:hidden}
+    .contours{position:absolute;right:-160px;top:-110px;width:560px;height:390px;opacity:.13;pointer-events:none;color:var(--green)}
+    .hero{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:36px;align-items:center;min-height:310px;position:relative}
+    .hero h1{font-family:Nunito,sans-serif;font-weight:900;font-size:clamp(2.35rem,6vw,4.8rem);line-height:.97;letter-spacing:-.045em;margin:0 0 20px;max-width:720px}
+    .hero h1 span{color:var(--green)}
+    .hero p{font-size:clamp(1.05rem,2vw,1.28rem);max-width:600px;margin:0;color:var(--muted)}
+    .compass{width:220px;height:220px;border:2px solid var(--line);border-radius:50%;display:grid;place-items:center;position:relative;background:var(--panel);box-shadow:var(--shadow);transform:rotate(-7deg)}
+    .compass:before,.compass:after{content:"";position:absolute;background:var(--line)}
+    .compass:before{width:2px;height:84%;}.compass:after{height:2px;width:84%}
+    .needle{width:66px;height:142px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);background:linear-gradient(to bottom,var(--orange) 0 50%,var(--green) 50% 100%);z-index:1}
+    .compass b{position:absolute;font-family:Nunito,sans-serif;font-size:.9rem}.north{top:9px}.south{bottom:9px}.east{right:13px}.west{left:13px}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);position:relative}
+    .mode-picker{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0 34px}
+    .mode-card{border:0;text-align:left;padding:22px 22px 20px;border-radius:18px;background:var(--panel);color:var(--ink);box-shadow:0 0 0 1px var(--line);cursor:pointer;transition:transform .16s, box-shadow .16s}
+    .mode-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(21,55,55,.12)}
+    .mode-card.active{background:var(--green-soft);box-shadow:inset 0 0 0 2px var(--green)}
+    .mode-card strong{font-family:Nunito,sans-serif;font-size:1.2rem;display:block;margin-bottom:4px}
+    .mode-card small{display:block;color:var(--muted);font-size:.97rem}
+    .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:9px;background:var(--yellow);box-shadow:18px 0 var(--orange),36px 0 var(--green);margin-bottom:5px}
+    .section{display:none}.section.active{display:block}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 15px}
+    .section-head h2{font-family:Nunito,sans-serif;font-size:clamp(1.55rem,3vw,2.2rem);margin:0;letter-spacing:-.02em}.section-head p{margin:0;color:var(--muted)}
+    .study-layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:18px}
+    .flashcard{min-height:330px;border:0;padding:0;background:transparent;perspective:1000px;cursor:pointer;text-align:left;color:var(--ink)}
+    .flash-inner{display:block;position:relative;width:100%;height:100%;min-height:330px;transition:transform .5s;transform-style:preserve-3d}
+    .flashcard.flipped .flash-inner{transform:rotateY(180deg)}
+    .flash-face{position:absolute;inset:0;border-radius:var(--radius);backface-visibility:hidden;padding:clamp(28px,5vw,50px);display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow);border:1px solid var(--line)}
+    .flash-front{background:var(--panel)} .flash-back{background:var(--green-soft);transform:rotateY(180deg);border-color:var(--green)}
+    .flash-face small{font-weight:700;color:var(--muted);font-size:.95rem}.flash-face h3{font-family:Nunito,sans-serif;font-size:clamp(2.2rem,7vw,4.4rem);line-height:1;margin:25px 0;letter-spacing:-.04em}.flash-back p{font-size:clamp(1.25rem,3vw,1.8rem);margin:25px 0;max-width:700px}
+    .tap{color:var(--green);font-weight:700}
+    .study-nav{display:flex;flex-direction:column;gap:10px}
+    .nav-btn,.primary,.secondary{border:0;border-radius:14px;padding:13px 16px;font-weight:700;cursor:pointer}
+    .nav-btn,.secondary{background:var(--panel);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+    .primary{background:var(--green);color:#fff}.primary:hover{background:var(--green-dark)}
+    @media (prefers-color-scheme: dark){.primary{color:#08221b}}
+    .card-count{padding:15px;text-align:center;color:var(--muted);font-weight:700}
+    .terms-mini{display:flex;flex-wrap:wrap;gap:7px;margin-top:24px}.terms-mini button{border:0;background:var(--panel);color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);padding:8px 10px;border-radius:10px;cursor:pointer}.terms-mini button.current{background:var(--green-soft);color:var(--green-dark);box-shadow:inset 0 0 0 2px var(--green)}
+    .quiz{padding:clamp(22px,5vw,42px)}
+    .quiz-top{display:flex;align-items:center;gap:14px;margin-bottom:32px}.progress{height:12px;background:var(--green-soft);border-radius:99px;overflow:hidden;flex:1}.progress span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}.score{font-weight:700;white-space:nowrap}
+    .question-kicker{color:var(--orange);font-weight:700;margin:0 0 8px}.question{font-family:Nunito,sans-serif;font-size:clamp(1.55rem,4vw,2.4rem);line-height:1.15;margin:0 0 24px;max-width:800px}
+    .say-prompt{color:var(--muted);font-size:1.08rem;margin:-10px 0 18px}.reveal{width:100%;min-height:64px;font-size:1.08rem}.revealed-answer{display:none;background:var(--green-soft);border:2px solid var(--green);border-radius:18px;padding:22px;margin-top:14px}.revealed-answer.show{display:block}.revealed-answer small{display:block;color:var(--muted);font-weight:700;margin-bottom:3px}.revealed-answer strong{display:block;font-family:Nunito,sans-serif;font-size:clamp(1.7rem,5vw,2.7rem);line-height:1.1}.self-check{display:none;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.self-check.show{display:grid}.check-btn{border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:var(--panel);color:var(--ink);font-weight:700;cursor:pointer}.check-btn:hover{border-color:var(--green);background:var(--green-soft)}.check-btn.selected{border:2px solid var(--green);background:var(--green-soft)}
+    .feedback{min-height:64px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:16px}.feedback-text{font-size:1.08rem}.feedback-text strong{font-family:Nunito,sans-serif;font-size:1.18rem;display:block}.next{display:none;white-space:nowrap}.next.show{display:inline-block}
+    .results{text-align:center;padding:30px 0 8px;display:none}.results.show{display:block}.result-mark{font-family:Nunito,sans-serif;font-size:clamp(4rem,12vw,7rem);font-weight:900;line-height:1;color:var(--green)}.results h3{font-family:Nunito,sans-serif;font-size:2rem;margin:12px 0 6px}.results>p{color:var(--muted);font-size:1.12rem;margin:0 auto 24px;max-width:520px}.review-list{display:none;text-align:left;margin:28px auto 24px;max-width:700px;border-top:2px solid var(--line)}.review-list.show{display:block}.review-list h4{font-family:Nunito,sans-serif;font-size:1.35rem;margin:20px 0 2px}.review-list>p{color:var(--muted);margin:0 0 10px}.review-item{padding:16px 0;border-bottom:1px solid var(--line)}.review-item strong{display:block;color:var(--orange);font-family:Nunito,sans-serif;font-size:1.15rem;margin-bottom:3px}.review-item span{display:block}.result-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .hint{margin-top:28px;padding:17px 19px;border-radius:14px;background:var(--orange-soft);color:var(--ink)}.hint strong{color:var(--orange)}
+    @media (max-width:720px){.hero{grid-template-columns:1fr;min-height:0;padding-top:16px}.compass{display:none}.mode-picker{grid-template-columns:1fr}.study-layout{grid-template-columns:1fr}.study-nav{display:grid;grid-template-columns:1fr 1fr}.card-count{grid-column:1/-1;order:-1}.self-check{grid-template-columns:1fr}.feedback{align-items:flex-start;flex-direction:column}.next{width:100%}.section-head{align-items:start;flex-direction:column;gap:4px}.flash-inner,.flashcard{min-height:370px}.terms-mini{display:none}}
+    @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}.flash-inner,.progress{transition:none!important}.mode-card:hover{transform:none}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <svg class="contours" viewBox="0 0 560 390" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3"><path d="M34 253C49 119 180 36 331 75s220 186 129 269"/><path d="M82 261C90 154 191 84 311 106s174 137 112 222"/><path d="M130 265c8-78 79-126 164-119s123 94 88 158"/><path d="M178 266c10-48 53-79 103-76s74 52 59 94"/><path d="M225 266c9-22 28-34 48-31s28 21 24 39"/></g></svg>
+  <section class="hero">
+    <div><h1>Can you crack the <span>map code?</span></h1><p>Learn the 11 key terms, then take a quick mission to test what you know. No timer — think it through.</p></div>
+    <div class="compass" aria-hidden="true"><b class="north">N</b><b class="south">S</b><b class="east">E</b><b class="west">W</b><div class="needle"></div></div>
+  </section>
+
+  <nav class="mode-picker" aria-label="Choose an activity">
+    <button type="button" class="mode-card active" id="studyTab" aria-pressed="true"><span class="dot"></span><strong>Study the cards</strong><small>Tap to reveal each meaning</small></button>
+    <button type="button" class="mode-card" id="quizTab" aria-pressed="false"><span class="dot"></span><strong>Play Map Mission</strong><small>Say each answer, then reveal it</small></button>
+  </nav>
+
+  <section class="section active" id="studySection">
+    <div class="section-head"><h2>Study deck</h2><p id="studyPrompt">Start with the term, then reveal the meaning.</p></div>
+    <div class="study-layout">
+      <button type="button" class="flashcard" id="flashcard" aria-describedby="studyPrompt">
+        <span class="flash-inner">
+          <span class="flash-face flash-front"><small>MAP TERM</small><h3 id="termText">Scale</h3><span class="tap">Tap to reveal the meaning →</span></span>
+          <span class="flash-face flash-back"><small>MEANING</small><p id="definitionText">The ratio between a distance on a map and the real distance on the ground.</p><span class="tap">Tap to see the term again</span></span>
+        </span>
+      </button>
+      <div class="study-nav"><div class="card-count" id="cardCount">1 of 11</div><button type="button" class="nav-btn" id="prevCard">← Previous</button><button type="button" class="primary" id="nextCard">Next →</button></div>
+    </div>
+    <div class="terms-mini" id="termIndex" aria-label="Jump to a term"></div>
+    <div class="hint"><strong>Memory trick:</strong> latitude lines lie flat, while longitude lines are long from pole to pole.</div>
+  </section>
+
+  <section class="section" id="quizSection">
+    <div class="section-head"><h2>Map Mission</h2><p>Say the term out loud, then reveal it to check.</p></div>
+    <div class="panel quiz">
+      <div id="quizPlay">
+        <div class="quiz-top"><div class="progress" aria-label="Quiz progress"><span id="progressBar"></span></div><div class="score" id="scoreText">0 points</div></div>
+        <p class="question-kicker" id="questionNumber">Question 1 of 10</p>
+        <h3 class="question" id="questionText"></h3>
+        <p class="say-prompt">Say the map term out loud before you reveal it.</p>
+        <button type="button" class="primary reveal" id="revealAnswer">Tap to reveal the answer</button>
+        <div class="revealed-answer" id="revealedAnswer" aria-live="polite"><small>THE ANSWER IS</small><strong id="answerText"></strong></div>
+        <div class="self-check" id="selfCheck" aria-label="Check your answer"><button type="button" class="check-btn" id="gotIt">I got it</button><button type="button" class="check-btn" id="notYet">Not yet</button></div>
+        <div class="feedback"><div class="feedback-text" id="feedback" aria-live="polite"></div><button type="button" class="primary next" id="nextQuestion">Next question →</button></div>
+      </div>
+      <div class="results" id="results" aria-live="polite"><div class="result-mark" id="resultScore">0/10</div><h3 id="resultTitle">Mission complete</h3><p id="resultMessage"></p><div class="review-list" id="reviewList"><h4>Terms to learn again</h4><p>Say each term, read its meaning, then try the mission again.</p><div id="reviewItems"></div></div><div class="result-actions"><button type="button" class="primary" id="playAgain">Play again</button><button type="button" class="secondary" id="backToCards">Review the cards</button></div></div>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var terms = [
+    {term:'Scale', def:'The ratio between a distance on a map and the real distance on the ground.'},
+    {term:'Direction', def:'The position towards which someone or something moves or faces.'},
+    {term:'Grid reference', def:'A method for specifying an exact position on a map.'},
+    {term:'Relief', def:'The height and shape of the land.'},
+    {term:'Contour lines', def:'Lines on a map that join places at the same height above sea level.'},
+    {term:'Longitude', def:'A measurement of distance east or west of the Prime Meridian.'},
+    {term:'Latitude', def:'A measurement of distance north or south of the Equator.'},
+    {term:'Equator', def:'An imaginary line around the middle of Earth, halfway between the poles.'},
+    {term:'Tropic of Cancer', def:'The line of latitude at 23.5° north of the Equator.'},
+    {term:'Tropic of Capricorn', def:'The line of latitude at 23.5° south of the Equator.'},
+    {term:'Continent', def:'One of the seven large continuous landmasses that make up Earth’s land.'}
+  ];
+  var studyTab=document.getElementById('studyTab'), quizTab=document.getElementById('quizTab');
+  var studySection=document.getElementById('studySection'), quizSection=document.getElementById('quizSection');
+  var flashcard=document.getElementById('flashcard'), termText=document.getElementById('termText'), definitionText=document.getElementById('definitionText'), cardCount=document.getElementById('cardCount'), termIndex=document.getElementById('termIndex');
+  var current=0;
+  function on(el,event,handler){el.addEventListener(event,handler,false)}
+  function switchMode(mode){var study=mode==='study';studySection.classList.toggle('active',study);quizSection.classList.toggle('active',!study);studyTab.classList.toggle('active',study);quizTab.classList.toggle('active',!study);studyTab.setAttribute('aria-pressed',study);quizTab.setAttribute('aria-pressed',!study);if(!study&&quiz.length===0)startQuiz();}
+  on(studyTab,'click',function(){switchMode('study')});on(quizTab,'click',function(){switchMode('quiz')});
+  function renderCard(){flashcard.classList.remove('flipped');termText.textContent=terms[current].term;definitionText.textContent=terms[current].def;cardCount.textContent=(current+1)+' of '+terms.length;Array.prototype.forEach.call(termIndex.children,function(b,i){b.classList.toggle('current',i===current)});}
+  on(flashcard,'click',function(){flashcard.classList.toggle('flipped')});
+  on(document.getElementById('prevCard'),'click',function(){current=(current-1+terms.length)%terms.length;renderCard()});
+  on(document.getElementById('nextCard'),'click',function(){current=(current+1)%terms.length;renderCard()});
+  terms.forEach(function(item,i){var b=document.createElement('button');b.type='button';b.textContent=item.term;on(b,'click',function(){current=i;renderCard()});termIndex.appendChild(b)});renderCard();
+
+  var quiz=[], qIndex=0, score=0, answered=false, missedTerms=[];
+  var qText=document.getElementById('questionText'), qNum=document.getElementById('questionNumber'), reveal=document.getElementById('revealAnswer'), revealedAnswer=document.getElementById('revealedAnswer'), answerText=document.getElementById('answerText'), selfCheck=document.getElementById('selfCheck'), gotIt=document.getElementById('gotIt'), notYet=document.getElementById('notYet'), feedback=document.getElementById('feedback'), next=document.getElementById('nextQuestion'), progress=document.getElementById('progressBar'), scoreText=document.getElementById('scoreText');
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  function startQuiz(){quiz=shuffle(terms).slice(0,10);qIndex=0;score=0;answered=false;missedTerms=[];document.getElementById('quizPlay').style.display='block';document.getElementById('results').classList.remove('show');document.getElementById('reviewList').classList.remove('show');document.getElementById('reviewItems').innerHTML='';renderQuestion()}
+  function renderQuestion(){answered=false;var item=quiz[qIndex];qText.textContent=item.def;qNum.textContent='Question '+(qIndex+1)+' of '+quiz.length;scoreText.textContent=score+' point'+(score===1?'':'s');progress.style.width=(qIndex/quiz.length*100)+'%';feedback.innerHTML='';next.classList.remove('show');reveal.style.display='block';revealedAnswer.classList.remove('show');selfCheck.classList.remove('show');gotIt.classList.remove('selected');notYet.classList.remove('selected');gotIt.disabled=false;notYet.disabled=false;answerText.textContent=item.term}
+  on(reveal,'click',function(){reveal.style.display='none';revealedAnswer.classList.add('show');selfCheck.classList.add('show');gotIt.focus()});
+  function checkAnswer(gotCorrect){if(answered)return;answered=true;if(gotCorrect){score++;gotIt.classList.add('selected');feedback.innerHTML='<strong>Nice work!</strong> You said the right term.'}else{missedTerms.push(quiz[qIndex]);notYet.classList.add('selected');feedback.innerHTML='<strong>Good check.</strong> Say the answer once more to help it stick. We’ll show it again at the end.'}gotIt.disabled=true;notYet.disabled=true;scoreText.textContent=score+' point'+(score===1?'':'s');next.textContent=qIndex===quiz.length-1?'See my result →':'Next question →';next.classList.add('show')}
+  on(gotIt,'click',function(){checkAnswer(true)});on(notYet,'click',function(){checkAnswer(false)});
+  on(next,'click',function(){if(!answered)return;if(qIndex<quiz.length-1){qIndex++;renderQuestion()}else{showResults()}});
+  function showResults(){
+    document.getElementById('quizPlay').style.display='none';
+    var results=document.getElementById('results'),reviewList=document.getElementById('reviewList'),reviewItems=document.getElementById('reviewItems');
+    results.classList.add('show');
+    document.getElementById('resultScore').textContent=score+'/'+quiz.length;
+    progress.style.width='100%';
+    var title,msg;
+    if(score===10){title='Map master!';msg='Perfect score — every key term is locked in.'}
+    else if(score>=8){title='Excellent navigating';msg='You know these really well. Learn the tricky ones below, then have another go.'}
+    else if(score>=5){title='Good progress';msg='You have the main ideas. Learn the tricky ones below, then try again.'}
+    else{title='A useful first mission';msg='Learn the terms below, then try saying each answer again. You’ll improve fast.'}
+    document.getElementById('resultTitle').textContent=title;
+    document.getElementById('resultMessage').textContent=msg;
+    reviewItems.innerHTML='';
+    missedTerms.forEach(function(item){var row=document.createElement('div'),term=document.createElement('strong'),definition=document.createElement('span');row.className='review-item';term.textContent=item.term;definition.textContent=item.def;row.appendChild(term);row.appendChild(definition);reviewItems.appendChild(row)});
+    reviewList.classList.toggle('show',missedTerms.length>0);
+  }
+  on(document.getElementById('playAgain'),'click',startQuiz);
+  on(document.getElementById('backToCards'),'click',function(){switchMode('study')});
+})();
+</script>
+</body>
+</html>
